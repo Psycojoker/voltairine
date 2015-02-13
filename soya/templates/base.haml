@@ -1,0 +1,37 @@
+-extends "bootstrap3/bootstrap3.html"
+
+-block bootstrap3_title
+  Saya-Films
+
+-block bootstrap3_extra_head
+  %script{type: "text/javascript", src: "{{ STATIC_URL }}js/angular.js"}
+  %script{type: "text/javascript", src: "{{ STATIC_URL }}js/angular-cookies.js"}
+  %script{type: "text/javascript", src: "{{ STATIC_URL }}js/base.js"}
+
+  %link{href: "{{ STATIC_URL }}/css/style.css", rel: "stylesheet"}
+
+  :css
+    body {
+        padding-top: 51px; /*for navbar*/
+    }
+
+  -block head
+
+
+-block bootstrap3_content
+  .navbar.navbar-inverse.navbar-fixed-top.navbar-bold{data-spy: "affix", data-offset-top: "1000"}
+    .navbar-inner
+      .container
+        %a.brand.navbar-brand{href: "/"}
+          Saya Films
+        %ul.nav.navbar-nav.navbar-right
+          %li
+            %a{href: "{% url 'logout' %}"}
+              Déconnexion
+
+
+  .container
+    -block content
+
+-block bootstrap3_extra_script
+  -block javascript
