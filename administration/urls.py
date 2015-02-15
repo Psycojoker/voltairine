@@ -1,16 +1,8 @@
 from django.conf.urls import patterns, url
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import UpdateView
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 
-class UpdateUser(UpdateView):
-    model=User
-    template_name='administration/user_update_form.haml'
-    fields=['username', 'first_name', 'last_name', 'email']
-
-    def get_success_url(self):
-        return reverse('administration_user_detail', args=(self.object.pk,))
+from .views import UpdateUser
 
 
 urlpatterns = patterns('administration.views',
