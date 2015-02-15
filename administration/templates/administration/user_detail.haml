@@ -12,6 +12,9 @@
   %p Email:
     =user.email
 
+  %a.btn.btn-primary.btn-lg{href: "{% url 'administration_user_update' user.pk %}"}
+    Modify
+
   %h2 Permissions
   %hr
 
