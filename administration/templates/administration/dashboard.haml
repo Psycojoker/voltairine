@@ -1,4 +1,6 @@
 -extends "base.haml"
 
 -block content
-  %p Hello
+  %h2
+    %a{href: "{% url 'administration_user_list' %}"}
+      Administrate users
