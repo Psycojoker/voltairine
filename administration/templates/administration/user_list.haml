@@ -8,3 +8,6 @@
     -for user in user_list
       %li
         %a{href: "{% url 'administration_user_detail' user.pk %}"}= user.username
+
+  %a.btn.btn-lg.btn-primary{href: "{% url 'administration_user_create' %}"}
+    Add another user
