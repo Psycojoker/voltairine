@@ -1,5 +1,5 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def dashboard(request):
-    return HttpResponse("pouet")
+    return render(request, "administration/dashboard.haml")

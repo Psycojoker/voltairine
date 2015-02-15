@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'soya',
     'debug_toolbar',
     'django_pdb',
+    'administration',
     'authentification',
 )
 
