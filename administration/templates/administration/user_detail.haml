@@ -2,17 +2,17 @@
 
 -block content
   %h1 User:
-    =user.username
+    =object.username
   %hr
 
   %p First name:
-    =user.first_name
+    =object.first_name
   %p Last name:
-    =user.last_name
+    =object.last_name
   %p Email:
-    =user.email
+    =object.email
 
-  %a.btn.btn-primary.btn-lg{href: "{% url 'administration_user_update' user.pk %}"}
+  %a.btn.btn-primary.btn-lg{href: "{% url 'administration_user_update' object.pk %}"}
     Modify
 
   %h2 Permissions
