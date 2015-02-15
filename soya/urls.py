@@ -3,6 +3,6 @@ from django.contrib import admin
 
 urlpatterns = patterns('',
     url(r'^$', 'soya.views.home_redirect', name='home_redirect'),
-    url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^accounts/', include('authentification.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
