@@ -1,0 +1,9 @@
+-extends "base.haml"
+
+-block content
+  %h1 Users
+  %hr
+
+  %ul
+    -for user in user_list
+      %li= user.username
