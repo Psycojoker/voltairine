@@ -6,4 +6,5 @@
 
   %ul
     -for user in user_list
-      %li= user.username
+      %li
+        %a{href: "{% url 'administration_user_detail' user.pk %}"}= user.username
