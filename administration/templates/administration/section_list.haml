@@ -1,0 +1,23 @@
+-extends "base.haml"
+
+-block content
+  %h1 Sections
+  %hr
+
+  %h2 Tournages
+  %ul
+    -for subsection in subsection_list
+      -if subsection.section == "1"
+        %li= subsection.title
+
+  %h2 Montages
+  %ul
+    -for subsection in subsection_list
+      -if subsection.section == "2"
+        %li= subsection.title
+
+  %h2 Producteurs
+  %ul
+    -for subsection in subsection_list
+      -if subsection.section == "3"
+        %li= subsection.title
