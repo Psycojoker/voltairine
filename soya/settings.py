@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'django_pdb',
     'administration',
     'authentification',
+    'categories',
 )
 
 MIDDLEWARE_CLASSES = (
