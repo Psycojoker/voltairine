@@ -9,6 +9,17 @@
     -for subsection in subsection_list
       -if subsection.section == "1"
         %li= subsection.title
+        %ul
+          -for subsubsection in subsection.subsubsection_set.all
+            %li= subsubsection.title
+          %li
+            %form.form-inline{method: "POST", action: "../subsubsection/new/"}
+              -csrf_token
+              .form-group
+                %input#id_subsection.form-control{type: "text", placeholder: "titre", required: "", style: "display: none;", value: '{{ subsection.id }}', name: "subsection"}
+                %input#id_title.form-control{type: "text", placeholder: "titre", required: "", name: "title"}
+              %button.btn.btn-default{type: "submit"}
+                Rajouter un nouveau jours de tournage
     %li
       %form.form-inline{method: "POST", action: "new/"}
         -csrf_token
@@ -37,6 +48,17 @@
     -for subsection in subsection_list
       -if subsection.section == "3"
         %li= subsection.title
+        %ul
+          -for subsubsection in subsection.subsubsection_set.all
+            %li= subsubsection.title
+          %li
+            %form.form-inline{method: "POST", action: "../subsubsection/new/"}
+              -csrf_token
+              .form-group
+                %input#id_subsection.form-control{type: "text", placeholder: "titre", required: "", style: "display: none;", value: '{{ subsection.id }}', name: "subsection"}
+                %input#id_title.form-control{type: "text", placeholder: "titre", required: "", name: "title"}
+              %button.btn.btn-default{type: "submit"}
+                Rajouter un nouveau film/une nouvelle série
     %li
       %form.form-inline{method: "POST", action: "new/"}
         -csrf_token
