@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 from sections.models import SubSection
 
-from .views import UpdateUser, CreateUser
+from .views import UpdateUser, CreateUser, CreateSubSection
 
 
 urlpatterns = patterns('administration.views',
@@ -15,4 +15,5 @@ urlpatterns = patterns('administration.views',
     url(r'^user/(?P<pk>\d+)/update/$', UpdateUser.as_view(), name='administration_user_update'),
 
     url(r'^section/$', ListView.as_view(model=SubSection, template_name='administration/section_list.haml'), name='administration_section_list'),
+    url(r'^section/new/$', CreateSubSection.as_view(), name='administration_section_create'),
 )

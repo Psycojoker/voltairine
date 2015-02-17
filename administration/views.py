@@ -1,7 +1,9 @@
 from django.shortcuts import render
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic.edit import UpdateView, CreateView
 from django.contrib.auth.models import User
+
+from sections.models import SubSection
 
 
 class CreateUser(CreateView):
@@ -11,6 +13,13 @@ class CreateUser(CreateView):
 
     def get_success_url(self):
         return reverse('administration_user_detail', args=(self.object.pk,))
+
+
+class CreateSubSection(CreateView):
+    model=SubSection
+    template_name='administration/section_list.haml'
+    fields=['title', 'section']
+    success_url=reverse_lazy('administration_section_list')
 
 
 class UpdateUser(UpdateView):
