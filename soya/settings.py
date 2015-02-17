@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_extensions',
     'bootstrap3',
+    'resumable',
     'soya',
     'debug_toolbar',
     'django_pdb',
