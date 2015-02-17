@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic.edit import UpdateView, CreateView
 from django.contrib.auth.models import User
 
-from sections.models import SubSection
+from sections.models import SubSection, SubSubSection
 
 
 class CreateUser(CreateView):
@@ -19,6 +19,13 @@ class CreateSubSection(CreateView):
     model=SubSection
     template_name='administration/section_list.haml'
     fields=['title', 'section']
+    success_url=reverse_lazy('administration_section_list')
+
+
+class CreateSubSubSection(CreateView):
+    model=SubSubSection
+    template_name='administration/section_list.haml'
+    fields=['title', 'subsection']
     success_url=reverse_lazy('administration_section_list')
 
 
