@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
 
@@ -17,4 +17,6 @@ urlpatterns = patterns('administration.views',
     url(r'^section/$', ListView.as_view(model=SubSection, template_name='administration/section_list.haml'), name='administration_section_list'),
     url(r'^section/new/$', CreateSubSection.as_view(), name='administration_section_create'),
     url(r'^subsubsection/new/$', CreateSubSubSection.as_view(), name='administration_section_create'),
+
+    url(r'^', include('upload_video.urls')),
 )
