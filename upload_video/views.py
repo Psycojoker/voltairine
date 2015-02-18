@@ -13,6 +13,7 @@ class ResumableForm(Form):
 def upload_video(request):
     if request.method == "POST":
         form = ResumableForm(request.POST)
+        print form.is_valid()
     else:
         form = ResumableForm()
 
