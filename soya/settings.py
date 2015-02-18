@@ -101,3 +101,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/'
+
+FILE_UPLOAD_TEMP_DIR = os.path.join(BASE_DIR, 'chuncks')
