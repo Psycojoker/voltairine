@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'authentification',
     'sections',
     'upload_video',
+    'video',
 )
 
 MIDDLEWARE_CLASSES = (
