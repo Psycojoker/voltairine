@@ -1,19 +1,40 @@
+import os
+import shutil
+
+from django.core.urlresolvers import reverse_lazy, reverse
 from django.shortcuts import render
-from django.core.urlresolvers import reverse_lazy
-from django.forms import Form
+from django.conf import settings
+from django.http import HttpResponseRedirect
+from django import forms
 
 from resumable.fields import ResumableFileField
 
+from video.models import Video
 
-class ResumableForm(Form):
-    file = ResumableFileField(upload_url=reverse_lazy('upload'), chunks_dir="chuncks")
+class ResumableForm(forms.Form):
+    title = forms.CharField()
+    file_name = ResumableFileField(upload_url=reverse_lazy('upload'), chunks_dir="chuncks")
 
 
 def upload_video(request):
-    if request.method == "POST":
-        form = ResumableForm(request.POST)
-        print form.is_valid()
-    else:
-        form = ResumableForm()
+    if request.method == "GET":
+        return render(request, "upload/upload.haml", {"form": ResumableForm()})
 
-    return render(request, "upload/upload.haml", {"form": form})
+    # POST
+    form = ResumableForm(request.POST)
+    if not form.is_valid():
+        return render(request, "upload/upload.haml", {"form": form})
+
+    destination = os.path.join(settings.MEDIA_ROOT, "videos")
+
+    if not os.path.exists(destination):
+        os.makedirs(destination)
+
+    shutil.move(form.cleaned_data["file_name"].file.name, destination)
+
+    Video.objects.create(
+        title=form.cleaned_data["title"],
+        file_name=os.path.split(form.cleaned_data["file_name"].file.name)[1],
+    )
+
+    return HttpResponseRedirect(reverse("upload_video"))
