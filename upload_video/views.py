@@ -3,7 +3,6 @@ from django.core.urlresolvers import reverse_lazy
 from django.forms import Form
 
 from resumable.fields import ResumableFileField
-from resumable.views import ResumableUploadView
 
 
 class ResumableForm(Form):

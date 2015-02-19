@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from .views import ResumableUploadView
+from resumable.views import ResumableUploadView
 
 
 urlpatterns = patterns('upload_video.views',
