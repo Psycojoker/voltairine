@@ -20,6 +20,7 @@ urlpatterns = patterns('administration.views',
     url(r'^subsubsection/new/$', CreateSubSubSection.as_view(), name='administration_section_create'),
 
     url(r'^video/$', ListView.as_view(model=Video, template_name='administration/video_list.haml'), name='administration_video_list'),
+    url(r'^video/(?P<pk>\d+)/$', DetailView.as_view(model=Video, template_name='administration/video_detail.haml'), name='administration_video_detail'),
 
     url(r'^', include('upload_video.urls')),
 )

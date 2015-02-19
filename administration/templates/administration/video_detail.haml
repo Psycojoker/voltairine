@@ -1,0 +1,29 @@
+-extends "base.haml"
+
+-block content
+  %h1 Video:
+    =object.title
+  %hr
+
+  %p Nom du film:
+    -if object.film_name
+      =object.film_name
+
+  %p Realisation:
+    -if object.realisation
+      =object.realisation
+
+  %p Production:
+    -if object.production
+      =object.production
+
+  %p Direction photo:
+    -if object.photo_direction
+      =object.photo_direction
+
+  %p Observations:
+    -if object.observations
+      =object.observations
+
+  %a{href: "{% url 'administration_video_list' %}"}
+    Liste des vidéos

@@ -7,7 +7,7 @@
   %ul
     -for video in video_list
       %li
-        %a{href: ""}= video.title
+        %a{href: "{% url 'administration_video_detail' video.pk %}"}= video.title
 
   %a.btn.btn-lg.btn-primary{href: "{% url 'upload_video' %}"}
     Uploader une autre vidéo
