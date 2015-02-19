@@ -1,0 +1,13 @@
+-extends "base.haml"
+
+-block content
+  %h1 Video
+  %hr
+
+  %ul
+    -for video in video_list
+      %li
+        %a{href: ""}= video.title
+
+  %a.btn.btn-lg.btn-primary{href: "{% url 'upload_video' %}"}
+    Uploader une autre vidéo
