@@ -6,4 +6,3 @@ git+https://github.com/tomchristie/django-pdb
 hamlpy
 werkzeug
 django-resumable
-django-mediaelementjs

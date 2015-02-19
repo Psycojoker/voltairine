@@ -39,7 +39,6 @@ INSTALLED_APPS = (
     'django_extensions',
     'bootstrap3',
     'resumable',
-    'mediaelementjs',
     'soya',
     'debug_toolbar',
     'django_pdb',
