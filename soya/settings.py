@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'django_pdb',
     'administration',
     'authentification',
+    'regular_users_interface',
     'sections',
     'upload_video',
     'video',
