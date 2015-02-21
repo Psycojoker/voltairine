@@ -34,7 +34,7 @@ class CreateSubSubSection(CreateView):
 class UpdateUser(UpdateView):
     model=User
     template_name='administration/user_update_form.haml'
-    fields=['username', 'first_name', 'last_name', 'email']
+    fields=['username', 'first_name', 'last_name', 'email', 'is_staff']
 
     def get_success_url(self):
         return reverse('administration_user_detail', args=(self.object.pk,))
