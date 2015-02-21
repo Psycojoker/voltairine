@@ -1,0 +1,15 @@
+-extends "base.haml"
+-load bootstrap3
+-load staticfiles
+
+-block content
+  %form{method: "post"}
+    %fieldset
+      -csrf_token
+      =form.as_p
+    %button.btn.btn-primary{type: "submit"}
+      Send
+
+  %script{type: "text/javascript", src: "https://raw.github.com/23/resumable.js/master/resumable.js"}
+  %script{src:"{% static 'resumable/js/django-resumable.js' %}", type:"text/javascript"}
+  %script{src:"{% static 'resumable/js/init.js' %}", type:"text/javascript"}
