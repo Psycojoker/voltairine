@@ -16,8 +16,21 @@
           %a{href: "/"}
             Menu
         %li
-          %a{href: "#"}
-            Foo
+          %a{href: "{% url 'upload_video' %}"}
+            Uploader une vidéo
+        %li
+          %a{href: "{% url 'administration_user_list' %}"}
+            Utilisateurs
+        %li
+          %a{href: "{% url 'administration_section_list' %}"}
+            Sections
+        %li
+          %a{href: "{% url 'administration_video_list' %}"}
+            Toutes les vidéos
+        %hr
+        %li
+          %a{href: "{% url 'logout' %}"}
+            Déconnexion
 
 
     .heading-brand
