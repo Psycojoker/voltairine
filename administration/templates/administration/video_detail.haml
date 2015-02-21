@@ -31,5 +31,9 @@
     -if object.observations
       =object.observations
 
+  %h2 Dans les sections
+  -for section in video.videosection_set.all
+    %p= section
+
   %a{href: "{% url 'administration_video_list' %}"}
     Liste des vidéos
