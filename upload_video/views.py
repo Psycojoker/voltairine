@@ -36,9 +36,9 @@ def upload_video(request):
 
     shutil.move(form.cleaned_data["file_name"].file.name, destination)
 
-    Video.objects.create(
+    video = Video.objects.create(
         title=form.cleaned_data["title"],
         file_name=os.path.split(form.cleaned_data["file_name"].file.name)[1],
     )
 
-    return HttpResponseRedirect(reverse("upload_video"))
+    return HttpResponseRedirect(reverse("administration_video_detail", args=(video.pk,)))
