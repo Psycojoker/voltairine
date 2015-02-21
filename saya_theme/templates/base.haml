@@ -1,0 +1,32 @@
+-extends "bootstrap3/bootstrap3.html"
+
+-block bootstrap3_title
+  Saya-Films
+
+-block bootstrap3_extra_head
+  :css
+    body {
+        padding-top: 51px; /*for navbar*/
+    }
+
+  -block head
+
+
+-block bootstrap3_content
+  .navbar.navbar-default.navbar-fixed-top.navbar-bold{data-spy: "affix", data-offset-top: "1000"}
+    .navbar-inner
+      .container
+        %a.brand.navbar-brand{href: "/"}
+          Saya-Films
+        -if user.is_authenticated
+          %ul.nav.navbar-nav.navbar-right
+            %li
+              %a{href: "{% url 'logout' %}"}
+                Déconnexion
+
+
+  .container
+    -block content
+
+-block bootstrap3_extra_script
+  -block javascript
