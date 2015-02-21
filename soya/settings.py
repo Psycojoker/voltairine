@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'saya_theme',
     'bootstrap3',
     'resumable',
     'soya',
