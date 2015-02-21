@@ -18,7 +18,7 @@ class SubSubSection(models.Model):
     subsection = models.ForeignKey(SubSection)
 
     def __unicode__(self):
-        return self.title
+        return "%s - %s" % (self.subsection.title, self.title)
 
     class Meta:
         ordering = ['title']
