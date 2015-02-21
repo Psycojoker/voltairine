@@ -34,3 +34,8 @@ class VideoSection(models.Model):
     video = models.ForeignKey("video.Video")
     subsection = models.ForeignKey(SubSection, null=True)
     subsubsection = models.ForeignKey(SubSubSection, null=True)
+
+    def __unicode__(self):
+        if self.subsection:
+            return self.subsection.__unicode__()
+        return self.subsubsection.__unicode__()

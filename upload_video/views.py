@@ -11,12 +11,14 @@ from administration.utils import is_staff
 
 from resumable.fields import ResumableFileField
 
+from sections.models import SubSubSection, VideoSection
 from video.models import Video
 
 
 class ResumableForm(forms.Form):
     title = forms.CharField()
     file_name = ResumableFileField(upload_url=reverse_lazy('upload'), chunks_dir="chuncks")
+    subsubsection = forms.ModelChoiceField(queryset=SubSubSection.objects.filter(subsection__section="1"))
 
 
 @is_staff
@@ -41,6 +43,11 @@ def upload_video(request):
     video = Video.objects.create(
         title=form.cleaned_data["title"],
         file_name=os.path.split(form.cleaned_data["file_name"].file.name)[1],
+    )
+
+    VideoSection.objects.create(
+        video=video,
+        subsubsection=form.cleaned_data["subsubsection"],
     )
 
     return HttpResponseRedirect(reverse("administration_video_detail", args=(video.pk,)))
