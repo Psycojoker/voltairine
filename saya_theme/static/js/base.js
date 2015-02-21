@@ -1,4 +1,4 @@
-var app = angular.module('oscar', ['ngCookies'])
+var app = angular.module('soya', ['ngCookies'])
     .config(function($interpolateProvider) {
         $interpolateProvider.startSymbol('{&');
         $interpolateProvider.endSymbol('&}');
