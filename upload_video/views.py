@@ -7,15 +7,19 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django import forms
 
+from administration.utils import is_staff
+
 from resumable.fields import ResumableFileField
 
 from video.models import Video
+
 
 class ResumableForm(forms.Form):
     title = forms.CharField()
     file_name = ResumableFileField(upload_url=reverse_lazy('upload'), chunks_dir="chuncks")
 
 
+@is_staff
 def upload_video(request):
     if request.method == "GET":
         return render(request, "upload/upload.haml", {"form": ResumableForm()})

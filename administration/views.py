@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 
 from sections.models import SubSection, SubSubSection
 
+from .utils import is_staff
+
 
 class CreateUser(CreateView):
     model=User
@@ -38,5 +40,6 @@ class UpdateUser(UpdateView):
         return reverse('administration_user_detail', args=(self.object.pk,))
 
 
+@is_staff
 def dashboard(request):
     return render(request, "administration/dashboard.haml")
