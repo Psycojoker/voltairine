@@ -24,6 +24,8 @@ def upload_video(request):
     if request.method == "GET":
         return render(request, "upload/upload.haml", {"form": ResumableForm()})
 
+    assert request.method == "POST"
+
     # POST
     form = ResumableForm(request.POST)
     if not form.is_valid():
