@@ -28,3 +28,9 @@ class Permissions(models.Model):
     user = models.ForeignKey(User)
     subsection = models.ForeignKey(SubSection, null=True)
     subsubsection = models.ForeignKey(SubSubSection, null=True)
+
+
+class VideoSection(models.Model):
+    video = models.ForeignKey("video.Video")
+    subsection = models.ForeignKey(SubSection, null=True)
+    subsubsection = models.ForeignKey(SubSubSection, null=True)
