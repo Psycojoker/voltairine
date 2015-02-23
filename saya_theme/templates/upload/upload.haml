@@ -3,6 +3,9 @@
 -load staticfiles
 
 -block content
+  -# put here to allow DjangoResumable to get it
+  -csrf_token
+
   %div{ng-app: "soya", ng-controller: "VideoUploadController"}
     %div{ng-repeat: "upload in uploads"}
       %form{method: "post"}
