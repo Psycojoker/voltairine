@@ -12,6 +12,9 @@
         %button.btn.btn-primary{type: "submit"}
           Send
 
+    %button.btn.btn-primary{ng-click: "addUpload()"}
+      Uploader une vidéo en plus
+
   %script{type: "text/javascript", src: "https://raw.github.com/23/resumable.js/master/resumable.js"}
   %script{src:"{% static 'resumable/js/django-resumable.js' %}", type:"text/javascript"}
   %script{src:"{% static 'resumable/js/init.js' %}", type:"text/javascript"}
