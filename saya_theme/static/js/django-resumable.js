@@ -8,7 +8,7 @@ var DjangoResumable = function (options) {
     defaults = {
         csrfInputName: 'csrfmiddlewaretoken',
         urlAttribute: 'data-upload-url',
-        progressDisplay: 'inline',
+        progressDisplay: '',
         errorListClass: 'errorlist',
         onFileError: this.onFileError,
         onFileAdded: this.onFileAdded,
