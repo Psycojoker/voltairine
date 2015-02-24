@@ -45,9 +45,10 @@ def upload_video(request):
         file_name=os.path.split(form.cleaned_data["file_name"].file.name)[1],
     )
 
-    VideoSection.objects.create(
-        video=video,
-        subsubsection=form.cleaned_data["subsubsection"],
-    )
+    if form.cleaned_data["subsubsection"]:
+        VideoSection.objects.create(
+            video=video,
+            subsubsection=form.cleaned_data["subsubsection"],
+        )
 
     return HttpResponseRedirect(reverse("administration_video_detail", args=(video.pk,)))
