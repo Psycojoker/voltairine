@@ -18,10 +18,6 @@ var DjangoResumable = function (options) {
     };
     this.options = this.extend(defaults, options);
     this.csrfToken = document.querySelector('input[name=' + this.options.csrfInputName + ']').value;
-    els = document.querySelectorAll('input[' + this.options.urlAttribute + ']');
-    this.each(els, function (el) {
-        this.initField(el);
-    });
 };
 
 
