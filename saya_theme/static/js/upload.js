@@ -3,20 +3,22 @@ function VideoUploadController($scope) {
     $scope.uploads = [];
     number = 0;
 
-    applyDjangoResumable = function(elementId) {
+    applyDjangoResumable = function(form) {
         var dj = new DjangoResumable();
-        dj.initField($("#" + elementId + " input[data-upload-url]")[0]);
+        dj.initField($("#" + form.elementId + " input[data-upload-url]")[0]);
     }
 
     $scope.addUpload = function() {
-        var new_form = {
-            id: number
+        var newForm = {
+            id: number,
+            elementId: "upload_form_" + number,
+            djangoResumable: null
         };
 
-        $scope.uploads.push(new_form);
+        $scope.uploads.push(newForm);
 
         // horrible hack because angularjs is strange
-        setTimeout(function() { applyDjangoResumable("upload_form_" + new_form.id)}, 100);
+        setTimeout(function() { applyDjangoResumable(newForm)}, 100);
 
         number += 1;
     }
