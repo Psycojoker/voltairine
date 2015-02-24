@@ -79,7 +79,6 @@ function VideoUploadController($scope) {
         }
         if (noneIsRunning()) {
             this.startUpload(r, progress);
-            el.style.display = "none";
         } else {
             this.options.angularReference.state = "waiting";
         }

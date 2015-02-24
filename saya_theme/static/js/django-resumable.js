@@ -88,6 +88,8 @@ DjangoResumable.prototype.initField = function (el) {
     this.getForm(el).addEventListener('submit', function () {
         el.parentNode.removeChild(el);
     });
+
+    this.el = el;
 };
 
 
@@ -173,4 +175,5 @@ DjangoResumable.prototype.startUpload = function (r, progress) {
     r.upload();
     progress.style.display = this.options.progressDisplay;
     this.options.angularReference.state = "running";
+    this.el.style.display = "none";
 }
