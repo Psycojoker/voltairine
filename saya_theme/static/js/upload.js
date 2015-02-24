@@ -79,6 +79,7 @@ function VideoUploadController($scope) {
         }
         if (noneIsRunning()) {
             this.startUpload(r, progress);
+            el.style.display = "none";
         }
 
         this.options.angularReference.r = r;
