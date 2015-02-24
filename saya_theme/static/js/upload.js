@@ -50,10 +50,12 @@ function VideoUploadController($scope) {
     startNextUpload = function() {
         for (var i = 0; i < $scope.uploads.length; ++i) {
             if ($scope.uploads[i].state == "waiting") {
+                console.log(i + " '" + $scope.uploads[i].title + "' is waiting, starts it");
                 // spaguetti!
                 $scope.uploads[i].djangoResumable.startUpload($scope.uploads[i].r, $scope.uploads[i].progress);
                 return;
             }
+            console.log(i + " '" + $scope.uploads[i].title + "' is in state '" + $scope.uploads[i].state + "', skipping");
         }
     }
 
