@@ -12,7 +12,12 @@
         %form{method: "post", id: "upload_form_{& upload.id &}"}
           %fieldset
             -csrf_token
-            -bootstrap_form form
+            .row
+              .col-md-6
+                -bootstrap_field form.title
+              .col-md-6
+                -bootstrap_field form.subsubsection
+            -bootstrap_field form.file_name
           %button.btn.btn-primary{type: "submit"}
             Send
 
