@@ -19,7 +19,7 @@ function VideoUploadController($scope) {
             id: number,
             elementId: "upload_form_" + number,
             djangoResumable: null,
-            state: "waiting"
+            state: "empty"
         };
 
         $scope.uploads.push(newForm);
@@ -34,11 +34,11 @@ function VideoUploadController($scope) {
         number += 1;
     }
 
-    allAreWaitingOrDone = function() {
+    noneIsRunning = function() {
         result = true;
 
         $scope.uploads.forEach(function(i) {
-            if (i.state != "waiting" && i.state != "done") {
+            if (i.state == "running") {
                 result = false;
             }
         });
@@ -75,7 +75,7 @@ function VideoUploadController($scope) {
         if (errorList) {
             errorList.parentNode.removeChild(errorList);
         }
-        if (allAreWaitingOrDone()) {
+        if (noneIsRunning()) {
             this.startUpload(r, progress);
         }
 
