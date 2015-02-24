@@ -2,6 +2,12 @@
 -load bootstrap3
 -load staticfiles
 
+-block head
+  :css
+    .progress {
+      background-color: #FFFFFF;
+    }
+
 -block content
   -# put here to allow DjangoResumable to get it
   -csrf_token
