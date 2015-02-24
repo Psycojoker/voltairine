@@ -68,6 +68,7 @@ function VideoUploadController($scope) {
         }
         this.options.angularReference.state = "done";
         startNextUpload();
+        $scope.$digest();
     };
 
     onFileAdded = function (r, file, event, el, progress, filePath, fileName) {
@@ -85,8 +86,8 @@ function VideoUploadController($scope) {
 
         if (this.options.angularReference.title.length == 0) {
             this.options.angularReference.title = file.fileName.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
-            $scope.$digest();
         }
+        $scope.$digest();
     };
 
     onFileSuccess = function (r, file, message, el, progress, filePath, fileName) {
@@ -97,5 +98,6 @@ function VideoUploadController($scope) {
         progress.firstChild.innerHTML = 'Upload terminé'
         this.options.angularReference.state = "done";
         startNextUpload();
+        $scope.$digest();
     };
 }
