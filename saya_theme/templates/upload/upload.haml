@@ -12,7 +12,7 @@
         %form{method: "post", id: "upload_form_{& upload.id &}"}
           %fieldset
             -csrf_token
-            =form.as_p
+            -bootstrap_form form
           %button.btn.btn-primary{type: "submit"}
             Send
 
