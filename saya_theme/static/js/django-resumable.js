@@ -16,6 +16,7 @@ var DjangoResumable = function (options) {
         onProgress: this.onProgress,
         resumableOptions: {}
     };
+    this.previousProgressNumber = 0;
     this.options = this.extend(defaults, options);
     this.csrfToken = document.querySelector('input[name=' + this.options.csrfInputName + ']').value;
 };
@@ -158,5 +159,13 @@ DjangoResumable.prototype.onFileSuccess = function (r, file, message, el, progre
 
 DjangoResumable.prototype.onProgress = function (r, el, progress, filePath, fileName) {
     "use strict";
-    progress.setAttribute('value', r.progress());
+    number = Math.floor(r.progress() * 100);
+    if (number == this.previousProgressNumber) {
+        return;
+    }
+    this.previousProgressNumber = number;
+    console.log(number);
+    progress.firstChild.style.width = number + "%";
+    progress.firstChild.setAttribute("aria-valuenow", number);
+    progress.firstChild.innerHTML = number + "%";
 };
