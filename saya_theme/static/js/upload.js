@@ -35,6 +35,17 @@ function VideoUploadController($scope) {
         number += 1;
     }
 
+    $scope.saveVideo = function(id) {
+        var data = $("#" + $scope.uploads[id].elementId).serialize();
+        $.post("", data).done(function(response) {
+            console.log("success!");
+            console.log(response);
+        }).fail(function(response) {
+            console.log("fail!");
+            console.log(response);
+        })
+    }
+
     noneIsRunning = function() {
         result = true;
 
