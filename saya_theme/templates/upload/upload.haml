@@ -8,12 +8,13 @@
 
   %div{ng-app: "soya", ng-controller: "VideoUploadController"}
     %div{ng-repeat: "upload in uploads"}
-      %form{method: "post", id: "upload_form_{& upload.id &}"}
-        %fieldset
-          -csrf_token
-          =form.as_p
-        %button.btn.btn-primary{type: "submit"}
-          Send
+      .well
+        %form{method: "post", id: "upload_form_{& upload.id &}"}
+          %fieldset
+            -csrf_token
+            =form.as_p
+          %button.btn.btn-primary{type: "submit"}
+            Send
 
     %button.btn.btn-primary{ng-click: "addUpload()"}
       Uploader une vidéo en plus
