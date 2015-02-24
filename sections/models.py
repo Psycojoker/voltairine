@@ -31,7 +31,7 @@ class Permissions(models.Model):
 
 
 class VideoSection(models.Model):
-    video = models.ForeignKey("video.Video")
+    video = models.OneToOneField("video.Video")
     subsection = models.ForeignKey(SubSection, null=True)
     subsubsection = models.ForeignKey(SubSubSection, null=True)
 
