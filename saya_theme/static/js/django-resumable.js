@@ -85,10 +85,6 @@ DjangoResumable.prototype.initField = function (el) {
 
     this.initResumable(el, progress, filePath, fileName);
 
-    this.getForm(el).addEventListener('submit', function () {
-        el.parentNode.removeChild(el);
-    });
-
     this.el = el;
 };
 
