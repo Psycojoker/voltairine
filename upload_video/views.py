@@ -4,7 +4,7 @@ import shutil
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.shortcuts import render
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django import forms
 
 from administration.utils import is_staff
@@ -50,5 +50,8 @@ def upload_video(request):
             video=video,
             subsubsection=form.cleaned_data["subsubsection"],
         )
+
+    if request.is_ajax():
+        return HttpResponse("ok")
 
     return HttpResponseRedirect(reverse("administration_video_detail", args=(video.pk,)))
