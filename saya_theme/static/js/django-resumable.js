@@ -166,7 +166,6 @@ DjangoResumable.prototype.onProgress = function (r, el, progress, filePath, file
         return;
     }
     this.previousProgressNumber = number;
-    console.log(number);
     progress.firstChild.style.width = number + "%";
     progress.firstChild.setAttribute("aria-valuenow", number);
     progress.firstChild.innerHTML = number + "%";
