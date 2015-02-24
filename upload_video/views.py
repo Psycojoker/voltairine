@@ -18,7 +18,7 @@ from video.models import Video
 class ResumableForm(forms.Form):
     title = forms.CharField()
     file_name = ResumableFileField(upload_url=reverse_lazy('upload'), chunks_dir="chuncks")
-    subsubsection = forms.ModelChoiceField(queryset=SubSubSection.objects.filter(subsection__section="1"))
+    subsubsection = forms.ModelChoiceField(queryset=SubSubSection.objects.filter(subsection__section="1"), required=False)
 
 
 @is_staff
