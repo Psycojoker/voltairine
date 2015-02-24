@@ -82,7 +82,6 @@ DjangoResumable.prototype.initField = function (el) {
 
     filePathName = el.getAttribute('name') + '-path';
     filePath = el.parentNode.querySelector('[name=' + filePathName + ']');
-    fileName = el.parentNode.querySelector('label[for=id_' + filePathName + ']');
 
     this.initResumable(el, progress, filePath, fileName);
 
@@ -153,7 +152,6 @@ DjangoResumable.prototype.onFileAdded = function (r, file, event, el, progress, 
 DjangoResumable.prototype.onFileSuccess = function (r, file, message, el, progress, filePath, fileName) {
     "use strict";
     filePath.setAttribute('value', file.size + '_' + file.fileName);
-    fileName.innerHTML = file.fileName;
     progress.firstChild.className += ' progress-bar-success';
     progress.firstChild.innerHTML = 'Upload terminé'
 };

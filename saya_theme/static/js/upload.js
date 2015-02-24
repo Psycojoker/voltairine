@@ -93,7 +93,6 @@ function VideoUploadController($scope) {
     onFileSuccess = function (r, file, message, el, progress, filePath, fileName) {
         "use strict";
         filePath.setAttribute('value', file.size + '_' + file.fileName);
-        fileName.innerHTML = file.fileName;
         progress.firstChild.className += ' progress-bar-success';
         progress.firstChild.innerHTML = 'Upload terminé'
         this.options.angularReference.state = "done";
