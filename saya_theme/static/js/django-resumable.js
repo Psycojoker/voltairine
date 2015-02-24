@@ -92,9 +92,9 @@ DjangoResumable.prototype.initField = function (el) {
 
 DjangoResumable.prototype.initProgressBar = function () {
     "use strict";
-    var progress = document.createElement('progress');
-    progress.setAttribute('value', '0');
-    progress.setAttribute('max', '1');
+    var progress = document.createElement('div');
+    progress.className = "progress";
+    progress.innerHTML = '<div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">60%</div>';
     progress.style.display = 'none';
     return progress;
 };
