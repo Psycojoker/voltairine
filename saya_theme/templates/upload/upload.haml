@@ -34,8 +34,9 @@
               %input#id_file_name{type: "file", name: "file_name", title: "", data-upload-url: "/administration/upload/", multiple: "multiple"}
           %button.btn.btn-primary{type: "submit", ng-click: "saveVideo(upload.id)"}
             Sauver
-          %button.btn.btn-danger{ng-disabled: 'upload.state != "running"'}
-            Stop
+          -#
+            %button.btn.btn-danger{ng-disabled: 'upload.state != "running"'}
+              Stop
 
     %button.btn.btn-primary{ng-click: "addUpload()"}
       Uploader une vidéo en plus
