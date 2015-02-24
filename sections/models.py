@@ -38,4 +38,6 @@ class VideoSection(models.Model):
     def __unicode__(self):
         if self.subsection:
             return self.subsection.__unicode__()
-        return self.subsubsection.__unicode__()
+        if self.subsubsection:
+            return self.subsubsection.__unicode__()
+        return "%s not in any (Sub)SubSection" % self.video
