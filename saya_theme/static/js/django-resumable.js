@@ -77,7 +77,7 @@ DjangoResumable.prototype.initField = function (el) {
     var progress, fileName, filePath, filePathName;
 
     progress = this.initProgressBar();
-    el.parentNode.insertBefore(progress, el.nextSibling);
+    el.parentNode.parentNode.insertBefore(progress, el.parentNode.nextSibling);
 
     filePathName = el.getAttribute('name') + '-path';
     filePath = el.parentNode.querySelector('[name=' + filePathName + ']');
