@@ -6,6 +6,7 @@ function VideoUploadController($scope) {
     applyDjangoResumable = function(form) {
         var dj = new DjangoResumable();
         dj.initField($("#" + form.elementId + " input[data-upload-url]")[0]);
+        form["djangoResumable"] = dj;
     }
 
     $scope.addUpload = function() {
