@@ -19,7 +19,8 @@ function VideoUploadController($scope) {
             id: number,
             elementId: "upload_form_" + number,
             djangoResumable: null,
-            state: "empty"
+            state: "empty",
+            fileName: ""
         };
 
         $scope.uploads.push(newForm);
@@ -81,6 +82,15 @@ function VideoUploadController($scope) {
 
         this.options.angularReference.r = r;
         this.options.angularReference.progress = progress;
+
+        if (this.options.angularReference.fileName.length == 0) {
+            var fileName = file.fileName.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+            this.options.angularReference.fileName = fileName;
+            // stupid angular, I need to do that because I can't find a way to
+            // update this from here (modifying the ng-model doesn't work, like
+            // all my other more advanced attemps
+            $("#" + this.options.angularReference.elementId + " #id_title").val(fileName);
+        }
     };
 
     onFileSuccess = function (r, file, message, el, progress, filePath, fileName) {

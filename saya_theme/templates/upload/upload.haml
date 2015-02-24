@@ -20,7 +20,12 @@
             -csrf_token
             .row
               .col-md-6
-                -bootstrap_field form.title
+                .form-group{class: "{% if form.title.errors %}has-error{% elif form.data and form.title %}has-success{% endif %}"}
+                  %label.control-label{for: "title"}
+                    Titre de la vidéo
+                  %input#id_title.form-control{type: "text", required: "", placeholder: "Titre de la vidéo", name: "title", value: ""}
+                  -for error in form.title.errors
+                    %span.help-block= error
               .col-md-6
                 -bootstrap_field form.subsubsection
             -bootstrap_field form.file_name
