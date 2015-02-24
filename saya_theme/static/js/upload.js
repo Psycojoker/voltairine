@@ -4,7 +4,12 @@ function VideoUploadController($scope) {
     number = 0;
 
     applyDjangoResumable = function(form) {
-        var dj = new DjangoResumable();
+        var dj = new DjangoResumable({
+            onFileAdded: onFileAdded,
+            onFileError: onFileError,
+            onFileSuccess: onFileSuccess,
+            angularReference: form
+        });
         dj.initField($("#" + form.elementId + " input[data-upload-url]")[0]);
         form["djangoResumable"] = dj;
     }
@@ -13,7 +18,8 @@ function VideoUploadController($scope) {
         var newForm = {
             id: number,
             elementId: "upload_form_" + number,
-            djangoResumable: null
+            djangoResumable: null,
+            state: "waiting"
         };
 
         $scope.uploads.push(newForm);
@@ -27,4 +33,63 @@ function VideoUploadController($scope) {
 
         number += 1;
     }
+
+    allAreWaitingOrDone = function() {
+        result = true;
+
+        $scope.uploads.forEach(function(i) {
+            if (i.state != "waiting" && i.state != "done") {
+                result = false;
+            }
+        });
+
+        return result;
+    }
+
+    startNextUpload = function() {
+        for (var i = 0; i < $scope.uploads.length; ++i) {
+            if ($scope.uploads[i].state == "waiting") {
+                // spaguetti!
+                $scope.uploads[i].djangoResumable.startUpload($scope.uploads[i].r, $scope.uploads[i].progress);
+                return;
+            }
+        }
+    }
+
+    onFileError = function (r, file, message, el) {
+        "use strict";
+        console.log(message);
+        var errorList = this.getErrorList(el, true),
+            error = document.createElement('li');
+        error.innerHTML = message;
+        if (errorList) {
+            errorList.appendChild(error);
+        }
+        this.options.angularReference.state = "done";
+        startNextUpload();
+    };
+
+    onFileAdded = function (r, file, event, el, progress, filePath, fileName) {
+        "use strict";
+        var errorList = this.getErrorList(el);
+        if (errorList) {
+            errorList.parentNode.removeChild(errorList);
+        }
+        if (allAreWaitingOrDone()) {
+            this.startUpload(r, progress);
+        }
+
+        this.options.angularReference.r = r;
+        this.options.angularReference.progress = progress;
+    };
+
+    onFileSuccess = function (r, file, message, el, progress, filePath, fileName) {
+        "use strict";
+        filePath.setAttribute('value', file.size + '_' + file.fileName);
+        fileName.innerHTML = file.fileName;
+        progress.firstChild.className += ' progress-bar-success';
+        progress.firstChild.innerHTML = 'Upload terminé'
+        this.options.angularReference.state = "done";
+        startNextUpload();
+    };
 }

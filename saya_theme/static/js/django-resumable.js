@@ -14,6 +14,7 @@ var DjangoResumable = function (options) {
         onFileAdded: this.onFileAdded,
         onFileSuccess: this.onFileSuccess,
         onProgress: this.onProgress,
+        angularReference: {},
         resumableOptions: {}
     };
     this.previousProgressNumber = 0;
@@ -170,3 +171,9 @@ DjangoResumable.prototype.onProgress = function (r, el, progress, filePath, file
     progress.firstChild.setAttribute("aria-valuenow", number);
     progress.firstChild.innerHTML = number + "%";
 };
+
+DjangoResumable.prototype.startUpload = function (r, progress) {
+    r.upload();
+    progress.style.display = this.options.progressDisplay;
+    this.options.angularReference.state = "running";
+}
