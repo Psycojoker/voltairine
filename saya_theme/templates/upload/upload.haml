@@ -15,28 +15,32 @@
   %div{ng-app: "soya", ng-controller: "VideoUploadController"}
     %div{ng-repeat: "upload in uploads"}
       .well
-        %form{method: "post", id: "upload_form_{& upload.id &}"}
-          %fieldset
-            -csrf_token
-            .row
-              .col-md-6
-                .form-group{class: "{% if form.title.errors %}has-error{% elif form.data and form.title %}has-success{% endif %}"}
-                  %label.control-label{for: "title"}
-                    Titre de la vidéo
-                  %input#id_title.form-control{type: "text", required: "", placeholder: "Titre de la vidéo", name: "title", value: "", ng-model: "upload.title"}
-                  -for error in form.title.errors
-                    %span.help-block= error
+        %div{ng-if: 'upload.state != "saved"'}
+          %form{method: "post", id: "upload_form_{& upload.id &}"}
+            %fieldset
+              -csrf_token
+              .row
+                .col-md-6
+                  .form-group{class: "{% if form.title.errors %}has-error{% elif form.data and form.title %}has-success{% endif %}"}
+                    %label.control-label{for: "title"}
+                      Titre de la vidéo
+                    %input#id_title.form-control{type: "text", required: "", placeholder: "Titre de la vidéo", name: "title", value: "", ng-model: "upload.title"}
+                    -for error in form.title.errors
+                      %span.help-block= error
 
-              .col-md-6
-                -bootstrap_field form.subsubsection
-            .form-group
-              %input#id_file_name-path{type: "hidden", name: "file_name-path", value: "None"}
-              %input#id_file_name{type: "file", name: "file_name", title: "", data-upload-url: "/administration/upload/", multiple: "multiple"}
-          %button.btn.btn-primary{type: "submit", ng-click: "saveVideo(upload.id)"}
-            Sauver
-          -#
-            %button.btn.btn-danger{ng-disabled: 'upload.state != "running"'}
-              Stop
+                .col-md-6
+                  -bootstrap_field form.subsubsection
+              .form-group
+                %input#id_file_name-path{type: "hidden", name: "file_name-path", value: "None"}
+                %input#id_file_name{type: "file", name: "file_name", title: "", data-upload-url: "/administration/upload/", multiple: "multiple"}
+            %button.btn.btn-primary{type: "submit", ng-click: "saveVideo(upload.id)"}
+              Sauver
+            -#
+              %button.btn.btn-danger{ng-disabled: 'upload.state != "running"'}
+                Stop
+
+        %div{ng-if: 'upload.state == "saved"'}
+          %p '{& upload.title &}' a été correctement enregistré.
 
     %button.btn.btn-primary{ng-click: "addUpload()"}
       Uploader une vidéo en plus
