@@ -12,6 +12,7 @@ function VideoUploadController($scope) {
         });
         dj.initField($("#" + form.elementId + " input[data-upload-url]")[0]);
         form["djangoResumable"] = dj;
+        $('[data-toggle="tooltip"]').tooltip();
     }
 
     $scope.addUpload = function() {

@@ -37,8 +37,14 @@
               .form-group
                 %input#id_file_name-path{type: "hidden", name: "file_name-path", value: "None"}
                 %input#id_file_name{type: "file", name: "file_name", title: "", data-upload-url: "/administration/upload/", multiple: "multiple"}
-            %button.btn.btn-primary{type: "submit", ng-click: "saveVideo(upload.id)", ng-if: 'upload.isSubmited == false'}
-              Enregistrer
+
+            %div{ng-if: 'upload.state == "empty"'}
+              %div{data-toggle: "tooltip", data-placement: "left", title: "Choisissez un fichier à uploader"}
+                %button.btn.btn-primary{type: "submit", ng-click: "saveVideo(upload.id)", ng-if: 'upload.isSubmited == false', disabled: "disabled"}
+                  Enregistrer
+            %div{ng-if: 'upload.state != "empty"'}
+              %button.btn.btn-primary{type: "submit", ng-click: "saveVideo(upload.id)", ng-if: 'upload.isSubmited == false'}
+                Enregistrer
             -#
               %button.btn.btn-danger{ng-disabled: 'upload.state != "running"'}
                 Stop
