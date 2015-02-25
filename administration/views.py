@@ -1,11 +1,22 @@
 from django.shortcuts import render
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView, CreateView
 from django.contrib.auth.models import User
 
 from sections.models import SubSection, SubSubSection
 
 from .utils import is_staff
+
+
+class DetailUser(DetailView):
+    model=User
+    template_name='administration/user_detail.haml'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(DetailUser, self).get_context_data(*args, **kwargs)
+        context["subsection_list"] = SubSection.objects.all()
+        return context
 
 
 class CreateUser(CreateView):
