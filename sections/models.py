@@ -24,7 +24,7 @@ class SubSubSection(models.Model):
         ordering = ['title']
 
 
-class Permissions(models.Model):
+class Permission(models.Model):
     user = models.ForeignKey(User)
     subsection = models.ForeignKey(SubSection, null=True)
     subsubsection = models.ForeignKey(SubSubSection, null=True)
