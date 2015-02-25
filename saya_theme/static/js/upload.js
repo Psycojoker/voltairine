@@ -38,14 +38,20 @@ function VideoUploadController($scope) {
     $scope.addUpload();
 
     $scope.saveVideo = function(id) {
-        var data = $("#" + $scope.uploads[id].elementId).serialize();
-        $.post("", data).done(function(response) {
-            console.log("success!");
-            console.log(response);
-        }).fail(function(response) {
-            console.log("fail!");
-            console.log(response);
-        })
+        var video = $scope.uploads[id];
+        var data = $("#" + video.elementId).serialize();
+
+        if (video.state == "done") {
+            $.post("", data).done(function(response) {
+                console.log("success!");
+                console.log(response);
+                video.state = 'saved';
+                $scope.$digest();
+            }).fail(function(response) {
+                console.log("fail!");
+                console.log(response);
+            })
+        }
     }
 
     noneIsRunning = function() {
