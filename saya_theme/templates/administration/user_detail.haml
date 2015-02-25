@@ -40,8 +40,8 @@
             %li= subsection.title
             %ul
               -for subsubsection in subsection.subsubsection_set.all
-                %li= subsubsection.title
-                  %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé"}
+                %li{ng-init: "subsubsection_{{ subsubsection.id }} = {% is_user_have_access subsubsection user %}"}= subsubsection.title
+                  %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", ng-model: "subsubsection_{{ subsubsection.id }}"}
 
 -block javascript
   %script{src: "{{ STATIC_URL }}js/bootstrap-switch.min.js"}
