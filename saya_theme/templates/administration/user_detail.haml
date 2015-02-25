@@ -1,5 +1,8 @@
 -extends "base.haml"
 
+-block head
+  %link{href: "{{ STATIC_URL }}css/bootstrap-switch.min.css", rel: "stylesheet"}
+
 -block content
   .row
     .col-md-6
@@ -29,3 +32,6 @@
             %ul
               -for subsubsection in subsection.subsubsection_set.all
                 %li= subsubsection.title
+
+-block javascript
+  %script{src: "{{ STATIC_URL }}js/bootstrap-switch.min.js"}
