@@ -33,7 +33,7 @@
       %hr
 
       %h3 Tournages
-      %ul
+      %ul{ng-app: "soya", ng-controller: "SectionPermissionsController"}
         -for subsection in subsection_list
           -if subsection.section == "1"
             %li= subsection.title
@@ -44,6 +44,7 @@
 
 -block javascript
   %script{src: "{{ STATIC_URL }}js/bootstrap-switch.min.js"}
+  %script{src: "{{ STATIC_URL }}js/section_permissions.js"}
   :javascript
     $(function() {
       $("[name='foobar']").bootstrapSwitch();
