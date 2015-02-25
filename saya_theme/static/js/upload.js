@@ -35,6 +35,8 @@ function VideoUploadController($scope) {
         number += 1;
     }
 
+    $scope.addUpload();
+
     $scope.saveVideo = function(id) {
         var data = $("#" + $scope.uploads[id].elementId).serialize();
         $.post("", data).done(function(response) {
