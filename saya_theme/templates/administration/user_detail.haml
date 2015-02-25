@@ -2,6 +2,14 @@
 
 -block head
   %link{href: "{{ STATIC_URL }}css/bootstrap-switch.min.css", rel: "stylesheet"}
+  :css
+    .bootstrap-switch {
+      border-color: #3A3D44;
+    }
+
+    .bootstrap-switch .bootstrap-switch-label {
+      background: #D0D0D0;
+    }
 
 -block content
   .row
