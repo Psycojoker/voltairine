@@ -1,7 +1,7 @@
 function VideoUploadController($scope) {
     "user strict";
     $scope.uploads = [];
-    number = 0;
+    $scope.number = 0;
 
     applyDjangoResumable = function(form) {
         var dj = new DjangoResumable({
@@ -16,8 +16,8 @@ function VideoUploadController($scope) {
 
     $scope.addUpload = function() {
         var newForm = {
-            id: number,
-            elementId: "upload_form_" + number,
+            id: $scope.number,
+            elementId: "upload_form_" + $scope.number,
             djangoResumable: null,
             state: "empty",
             isSubmited: false,
@@ -25,6 +25,7 @@ function VideoUploadController($scope) {
         };
 
         $scope.uploads.push(newForm);
+        console.log("id: " + newForm.id);
 
         // horrible hack because angularjs is strange
         // it waits for this function to finish to update the dom
@@ -33,7 +34,7 @@ function VideoUploadController($scope) {
         // but I don't have the time for that now
         setTimeout(function() { applyDjangoResumable(newForm)}, 100);
 
-        number += 1;
+        $scope.number += 1;
     }
 
     $scope.addUpload();

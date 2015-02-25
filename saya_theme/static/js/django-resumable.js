@@ -157,7 +157,7 @@ DjangoResumable.prototype.onFileSuccess = function (r, file, message, el, progre
 
 DjangoResumable.prototype.onProgress = function (r, el, progress, filePath, fileName) {
     "use strict";
-    number = Math.floor(r.progress() * 100);
+    var number = Math.floor(r.progress() * 100);
     if (number == this.previousProgressNumber) {
         return;
     }
