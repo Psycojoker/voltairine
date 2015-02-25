@@ -36,3 +36,7 @@
 
 -block javascript
   %script{src: "{{ STATIC_URL }}js/bootstrap-switch.min.js"}
+  :javascript
+    $(function() {
+      $("[name='foobar']").bootstrapSwitch();
+    })
