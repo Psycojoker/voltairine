@@ -1,28 +1,31 @@
 -extends "base.haml"
 
 -block content
-  %h1 Utilisateur:
-    =object.username
-  %hr
+  .row
+    .col-md-6
+      %h1 Utilisateur:
+        =object.username
+      %hr
 
-  %p Nom:
-    =object.last_name
-  %p Prénom:
-    =object.first_name
-  %p Adresse email:
-    =object.email
+      %p Nom:
+        =object.last_name
+      %p Prénom:
+        =object.first_name
+      %p Adresse email:
+        =object.email
 
-  %a.btn.btn-primary.btn-lg{href: "{% url 'administration_user_update' object.pk %}"}
-    Modifier
+      %a.btn.btn-primary.btn-lg{href: "{% url 'administration_user_update' object.pk %}"}
+        Modifier
 
-  %h2 Permissions
-  %hr
+    .col-md-6
+      %h2 Permissions
+      %hr
 
-  %h3 Tournages
-  %ul
-    -for subsection in subsection_list
-      -if subsection.section == "1"
-        %li= subsection.title
-        %ul
-          -for subsubsection in subsection.subsubsection_set.all
-            %li= subsubsection.title
+      %h3 Tournages
+      %ul
+        -for subsection in subsection_list
+          -if subsection.section == "1"
+            %li= subsection.title
+            %ul
+              -for subsubsection in subsection.subsubsection_set.all
+                %li= subsubsection.title
