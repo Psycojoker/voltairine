@@ -20,7 +20,9 @@
             %fieldset
               -csrf_token
               %div{ng-if: 'upload.isSubmited == true'}
-                En attente que '{& upload.title &}' soit complétement uploadé.
+                En attente que '{& upload.title &}' soit complétement uploadé -
+                %a{ng-click: "upload.isSubmited = false", href: "#"}
+                  editer
               .row{ng-if: 'upload.isSubmited == false'}
                 .col-md-6
                   .form-group{class: "{% if form.title.errors %}has-error{% elif form.data and form.title %}has-success{% endif %}"}
