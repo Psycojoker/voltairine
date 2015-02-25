@@ -20,6 +20,7 @@ function VideoUploadController($scope) {
             elementId: "upload_form_" + number,
             djangoResumable: null,
             state: "empty",
+            isSubmited: false,
             title: ""
         };
 
@@ -45,7 +46,7 @@ function VideoUploadController($scope) {
             $.post("", data).done(function(response) {
                 console.log("success!");
                 console.log(response);
-                video.state = 'saved';
+                video.isSubmited = true;
                 $scope.$digest();
             }).fail(function(response) {
                 console.log("fail!");

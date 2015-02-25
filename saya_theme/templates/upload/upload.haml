@@ -15,7 +15,7 @@
   %div{ng-app: "soya", ng-controller: "VideoUploadController"}
     %div{ng-repeat: "upload in uploads"}
       .well
-        %div{ng-if: 'upload.state != "saved"'}
+        %div{ng-if: 'upload.isSubmited == false'}
           %form{method: "post", id: "upload_form_{& upload.id &}"}
             %fieldset
               -csrf_token
@@ -39,7 +39,7 @@
               %button.btn.btn-danger{ng-disabled: 'upload.state != "running"'}
                 Stop
 
-        %div{ng-if: 'upload.state == "saved"'}
+        %div{ng-if: 'upload.isSubmited == true'}
           %p '{& upload.title &}' a été correctement enregistré.
 
     %button.btn.btn-primary{ng-click: "addUpload()"}
