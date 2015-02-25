@@ -15,11 +15,13 @@
   %div{ng-app: "soya", ng-controller: "VideoUploadController"}
     %div{ng-repeat: "upload in uploads"}
       .well
-        %div{ng-if: 'upload.isSubmited == false'}
+        %div{ng-if: 'upload.isSubmited == false || upload.state != "done"'}
           %form{method: "post", id: "upload_form_{& upload.id &}"}
             %fieldset
               -csrf_token
-              .row
+              %div{ng-if: 'upload.isSubmited == true'}
+                En attente que '{& upload.title &}' soit complétement uploadé.
+              .row{ng-if: 'upload.isSubmited == false'}
                 .col-md-6
                   .form-group{class: "{% if form.title.errors %}has-error{% elif form.data and form.title %}has-success{% endif %}"}
                     %label.control-label{for: "title"}
@@ -33,14 +35,15 @@
               .form-group
                 %input#id_file_name-path{type: "hidden", name: "file_name-path", value: "None"}
                 %input#id_file_name{type: "file", name: "file_name", title: "", data-upload-url: "/administration/upload/", multiple: "multiple"}
-            %button.btn.btn-primary{type: "submit", ng-click: "saveVideo(upload.id)"}
+            %button.btn.btn-primary{type: "submit", ng-click: "saveVideo(upload.id)", ng-if: 'upload.isSubmited == false'}
               Sauver
             -#
               %button.btn.btn-danger{ng-disabled: 'upload.state != "running"'}
                 Stop
 
-        %div{ng-if: 'upload.isSubmited == true'}
-          %p '{& upload.title &}' a été correctement enregistré.
+        %div{ng-if: 'upload.isSubmited == true && upload.state == "done"'}
+          %p{style: "margin-bottom: 0px"}
+            '{& upload.title &}' a été correctement enregistré.
 
     %button.btn.btn-primary{ng-click: "addUpload()"}
       Uploader une vidéo en plus

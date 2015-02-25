@@ -42,11 +42,12 @@ function VideoUploadController($scope) {
         var video = $scope.uploads[id];
         var data = $("#" + video.elementId).serialize();
 
+        video.isSubmited = true;
+
         if (video.state == "done") {
             $.post("", data).done(function(response) {
                 console.log("success!");
                 console.log(response);
-                video.isSubmited = true;
                 $scope.$digest();
             }).fail(function(response) {
                 console.log("fail!");
