@@ -17,3 +17,12 @@
 
   %h2 Permissions
   %hr
+
+  %h3 Tournages
+  %ul
+    -for subsection in subsection_list
+      -if subsection.section == "1"
+        %li= subsection.title
+        %ul
+          -for subsubsection in subsection.subsubsection_set.all
+            %li= subsubsection.title
