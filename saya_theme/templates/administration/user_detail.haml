@@ -1,19 +1,19 @@
 -extends "base.haml"
 
 -block content
-  %h1 User:
+  %h1 Utilisateur:
     =object.username
   %hr
 
-  %p First name:
-    =object.first_name
-  %p Last name:
+  %p Nom:
     =object.last_name
-  %p Email:
+  %p Prénom:
+    =object.first_name
+  %p Adresse email:
     =object.email
 
   %a.btn.btn-primary.btn-lg{href: "{% url 'administration_user_update' object.pk %}"}
-    Modify
+    Modifier
 
   %h2 Permissions
   %hr
