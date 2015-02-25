@@ -38,7 +38,7 @@
                 %input#id_file_name-path{type: "hidden", name: "file_name-path", value: "None"}
                 %input#id_file_name{type: "file", name: "file_name", title: "", data-upload-url: "/administration/upload/", multiple: "multiple"}
             %button.btn.btn-primary{type: "submit", ng-click: "saveVideo(upload.id)", ng-if: 'upload.isSubmited == false'}
-              Sauver
+              Enregistrer
             -#
               %button.btn.btn-danger{ng-disabled: 'upload.state != "running"'}
                 Stop
