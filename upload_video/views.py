@@ -14,6 +14,7 @@ from resumable.fields import ResumableFileField
 from sections.models import SubSubSection, VideoSection
 from video.models import Video
 
+from .utils import generate_random_string
 
 class ResumableForm(forms.Form):
     title = forms.CharField()
@@ -38,11 +39,26 @@ def upload_video(request):
     if not os.path.exists(destination):
         os.makedirs(destination)
 
-    shutil.move(form.cleaned_data["file_name"].file.name, destination)
+    full_path_file_name = form.cleaned_data["file_name"].file.name
+    file_name = os.path.split(full_path_file_name)[1]
+
+    # ensure file_name is uniq
+    # not the best strategy, but good enough
+    # shouldn't loop more than 1 time, maybe 2-3 in the worst situation
+    while os.path.exists(os.path.join(destination, file_name)):
+        file_name = file_name.split(".")
+        assert len(file_name) > 0
+        if len(file_name) > 1:
+            file_name.insert(-1, generate_random_string(10))
+            file_name = ".".join(file_name)
+        else:
+            file_name = "%s_%s" % (file_name[0], generate_random_string(10))
+
+    shutil.move(full_path_file_name, os.path.join(destination, file_name))
 
     video = Video.objects.create(
         title=form.cleaned_data["title"],
-        file_name=os.path.split(form.cleaned_data["file_name"].file.name)[1],
+        file_name=file_name,
     )
 
     if form.cleaned_data["subsubsection"]:
