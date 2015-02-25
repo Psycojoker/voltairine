@@ -32,6 +32,7 @@
             %ul
               -for subsubsection in subsection.subsubsection_set.all
                 %li= subsubsection.title
+                  %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé"}
 
 -block javascript
   %script{src: "{{ STATIC_URL }}js/bootstrap-switch.min.js"}
