@@ -1,11 +1,16 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.exceptions import PermissionDenied
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView, CreateView
+from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
 
-from sections.models import SubSection, SubSubSection
 
+from sections.models import SubSection, SubSubSection, Permission
+
+from .forms import PermissionForm
 from .utils import is_staff
 
 
@@ -54,3 +59,37 @@ class UpdateUser(UpdateView):
 @is_staff
 def dashboard(request):
     return render(request, "administration/dashboard.haml")
+
+
+@is_staff
+@require_POST
+def change_subsection_permission(request):
+    form = PermissionForm(request.POST)
+
+    if not form.is_valid():
+        # sucks for debugging
+        print form.errors
+        from ipdb import set_trace; set_trace()
+        raise PermissionDenied()
+
+    if form.cleaned_data["state"]:
+        assert not Permission.objects.filter(
+            user=form.cleaned_data["user"],
+            subsubsection=form.cleaned_data["subsubsection"],
+        ).exists()
+
+        # autorised
+        Permission.objects.create(
+            user=form.cleaned_data["user"],
+            subsubsection=form.cleaned_data["subsubsection"],
+        )
+
+        return HttpResponse("ok")
+
+    # state is False
+    Permission.objects.get(
+        user=form.cleaned_data["user"],
+        subsubsection=form.cleaned_data["subsubsection"],
+    ).delete()
+
+    return HttpResponse("ok")

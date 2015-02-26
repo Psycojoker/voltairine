@@ -20,6 +20,8 @@ urlpatterns = patterns('administration.views',
     url(r'^section/new/$', is_staff(CreateSubSection.as_view()), name='administration_section_create'),
     url(r'^subsubsection/new/$', is_staff(CreateSubSubSection.as_view()), name='administration_section_create'),
 
+    url(r'^change_subsection_permission/$', 'change_subsection_permission', name='administration_change_subsection_permission'),
+
     url(r'^video/$', is_staff(ListView.as_view(model=Video, template_name='administration/video_list.haml')), name='administration_video_list'),
     url(r'^video/(?P<pk>\d+)/$', is_staff(DetailView.as_view(model=Video, template_name='administration/video_detail.haml')), name='administration_video_detail'),
 
