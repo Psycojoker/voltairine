@@ -41,7 +41,7 @@
             %ul
               -for subsubsection in subsection.subsubsection_set.all
                 %li= subsubsection.title
-                  %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", ng-model: "subsubsection_{{ subsubsection.id }}", ng-change: "swapPermission(subsubsection_{{ subsubsection.id }}, {{ user.id }})", ng-init: "subsubsection_{{ subsubsection.id }} = {% is_user_have_access subsubsection user %}"}
+                  %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", ng-model: "subsubsection_{{ subsubsection.id }}", data-user-id: "{{ user.id }})", data-section-id: "{{ subsubsection.id }}", data-has-permission: "{% is_user_have_access subsubsection user %}"}
 
 -block javascript
   %script{src: "{{ STATIC_URL }}js/bootstrap-switch.min.js"}
