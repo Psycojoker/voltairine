@@ -9,5 +9,12 @@
     -for subsubsection in subsection.subsubsection_set.all
       -if subsubsection.videosection_set.all.exists
         %h4= subsubsection.title
-        -for videosection in subsubsection.videosection_set.all
-          %p= videosection.video.title
+        .row
+          -for videosection in subsubsection.videosection_set.all
+            .col-md-2
+              .thumbnail
+                %img{src: "http://placekitten.com/242/200", alt: "videosection.video.title"}
+                .caption
+                  %h5= videosection.video.title
+                  %p
+                    foobar
