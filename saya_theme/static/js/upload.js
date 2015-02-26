@@ -22,6 +22,7 @@ function VideoUploadController($scope) {
             djangoResumable: null,
             state: "empty",
             isSubmited: false,
+            subsubsection: "",
             title: ""
         };
 
@@ -45,6 +46,7 @@ function VideoUploadController($scope) {
         var data = {
             "csrfmiddlewaretoken": $("#" + video.elementId + " input[name='csrfmiddlewaretoken']").val(),
             "file_name-path": $("#" + video.elementId + " input#id_file_name-path").val(),
+            "subsubsection": video.subsubsection,
             "title": video.title,
         }
 

@@ -36,7 +36,7 @@
                   .form-group
                     %label.control-label{for: "id_subsubsection"}
                       Section
-                    %select#id_subsubsection.form-control{name: "subsubsection", title: ""}
+                    %select#id_subsubsection.form-control{name: "subsubsection", title: "", ng-model: "upload.subsubsection"}
                       %option{value: "", selected: "selected"}
                         \---------
                       -regroup form.fields.subsubsection.queryset by subsection as subsection_list
