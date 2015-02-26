@@ -43,6 +43,7 @@ function VideoUploadController($scope) {
     $scope.saveVideo = function(id) {
         var video = $scope.uploads[id];
         var data = {
+            "csrfmiddlewaretoken": $("#" + video.elementId + " input[name='csrfmiddlewaretoken']").val(),
             "file_name-path": $("#" + video.elementId + " input#id_file_name-path").val(),
             "title": video.title,
         }
