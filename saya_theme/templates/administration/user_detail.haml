@@ -47,5 +47,10 @@
   %script{src: "{{ STATIC_URL }}js/bootstrap-switch.min.js"}
   :javascript
     $(function() {
-      $("[name='foobar']").bootstrapSwitch();
+      $("[name='foobar']").each(function(index, data) {
+        if (data.attributes["data-has-permission"].value == "true") {
+          data.checked = true;
+        }
+        $(data).bootstrapSwitch();
+      });
     })
