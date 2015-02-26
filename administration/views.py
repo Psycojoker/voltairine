@@ -72,10 +72,9 @@ def change_subsection_permission(request):
         raise PermissionDenied()
 
     if form.cleaned_data["state"]:
-        assert not Permission.objects.filter(
-            user=form.cleaned_data["user"],
-            subsubsection=form.cleaned_data["subsubsection"],
-        ).exists()
+        # already have the autorisation, don't do anything
+        if Permission.objects.filter(user=form.cleaned_data["user"], subsubsection=form.cleaned_data["subsubsection"]).exists():
+            return HttpResponse("ok")
 
         # autorised
         Permission.objects.create(
@@ -83,6 +82,10 @@ def change_subsection_permission(request):
             subsubsection=form.cleaned_data["subsubsection"],
         )
 
+        return HttpResponse("ok")
+
+    if not Permission.objects.filter(user=form.cleaned_data["user"], subsubsection=form.cleaned_data["subsubsection"]).exists():
+        # don't have the permission, don't do anything
         return HttpResponse("ok")
 
     # state is False
