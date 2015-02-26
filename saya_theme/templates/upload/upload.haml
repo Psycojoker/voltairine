@@ -33,7 +33,16 @@
                       %span.help-block= error
 
                 .col-md-6
-                  -bootstrap_field form.subsubsection
+                  .form-group
+                    %label.control-label{for: "id_subsubsection"}
+                      Section
+                    %select#id_subsubsection.form-control{name: "subsubsection", title: ""}
+                      %option{value: "", selected: "selected"}
+                        \---------
+                      -for subsubsection in form.fields.subsubsection.queryset
+                        %option{value: "{{ subsubsection.id }}"}
+                          =subsubsection
+
               .form-group
                 %input#id_file_name-path{type: "hidden", name: "file_name-path", value: "None"}
                 %input#id_file_name{type: "file", name: "file_name", title: "", data-upload-url: "/administration/upload/", multiple: "multiple"}
