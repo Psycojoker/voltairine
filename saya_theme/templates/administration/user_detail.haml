@@ -44,6 +44,7 @@
                   %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", ng-model: "subsubsection_{{ subsubsection.id }}", data-user-id: "{{ user.id }})", data-section-id: "{{ subsubsection.id }}", data-has-permission: "{% is_user_have_access subsubsection user %}"}
 
 -block javascript
+  %script{src: "{{ STATIC_URL }}js/ajax_django_magic.js"}
   %script{src: "{{ STATIC_URL }}js/bootstrap-switch.min.js"}
   :javascript
     $(function() {
