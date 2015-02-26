@@ -24,7 +24,7 @@ def upload_video(request):
     # POST
     form = ResumableForm(request.POST)
     if not form.is_valid():
-        return render(request, "upload/upload.haml", {"form": form})
+        return render(request, "upload/upload.haml", {"form": form}, status=400)
 
     destination = os.path.join(settings.MEDIA_ROOT, "videos")
 
