@@ -53,5 +53,15 @@
           data.checked = true;
         }
         $(data).bootstrapSwitch();
+        $(data).on("switchChange.bootstrapSwitch", function(event, value) {
+          attributes = event.currentTarget.attributes;
+          console.log(value);
+
+          $.post("{% url 'administration_change_subsection_permission' %}", {
+            "user": attributes["data-user-id"].value,
+            "subsubsection": attributes["data-section-id"].value,
+            "state": value
+          })
+        })
       });
     })
