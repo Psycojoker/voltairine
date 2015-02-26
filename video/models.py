@@ -14,3 +14,6 @@ class Video(models.Model):
     # montage_version = models.CharField(max_length=255)
     # bar_code_lto_saya = models.CharField(max_length=255)
     # bar_code_lto_prod = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return self.title
