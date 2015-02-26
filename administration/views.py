@@ -69,7 +69,6 @@ def change_subsection_permission(request):
     if not form.is_valid():
         # sucks for debugging
         print form.errors
-        from ipdb import set_trace; set_trace()
         raise PermissionDenied()
 
     if form.cleaned_data["state"]:
