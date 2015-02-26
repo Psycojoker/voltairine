@@ -4,5 +4,10 @@
   %h1{style: "margin-top: 0px"} Films
   %hr
 
-  -for video in video_list
-    %p= video
+  -for subsection in subsection_list
+    %h3= subsection.title
+    -for subsubsection in subsection.subsubsection_set.all
+      -if subsubsection.videosection_set.all.exists
+        %h4= subsubsection.title
+        -for videosection in subsubsection.videosection_set.all
+          %p= videosection.video.title
