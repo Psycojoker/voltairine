@@ -39,9 +39,12 @@
                     %select#id_subsubsection.form-control{name: "subsubsection", title: ""}
                       %option{value: "", selected: "selected"}
                         \---------
-                      -for subsubsection in form.fields.subsubsection.queryset
-                        %option{value: "{{ subsubsection.id }}"}
-                          =subsubsection
+                      -regroup form.fields.subsubsection.queryset by subsection as subsection_list
+                      -for subsection in subsection_list
+                        %optgroup{label: "{{ subsection.grouper.title }}"}
+                        -for subsubsection in subsection.list
+                          %option{value: "{{ subsubsection.id }}"}
+                            =subsubsection.title
 
               .form-group
                 %input#id_file_name-path{type: "hidden", name: "file_name-path", value: "None"}
