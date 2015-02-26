@@ -42,7 +42,10 @@ function VideoUploadController($scope) {
 
     $scope.saveVideo = function(id) {
         var video = $scope.uploads[id];
-        var data = $("#" + video.elementId).serialize();
+        var data = {
+            "file_name-path": $("#" + video.elementId + " input#id_file_name-path").val(),
+            "title": video.title,
+        }
 
         video.isSubmited = true;
 
