@@ -123,6 +123,11 @@ function VideoUploadController($scope) {
         progress.firstChild.className += ' progress-bar-success';
         progress.firstChild.innerHTML = 'Upload terminé'
         this.options.angularReference.state = "done";
+
+        if (this.options.angularReference.isSubmited) {
+            $scope.saveVideo(this.options.angularReference.id);
+        }
+
         startNextUpload();
         $scope.$digest();
     };
