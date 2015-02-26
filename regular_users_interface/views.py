@@ -7,5 +7,5 @@ from video.models import Video
 @login_required
 def dashboard(request):
     return render(request, 'regular_users_interface/dashboard.haml', {
-        Video.objects.filter(videosection__subsubsection__permission__user=request.user),
+        "video_list": Video.objects.filter(videosection__subsubsection__permission__user=request.user),
     })
