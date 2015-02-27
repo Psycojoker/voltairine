@@ -4,15 +4,27 @@
   Saya-Films
 
 -block bootstrap3_extra_head
-  :css
-    body {
-        padding-top: 51px; /*for navbar*/
-    }
-
   -block head
+
+  :css
+    .navbar-inverse {
+      background-image: none;
+      background-color: #3A3D44;
+      border-radius: 0px;
+    }
 
 
 -block bootstrap3_content
+  .navbar.navbar-inverse.navbar-bold
+    .navbar-inner
+      .container-fluid
+        %a.brand.navbar-brand{href: "/"}
+          Saya-Films
+        %ul.nav.navbar-nav.navbar-right
+          %li
+            %a{href: "{% url 'logout' %}"}
+              Déconnexion
+
   .container-fluid
     -block content
 
