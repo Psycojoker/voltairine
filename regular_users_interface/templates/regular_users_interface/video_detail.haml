@@ -4,12 +4,43 @@
   %script{src: "{{ STATIC_URL }}mediaelementjs/mediaelement-and-player.min.js"}
   %link{rel: "stylesheet", href: "{{ STATIC_URL }}mediaelementjs/mediaelementplayer.min.css"}
 
+  %script{src: "{{ STATIC_URL }}js/plyr.js"}
+  %script{src: "{{ STATIC_URL }}js/docs.js"}
+  %link{href: "{{ STATIC_URL }}css/plyr.css", rel: "stylesheet"}
+
+  :javascript
+    (function(d,p){
+        var a=new XMLHttpRequest(),
+            b=d.body;
+        a.open("GET",p,!0);
+        a.send();
+        a.onload=function(){
+            var c=d.createElement("div");
+            c.style.display="none";
+            c.innerHTML=a.responseText;
+            b.insertBefore(c,b.childNodes[0])
+        }
+    })(document,"{{ STATIC_URL }}svg/sprite.svg");
+
+    plyr.setup({
+      debug: true,
+      html: templates.controls.render({}),
+    });
+
+  :css
+    /* prevent bootstrap from breaking player */
+    input[type="range"] {
+      width: 100px;
+      display: inline-block;
+    }
+
 -block content
   %h1 Video:
     =object.title
   %hr
 
-  %video{src: "{{ MEDIA_URL }}videos/{{ object.file_name }}", width: "100%", height: "650", controls: "controls"}
+  .player
+    %video{src: "{{ MEDIA_URL }}videos/{{ object.file_name }}", width: "100%", height: "650", controls: "controls", type: "video/mp4"}
 
   %p Nom du film:
     -if object.film_name
