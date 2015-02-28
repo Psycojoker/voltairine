@@ -37,8 +37,24 @@
     .row
       .col-md-4.col-md-offset-4
         .well
-          %h1 Authentification
+          %h1 Connexion
           %form{method: "POST"}
             -csrf_token
-            -bootstrap_form form
-            %input.btn.btn-primary{type: "submit", value: "Connexion"}
+
+            .form-group{class: "{% if form.username.errors %}has-error{% elif form.data and form.username %}has-success{% endif %}"}
+              %label.control-label{for: "username"}
+                Nom d'utilisateur
+              %input#id_username.form-control{type: "text", required: "required", placeholder: 'Nom d´utilisateur', name: "username", maxlength: "254"}
+              -for error in form.username.errors
+                %span.help-block= error
+
+            .form-group{class: "{% if form.password.errors %}has-error{% elif form.data and form.password %}has-success{% endif %}"}
+              %label.control-label{for: "password"}
+                Mot de passe
+              %input#id_password.form-control{type: "password", required: "", placeholder: "Mot de passe", name: "password", value: ""}
+              -for error in form.password.errors
+                %span.help-block= error
+
+            -for error in form.errors
+              %span.help-block= error
+            %input.btn.btn-primary{type: "submit", value: "Se connecter"}
