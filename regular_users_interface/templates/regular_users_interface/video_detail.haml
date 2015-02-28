@@ -55,6 +55,7 @@
     %div{style: "padding: 20px;"}
       %h2{style: "margin-top: 0px"} Video:
         =object.title
+        %a.btn.btn-small.btn-info.pull-right{href: "{{ MEDIA_URL }}videos/{{ object.file_name }}"} Télécharger
       %hr
 
       .row
