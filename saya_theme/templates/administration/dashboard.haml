@@ -1,0 +1,18 @@
+-extends "base.haml"
+
+-block content
+  %h2
+    %a{href: "{% url 'administration_user_list' %}"}
+      Administrate users
+
+  %h2
+    %a{href: "{% url 'administration_section_list' %}"}
+      Administrate sections and permissions
+
+  %h2
+    %a{href: "{% url 'upload_video' %}"}
+      Uploader un film
+
+  %h2
+    %a{href: "{% url 'administration_video_list' %}"}
+      Voir toutes les vidéos uploadé
