@@ -1,6 +1,5 @@
 from django.conf.urls import patterns, url, include
 from django.views.generic import ListView
-from django.views.generic.edit import UpdateView
 from django.contrib.auth.models import User
 
 from sections.models import SubSection
