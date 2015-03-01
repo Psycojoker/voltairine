@@ -9,9 +9,9 @@
             .thumbnail
               %img{src: "http://placekitten.com/420/270", alt: "video.title"}
               .caption
-                %h5= video.title
+                %h4= video.title
                 %p
-                  foobar
+                  %i= video.observations|default:""
 
                 %a.btn.btn-primary{href: "{% url 'administration_video_detail' video.id %}"}
                   Regarder
@@ -27,9 +27,9 @@
               .thumbnail
                 %img{src: "http://placekitten.com/420/270", alt: "videosection.video.title"}
                 .caption
-                  %h5= videosection.video.title
+                  %h4= videosection.video.title
                   %p
-                    foobar
+                    %i= video.observations
 
                   %a.btn.btn-primary{href: "{% url 'administration_video_detail' videosection.video.id %}"}
                     Regarder
