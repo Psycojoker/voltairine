@@ -1,0 +1,11 @@
+-extends "base.haml"
+-load bootstrap3
+
+-block content
+  %h1 Modify user
+
+  %form{method: "POST"}
+    -csrf_token
+    -bootstrap_form form
+    %button.btn.btn-lg.btn-primary{type: "submit"}
+      Update
