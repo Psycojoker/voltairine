@@ -2,26 +2,26 @@
 
 -block content
   .row
-    .col-md-6
-      .well
-        %h2
-          %a{href: "{% url 'administration_user_list' %}"}
+    %a{href: "{% url 'administration_user_list' %}"}
+      .col-md-6
+        .well
+          %h2
             Administrate users
 
-    .col-md-6
-      .well
-        %h2
-          %a{href: "{% url 'administration_section_list' %}"}
+    %a{href: "{% url 'administration_section_list' %}"}
+      .col-md-6
+        .well
+          %h2
             Administrate sections and permissions
 
-    .col-md-6
-      .well
-        %h2
-          %a{href: "{% url 'upload_video' %}"}
+    %a{href: "{% url 'upload_video' %}"}
+      .col-md-6
+        .well
+          %h2
             Uploader un film
 
-    .col-md-6
-      .well
-        %h2
-          %a{href: "{% url 'administration_video_list' %}"}
+    %a{href: "{% url 'administration_video_list' %}"}
+      .col-md-6
+        .well
+          %h2
             Voir toutes les vidéos uploadé
