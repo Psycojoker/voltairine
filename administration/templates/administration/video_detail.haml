@@ -79,6 +79,9 @@
         %i{ng-init: 'film_name="{{ object.observations|default:"" }}"'}
           {& observations &}
 
+        %button.btn.btn-primary{ng-click: "switchToEditMode()"}
+          Éditer
+
   %a{href: "{% url 'administration_video_list' %}"}
     Liste des vidéos
 
