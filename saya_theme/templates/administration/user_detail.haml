@@ -19,12 +19,27 @@
         =object.username
       %hr
 
-      %p Nom:
-        =object.last_name
-      %p Prénom:
-        =object.first_name
-      %p Adresse email:
-        =object.email
+      .well
+        .row
+          .col-md-6
+            %p
+              %b Nom:
+              =object.last_name
+            %p
+              %b Prénom:
+              =object.first_name
+          .col-md-6
+            %p
+              %b Nom d'utilisateur:
+              =object.username
+            %p
+              %b Adresse email:
+              =object.email
+        %p
+          -if object.is_staff
+            L'utilisateur est un membre de l'équipe
+          -else
+            L'utilisateur n'est pas un membre de l'équipe
 
       %a.btn.btn-primary.btn-lg{href: "{% url 'administration_user_update' object.pk %}"}
         Modifier
