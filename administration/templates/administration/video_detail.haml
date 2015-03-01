@@ -1,9 +1,87 @@
--extends "regular_users_interface/video_detail.haml"
+-extends "base.haml"
 
--block administration
-  %h2 Dans les sections
-  -for section in video.videosection_set.all
-    %p= section
+-block javascript
+  %script{src: "{{ STATIC_URL }}mediaelementjs/mediaelement-and-player.min.js"}
+  %link{rel: "stylesheet", href: "{{ STATIC_URL }}mediaelementjs/mediaelementplayer.min.css"}
+
+  %script{src: "{{ STATIC_URL }}js/plyr.js"}
+  %script{src: "{{ STATIC_URL }}js/docs.js"}
+  %link{href: "{{ STATIC_URL }}css/plyr.css", rel: "stylesheet"}
+
+  :javascript
+    (function(d,p){
+        var a=new XMLHttpRequest(),
+            b=d.body;
+        a.open("GET",p,!0);
+        a.send();
+        a.onload=function(){
+            var c=d.createElement("div");
+            c.style.display="none";
+            c.innerHTML=a.responseText;
+            b.insertBefore(c,b.childNodes[0])
+        }
+    })(document,"{{ STATIC_URL }}svg/sprite.svg");
+
+    plyr.setup({
+      debug: true,
+      html: templates.controls.render({}),
+    });
+
+  :css
+    /* prevent bootstrap from breaking player */
+    input[type="range"] {
+      width: 100px;
+      display: inline-block;
+    }
+
+    .player-controls {
+      background: #3A3D44;
+    }
+
+    .player-progress-played[value] {
+      color: #C8C8C8;
+    }
+
+    .player-controls button:hover,.player-controls input+label:hover{
+      background:#666666;
+    }
+
+-block content
+  .well{style: "padding: 0; border: 0px"}
+    .player
+      %video{src: "{{ MEDIA_URL }}videos/{{ object.file_name }}", width: "100%", height: "auto", controls: "controls", type: "video/mp4"}
+
+    %div{style: "padding: 20px;"}
+      %h2{style: "margin-top: 0px"} Video:
+        =object.title
+        %a.btn.btn-small.btn-info.pull-right{href: "{{ MEDIA_URL }}videos/{{ object.file_name }}"} Télécharger
+      %hr
+
+      .row
+        .col-md-6
+          %p Nom du film:
+            -if object.film_name
+              =object.film_name
+
+          %p Realisation:
+            -if object.realisation
+              =object.realisation
+
+        .col-md-6
+          %p Production:
+            -if object.production
+              =object.production
+
+          %p Direction photo:
+            -if object.photo_direction
+              =object.photo_direction
+
+      -if object.observations
+        %i= object.observations
 
   %a{href: "{% url 'administration_video_list' %}"}
     Liste des vidéos
+
+  %h2 Dans les sections
+  -for section in video.videosection_set.all
+    %p= section
