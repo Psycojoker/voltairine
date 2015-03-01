@@ -33,15 +33,18 @@
       %h2 Permissions
       %hr
 
-      %h3 Tournages
-      %ul
-        -for subsection in subsection_list
-          -if subsection.section == "1"
-            %li= subsection.title
-            %ul
-              -for subsubsection in subsection.subsubsection_set.all
-                %li= subsubsection.title
-                  %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", data-user-id: "{{ object.id }}", data-section-id: "{{ subsubsection.id }}", data-has-permission: "{% is_user_have_access subsubsection object %}"}
+      -if object.is_staff
+        %p L'utilisateur est un membre de l'équipe, il a accès à toutes les vidéos.
+      -else
+        %h3 Tournages
+        %ul
+          -for subsection in subsection_list
+            -if subsection.section == "1"
+              %li= subsection.title
+              %ul
+                -for subsubsection in subsection.subsubsection_set.all
+                  %li= subsubsection.title
+                    %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", data-user-id: "{{ object.id }}", data-section-id: "{{ subsubsection.id }}", data-has-permission: "{% is_user_have_access subsubsection object %}"}
 
 -block javascript
   %script{src: "{{ STATIC_URL }}js/ajax_django_magic.js"}
