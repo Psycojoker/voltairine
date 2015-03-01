@@ -1,13 +1,25 @@
 -extends "base.haml"
 
 -block content
-  %h1 Video
-  %hr
+  -for subsection in subsection_list
+    %h3= subsection.title
+    -for subsubsection in subsection.subsubsection_set.all
+      -if subsubsection.videosection_set.all.exists
+        %h4= subsubsection.title
+        .row
+          -for videosection in subsubsection.videosection_set.all
+            .col-md-3
+              .thumbnail
+                %img{src: "http://placekitten.com/420/270", alt: "videosection.video.title"}
+                .caption
+                  %h5= videosection.video.title
+                  %p
+                    foobar
+
+                  %a.btn.btn-primary{href: "{% url 'administration_video_detail' videosection.video.id %}"}
+                    Regarder
 
   %ul
     -for video in video_list
       %li
         %a{href: "{% url 'administration_video_detail' video.pk %}"}= video.title
-
-  %a.btn.btn-lg.btn-primary{href: "{% url 'upload_video' %}"}
-    Uploader une autre vidéo

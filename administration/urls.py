@@ -3,7 +3,6 @@ from django.views.generic import ListView
 from django.contrib.auth.models import User
 
 from sections.models import SubSection
-from video.models import Video
 
 from .views import UpdateUser, CreateUser, CreateSubSection, CreateSubSubSection, DetailUser
 from .utils import is_staff
@@ -22,7 +21,7 @@ urlpatterns = patterns('administration.views',
 
     url(r'^change_subsection_permission/$', 'change_subsection_permission', name='administration_change_subsection_permission'),
 
-    url(r'^video/$', is_staff(ListView.as_view(model=Video, template_name='administration/video_list.haml')), name='administration_video_list'),
+    url(r'^video/$', 'video_list', name='administration_video_list'),
     url(r'^video/(?P<pk>\d+)/$', 'video_detail', name='administration_video_detail'),
 
     url(r'^', include('upload_video.urls')),
