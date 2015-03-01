@@ -123,5 +123,6 @@ def video_detail(request, pk):
         return HttpResponse("ok")
 
     return render(request, "administration/video_detail.haml", {
-        "object": video
+        "object": video,
+        "subsection_list": SubSection.objects.all(),
     })

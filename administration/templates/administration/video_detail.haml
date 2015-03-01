@@ -132,6 +132,17 @@
           %label{for: "id_observations"}
             Obersations:
           %textarea#id_observations.form-control{type: "text", ng-model: "observations"}
+        .form-group
+          %label.control-label{for: "id_subsubsection"}
+            Section
+          %select#id_subsubsection.form-control{name: "subsubsection", title: "", ng-model: "upload.subsubsection"}
+            %option{value: "", selected: "selected"}
+              \---------
+            -for subsection in subsection_list
+              %optgroup{label: "{{ subsection.title }}"}
+              -for subsubsection in subsection.subsubsection_set.all
+                %option{value: "{{ subsubsection.id }}"}
+                  =subsubsection.title
 
         %p
           %button.btn.btn-primary{ng-click: "toggleEditMode()"}
