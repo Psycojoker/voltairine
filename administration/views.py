@@ -132,6 +132,10 @@ def video_detail(request, pk):
                     video=video,
                     subsubsection=form.cleaned_data["subsubsection"],
                 )
+        elif form.cleaned_data["subsubsection"] is None and hasattr(video, "videosection"):
+            video.videosection.delete()
+            # need to do that, the instance isn't modified by the previous line
+            del video.videosection
 
         video.save()
         return HttpResponse(video.videosection.__unicode__() if hasattr(video, "videosection") else "")
