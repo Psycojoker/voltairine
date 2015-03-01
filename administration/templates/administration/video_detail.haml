@@ -54,29 +54,30 @@
       %video{src: "{{ MEDIA_URL }}videos/{{ object.file_name }}", width: "100%", height: "auto", controls: "controls", type: "video/mp4"}
 
     %div{ng-app: "soya", ng-controller: "editVideoDetailsController", style: "padding: 20px;"}
-      %h2{style: "margin-top: 0px", ng-init: 'title="{{ object.title|default:"" }}"'}
-        Video: {& title &}
+      %div{ng-if: "inEditMode == false"}
+        %h2{style: "margin-top: 0px", ng-init: 'title="{{ object.title|default:"" }}"'}
+          Video: {& title &}
 
-        %a.btn.btn-small.btn-info.pull-right{href: "{{ MEDIA_URL }}videos/{{ object.file_name }}"} Télécharger
-      %hr
+          %a.btn.btn-small.btn-info.pull-right{href: "{{ MEDIA_URL }}videos/{{ object.file_name }}"} Télécharger
+        %hr
 
-      .row
-        .col-md-6
-          %p{ng-init: 'film_name="{{ object.film_name|default:"" }}"'}
-            Nom du film: {& film_name &}
+        .row
+          .col-md-6
+            %p{ng-init: 'film_name="{{ object.film_name|default:"" }}"'}
+              Nom du film: {& film_name &}
 
-          %p{ng-init: 'film_name="{{ object.realisation|default:"" }}"'}
-            Realisation: {& realisation &}
+            %p{ng-init: 'film_name="{{ object.realisation|default:"" }}"'}
+              Realisation: {& realisation &}
 
-        .col-md-6
-          %p{ng-init: 'film_name="{{ object.production|default:"" }}"'}
-            Production: {& production &}
+          .col-md-6
+            %p{ng-init: 'film_name="{{ object.production|default:"" }}"'}
+              Production: {& production &}
 
-          %p{ng-init: 'film_name="{{ object.photo_direction|default:"" }}"'}
-            Direction photo: {& photo_direction &}
+            %p{ng-init: 'film_name="{{ object.photo_direction|default:"" }}"'}
+              Direction photo: {& photo_direction &}
 
-      %i{ng-init: 'film_name="{{ object.observations|default:"" }}"'}
-        {& observations &}
+        %i{ng-init: 'film_name="{{ object.observations|default:"" }}"'}
+          {& observations &}
 
   %a{href: "{% url 'administration_video_list' %}"}
     Liste des vidéos
