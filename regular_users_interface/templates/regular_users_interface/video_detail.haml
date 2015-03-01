@@ -52,7 +52,7 @@
       %video{src: "{{ MEDIA_URL }}videos/{{ object.file_name }}", width: "100%", height: "auto", controls: "controls", type: "video/mp4"}
 
     %div{style: "padding: 20px;"}
-      %h2{style: "margin-top: 0px"} Video:
+      %h2{style: "margin-top: 0px"}
         =object.title
         %a.btn.btn-small.btn-info.pull-right{href: "{{ MEDIA_URL }}videos/{{ object.file_name }}"} Télécharger
       %hr
