@@ -6,6 +6,47 @@
 
   %form{method: "POST"}
     -csrf_token
-    -bootstrap_form form
+    .form-group{class: "{% if form.username.errors %}has-error{% elif form.data and form.username %}has-success{% endif %}"}
+      %label.control-label{for: "id_username"}
+        Nom d'utilisateur
+      %input#id_username.form-control{type: "text", required: "", placeholder: 'Nom d\'utilisateur', name: "username", value: "{{ form.username.value }}"}
+      -for error in form.username.errors
+        %span.help-block= error
+
+    .form-group{class: "{% if form.first_name.errors %}has-error{% elif form.data and form.first_name %}has-success{% endif %}"}
+      %label.control-label{for: "id_first_name"}
+        Prénom
+      %input#id_first_name.form-control{type: "text", required: "", placeholder: "Prénom", name: "first_name", value: "{{ form.first_name.value }}"}
+      -for error in form.first_name.errors
+        %span.help-block= error
+
+    .form-group{class: "{% if form.last_name.errors %}has-error{% elif form.data and form.last_name %}has-success{% endif %}"}
+      %label.control-label{for: "id_last_name"}
+        Nom
+      %input#id_last_name.form-control{type: "text", required: "", placeholder: "Nom", name: "last_name", value: "{{ form.last_name.value }}"}
+      -for error in form.last_name.errors
+        %span.help-block= error
+
+    .form-group{class: "{% if form.email.errors %}has-error{% elif form.data and form.email %}has-success{% endif %}"}
+      %label.control-label{for: "id_email"}
+        Email
+      %input#id_email.form-control{type: "text", required: "", placeholder: "Email", name: "email", value: "{{ form.email.value }}"}
+      -for error in form.email.errors
+        %span.help-block= error
+
+    .form-group{class: "{% if form.is_staff.errors %}has-error{% elif form.data and form.is_staff %}has-success{% endif %}"}
+      .checkbox
+        %label{for: "id_is_staff"}
+          -if form.is_staff.value
+            %input#id_is_staff{type: "checkbox", name: "is_staff", checked: "checked"}.
+            Administrateur
+          -else
+            %input#id_is_staff{type: "checkbox", name: "is_staff"}.
+            Administrateur
+      %span.help-block
+        L'utilisateur peut se connecter sur l'interface d'administration
+      -for error in form.is_staff.errors
+        %span.help-block= error
+
     %button.btn.btn-lg.btn-primary{type: "submit"}
       Enregistrer
