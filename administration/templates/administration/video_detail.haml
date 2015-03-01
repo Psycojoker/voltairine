@@ -131,10 +131,3 @@
         %p
           %button.btn.btn-primary{ng-click: "toggleEditMode()"}
             Sauver
-
-  %a{href: "{% url 'administration_video_list' %}"}
-    Liste des vidéos
-
-  %h2 Dans les sections
-  -for section in video.videosection_set.all
-    %p= section
