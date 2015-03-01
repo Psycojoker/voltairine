@@ -59,6 +59,7 @@
     %div{ng-init: 'production="{{ object.production|default:"" }}"'}
     %div{ng-init: 'photo_direction="{{ object.photo_direction|default:"" }}"'}
     %div{ng-init: 'observations="{{ object.observations|default:"" }}"'}
+    %div{ng-init: 'section="{{ object.videosection|default:"" }}"'}
     %div{style: "padding: 20px;"}
       %div{ng-if: "inEditMode == false"}
         %h2{style: "margin-top: 0px"}
@@ -86,6 +87,10 @@
 
         %p
           %i {& observations &}
+
+        %p
+          %b Section:
+          {& section &}
 
         %button.btn.btn-primary{ng-click: "toggleEditMode()"}
           Éditer
