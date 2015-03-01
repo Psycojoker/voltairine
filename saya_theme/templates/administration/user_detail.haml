@@ -17,6 +17,10 @@
     .col-md-6
       %h2 Utilisateur:
         =object.username
+        %small.pull-right
+          %a.btn.btn-primary{href: "{% url 'administration_user_update' object.pk %}"}
+            Modifier
+
       %hr
 
       .well
@@ -40,9 +44,6 @@
             L'utilisateur est un membre de l'équipe
           -else
             L'utilisateur n'est pas un membre de l'équipe
-
-      %a.btn.btn-primary.btn-lg{href: "{% url 'administration_user_update' object.pk %}"}
-        Modifier
 
     .col-md-6
       %h2 Permissions
