@@ -1,4 +1,3 @@
-from django import forms
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -12,7 +11,7 @@ from django.contrib.auth.models import User
 from sections.models import SubSection, SubSubSection, Permission
 from video.models import Video
 
-from .forms import PermissionForm
+from .forms import PermissionForm, VideoForm
 from .utils import is_staff
 
 
@@ -97,12 +96,6 @@ def change_subsection_permission(request):
     ).delete()
 
     return HttpResponse("ok")
-
-
-class VideoForm(forms.ModelForm):
-    class Meta:
-        model = Video
-        fields = ['title', 'film_name', 'realisation', 'production', 'photo_direction', 'observations']
 
 
 @is_staff
