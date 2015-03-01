@@ -12,6 +12,8 @@ class PermissionForm(forms.Form):
 
 
 class VideoForm(forms.ModelForm):
+    subsubsection = forms.ModelChoiceField(queryset=SubSubSection.objects.all(), required=False)
+
     class Meta:
         model = Video
         fields = ['title', 'film_name', 'realisation', 'production', 'photo_direction', 'observations']

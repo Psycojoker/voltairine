@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
 from django.db.models import Count
 
-from sections.models import SubSection, SubSubSection, Permission
+from sections.models import SubSection, SubSubSection, Permission, VideoSection
 from video.models import Video
 
 from .forms import PermissionForm, VideoForm
@@ -119,8 +119,22 @@ def video_detail(request, pk):
         video.production = form.cleaned_data["production"]
         video.photo_direction = form.cleaned_data["photo_direction"]
         video.observations = form.cleaned_data["observations"]
+
+        if form.cleaned_data["subsubsection"]:
+            if not hasattr(video, "videosection"):
+                VideoSection.objects.create(
+                    video=video,
+                    subsubsection=form.cleaned_data["subsubsection"],
+                )
+            elif video.videosection.subsubsection != form.cleaned_data["subsubsection"]:
+                video.videosection.delete()
+                VideoSection.objects.create(
+                    video=video,
+                    subsubsection=form.cleaned_data["subsubsection"],
+                )
+
         video.save()
-        return HttpResponse("ok")
+        return HttpResponse(video.videosection.__unicode__() if hasattr(video, "videosection") else "")
 
     return render(request, "administration/video_detail.haml", {
         "object": video,
