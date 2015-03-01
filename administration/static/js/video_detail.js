@@ -21,7 +21,6 @@ function editVideoDetailsController($scope) {
                 subsubsection: $("#id_subsubsection").val(),
                 "csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
             }).done(function(subsubsection) {
-                console.log(arguments);
                 $scope.inEditMode = false;
                 $scope.subsubsection = subsubsection;
                 $scope.$digest();
