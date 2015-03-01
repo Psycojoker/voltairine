@@ -49,13 +49,19 @@
     }
 
 -block content
-  .well{style: "padding: 0; border: 0px"}
+  .well{ng-app: "soya", ng-controller: "editVideoDetailsController", style: "padding: 0; border: 0px"}
     .player
       %video{src: "{{ MEDIA_URL }}videos/{{ object.file_name }}", width: "100%", height: "auto", controls: "controls", type: "video/mp4"}
 
-    %div{ng-app: "soya", ng-controller: "editVideoDetailsController", style: "padding: 20px;"}
+    %div{ng-init: 'title="{{ object.title|default:"" }}"'}
+    %div{ng-init: 'film_name="{{ object.film_name|default:"" }}"'}
+    %div{ng-init: 'realisation="{{ object.realisation|default:"" }}"'}
+    %div{ng-init: 'production="{{ object.production|default:"" }}"'}
+    %div{ng-init: 'photo_direction="{{ object.photo_direction|default:"" }}"'}
+    %div{ng-init: 'observations="{{ object.observations|default:"" }}"'}
+    %div{style: "padding: 20px;"}
       %div{ng-if: "inEditMode == false"}
-        %h2{style: "margin-top: 0px", ng-init: 'title="{{ object.title|default:"" }}"'}
+        %h2{style: "margin-top: 0px"}
           Video: {& title &}
 
           %a.btn.btn-small.btn-info.pull-right{href: "{{ MEDIA_URL }}videos/{{ object.file_name }}"} Télécharger
@@ -63,24 +69,59 @@
 
         .row
           .col-md-6
-            %p{ng-init: 'film_name="{{ object.film_name|default:"" }}"'}
-              Nom du film: {& film_name &}
-
-            %p{ng-init: 'film_name="{{ object.realisation|default:"" }}"'}
-              Realisation: {& realisation &}
+            %p Nom du film: {& film_name &}
+            %p Realisation: {& realisation &}
 
           .col-md-6
-            %p{ng-init: 'film_name="{{ object.production|default:"" }}"'}
-              Production: {& production &}
+            %p Production: {& production &}
+            %p Direction photo: {& photo_direction &}
 
-            %p{ng-init: 'film_name="{{ object.photo_direction|default:"" }}"'}
-              Direction photo: {& photo_direction &}
+        %p
+          %i {& observations &}
 
-        %i{ng-init: 'film_name="{{ object.observations|default:"" }}"'}
-          {& observations &}
-
-        %button.btn.btn-primary{ng-click: "switchToEditMode()"}
+        %button.btn.btn-primary{ng-click: "toggleEditMode()"}
           Éditer
+
+
+      %div{ng-if: "inEditMode == true"}
+        .col-md-10{style: "padding-left: 0px; margin-bottom: 36px"}
+          .input-group
+            %span.input-group-addon Titre:
+            %input#id_title.form-control{type: "text", ng-model: "title"}
+
+        %a.btn.btn-small.btn-info.pull-right{href: "{{ MEDIA_URL }}videos/{{ object.file_name }}"} Télécharger
+
+        .row
+          .col-md-6
+            %p
+              .input-group
+                %span.input-group-addon Nom du film:
+                %input#id_film_name.form-control{type: "text", ng-model: "film_name"}
+
+            %p
+              .input-group
+                %span.input-group-addon Réalisation:
+                %input#id_realisation.form-control{type: "text", ng-model: "realisation"}
+
+          .col-md-6
+            %p
+              .input-group
+                %span.input-group-addon Production:
+                %input#id_production.form-control{type: "text", ng-model: "production"}
+
+            %p
+              .input-group
+                %span.input-group-addon Direction photo:
+                %input#id_photo_direction.form-control{type: "text", ng-model: "photo_direction"}
+
+        .form-group
+          %label{for: "id_observations"}
+            Obersations:
+          %textarea#id_observations.form-control{type: "text", ng-model: "observations"}
+
+        %p
+          %button.btn.btn-primary{ng-click: "toggleEditMode()"}
+            Sauver
 
   %a{href: "{% url 'administration_video_list' %}"}
     Liste des vidéos
