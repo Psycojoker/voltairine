@@ -33,6 +33,12 @@ class CreateUser(CreateView):
     def get_success_url(self):
         return reverse('administration_user_detail', args=(self.object.pk,))
 
+    def form_valid(self, form):
+        to_return = super(CreateUser, self).form_valid(form)
+        self.object.set_password(form.cleaned_data["password"])
+        self.object.save()
+        return to_return
+
 
 class CreateSubSection(CreateView):
     model=SubSection
@@ -51,10 +57,21 @@ class CreateSubSubSection(CreateView):
 class UpdateUser(UpdateView):
     model=User
     template_name='administration/user_update_form.haml'
-    fields=['username', 'first_name', 'last_name', 'email', 'is_staff']
+    fields=['username', 'first_name', 'last_name', 'email', 'is_staff', 'password']
 
     def get_success_url(self):
         return reverse('administration_user_detail', args=(self.object.pk,))
+
+    def form_valid(self, form):
+        old_password_hash = self.object.password
+        to_return = super(UpdateView, self).form_valid(form)
+        if form.cleaned_data["password"]:
+            self.object.set_password(form.cleaned_data["password"])
+        else:
+            self.object.password = old_password_hash
+        self.object.save()
+        return to_return
+
 
 
 @is_staff
