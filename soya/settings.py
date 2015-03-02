@@ -117,6 +117,10 @@ LOGIN_REDIRECT_URL = '/'
 
 FILE_UPLOAD_TEMP_DIR = os.path.join(BASE_DIR, 'chuncks')
 
+# not 100% good, should be in ResumableUploadView
+if not os.path.exists(os.path.join(BASE_DIR, "chuncks")):
+    os.makedirs(os.path.join(BASE_DIR, "chuncks"))
+
 try:
     from settings_local import *
 except ImportError:
