@@ -110,3 +110,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 LOGIN_REDIRECT_URL = '/'
 
 FILE_UPLOAD_TEMP_DIR = os.path.join(BASE_DIR, 'chuncks')
+
+try:
+    from settings_local import *
+except ImportError:
+    pass
