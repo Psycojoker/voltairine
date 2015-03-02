@@ -14,6 +14,19 @@
       -for error in form.username.errors
         %span.help-block= error
 
+    .form-group{class: "{% if form.password.errors %}has-error{% elif form.data and form.password %}has-success{% endif %}"}
+      -# I'm modifying the user
+      -if object.pk
+        %label.control-label{for: "id_password"}
+          Nouveau mot de passe (optionnel)
+        %input#id_password.form-control{type: "password", placeholder: "Nouveau mot de passe", name: "password"}
+      -else
+        %label.control-label{for: "id_password"}
+          Mot de passe (optionnel)
+        %input#id_password.form-control{type: "password", required: "required", placeholder: "Mot de passe", name: "password"}
+      -for error in form.password.errors
+        %span.help-block= error
+
     .form-group{class: "{% if form.email.errors %}has-error{% elif form.data and form.email %}has-success{% endif %}"}
       %label.control-label{for: "id_email"}
         Email
