@@ -14,6 +14,13 @@
       -for error in form.username.errors
         %span.help-block= error
 
+    .form-group{class: "{% if form.email.errors %}has-error{% elif form.data and form.email %}has-success{% endif %}"}
+      %label.control-label{for: "id_email"}
+        Email
+      %input#id_email.form-control{type: "text", required: "", placeholder: "Email", name: "email", value: '{{ form.email.value|default_if_none:"" }}'}
+      -for error in form.email.errors
+        %span.help-block= error
+
     .form-group{class: "{% if form.first_name.errors %}has-error{% elif form.data and form.first_name %}has-success{% endif %}"}
       %label.control-label{for: "id_first_name"}
         Prénom
@@ -26,13 +33,6 @@
         Nom
       %input#id_last_name.form-control{type: "text", required: "", placeholder: "Nom", name: "last_name", value: '{{ form.last_name.value|default_if_none:"" }}'}
       -for error in form.last_name.errors
-        %span.help-block= error
-
-    .form-group{class: "{% if form.email.errors %}has-error{% elif form.data and form.email %}has-success{% endif %}"}
-      %label.control-label{for: "id_email"}
-        Email
-      %input#id_email.form-control{type: "text", required: "", placeholder: "Email", name: "email", value: '{{ form.email.value|default_if_none:"" }}'}
-      -for error in form.email.errors
         %span.help-block= error
 
     .form-group{class: "{% if form.is_staff.errors %}has-error{% elif form.data and form.is_staff %}has-success{% endif %}"}
