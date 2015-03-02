@@ -21,3 +21,7 @@
 
                   %a.btn.btn-primary{href: "{% url 'user_video_detail' videosection.video.id %}"}
                     Regarder
+
+
+  -if not subsection_list
+    %p Il n'y a aucune vidéo dans les catégories auxquelles vous avez accès.
