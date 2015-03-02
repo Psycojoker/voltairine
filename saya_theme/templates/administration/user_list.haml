@@ -1,13 +1,20 @@
 -extends "base.haml"
 
 -block content
-  %h1 Users
+  %h1 Utilisateurs
   %hr
 
-  %ul
+  .list-group
     -for user in user_list
-      %li
-        %a{href: "{% url 'administration_user_detail' user.pk %}"}= user.username
+      %a.list-group-item{href: "{% url 'administration_user_detail' user.pk %}"}
+        -if user.first_name and user.last_name
+          =user.first_name
+          =user.last_name
+          ({{ user.username }})
+        -else
+          =user.username
+        \-
+        =user.email
 
   %a.btn.btn-lg.btn-primary{href: "{% url 'administration_user_create' %}"}
-    Add another user
+    Rajouter un nouvel utilisateur
