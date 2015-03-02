@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block bootstrap3_title %}django-bootstrap3 template title{% endblock %}</title>
     <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/flowtype.css" type="text/css" charset="utf-8">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -21,6 +22,18 @@
 <body>
 {% block bootstrap3_content %}django-bootstrap3 template content{% endblock %}
 {% if not 'javascript_in_head'|bootstrap_setting %}{% bootstrap_javascript jquery=True %}{% endif %}
+<script src="{{ STATIC_URL }}js/flowtype.js"></script>
+<script>
+$(function() {
+    $('body').flowtype({
+        minimum   : 320,
+        maximum   : 1200,
+        minFont   : 10,
+        maxFont   : 14,
+        fontRatio : 25
+    });
+});
+</script>
 {% block bootstrap3_extra_script %}{% endblock %}
 </body>
 
