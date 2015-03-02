@@ -29,6 +29,12 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+try:
+    from installed_apps_local import INSTALLED_APPS as INSTALLED_APPS_LOCAL
+except ImportError:
+    INSTALLED_APPS_LOCAL = ()
+
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -49,7 +55,7 @@ INSTALLED_APPS = (
     'sections',
     'upload_video',
     'video',
-)
+) + INSTALLED_APPS_LOCAL
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
