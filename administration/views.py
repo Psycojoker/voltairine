@@ -122,6 +122,8 @@ def video_list(request):
         "video_list": Video.objects.filter(videosection__isnull=True),
     })
 
+
+@is_staff
 def video_detail(request, pk):
     video = get_object_or_404(Video, pk=pk)
 
