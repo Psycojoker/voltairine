@@ -11,7 +11,7 @@ from django.db.models import Count
 from sections.models import SubSection, SubSubSection, Permission, VideoSection
 from video.models import Video
 
-from .forms import PermissionForm, VideoForm
+from .forms import PermissionForm, VideoForm, FormUser
 from .utils import is_staff
 
 
