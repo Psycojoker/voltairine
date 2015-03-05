@@ -1,4 +1,3 @@
-from django import forms
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -14,14 +13,6 @@ from video.models import Video
 
 from .forms import PermissionForm, VideoForm
 from .utils import is_staff
-
-
-class FormUser(forms.ModelForm):
-    password = forms.CharField(required=False)
-
-    class Meta:
-        model=User
-        fields=['username', 'is_staff', 'first_name', 'last_name', 'email']
 
 
 class DetailUser(DetailView):

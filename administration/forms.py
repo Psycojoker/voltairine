@@ -17,3 +17,11 @@ class VideoForm(forms.ModelForm):
     class Meta:
         model = Video
         fields = ['title', 'film_name', 'realisation', 'production', 'photo_direction', 'observations']
+
+
+class FormUser(forms.ModelForm):
+    password = forms.CharField(required=False)
+
+    class Meta:
+        model=User
+        fields=['username', 'is_staff', 'first_name', 'last_name', 'email']
