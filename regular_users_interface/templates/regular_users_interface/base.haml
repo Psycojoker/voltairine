@@ -17,7 +17,7 @@
 -block bootstrap3_content
   .navbar.navbar-inverse.navbar-bold
     .navbar-inner
-      .container-fluid
+      .container
         %a.brand.navbar-brand{href: "/"}
           Saya-Films
         %ul.nav.navbar-nav.navbar-right
@@ -25,7 +25,7 @@
             %a{href: "{% url 'logout' %}"}
               Déconnexion
 
-  .container-fluid
+  .container
     -block content
 
 -block bootstrap3_extra_script
