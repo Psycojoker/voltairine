@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 from sections.models import SubSection
 
-from .views import UpdateUser, CreateUser, CreateSubSection, CreateSubSubSection, DetailUser
+from .views import UpdateUser, CreateUser, CreateSubSection, CreateSubSubSection, DetailUser, DeleteUser
 from .utils import is_staff
 
 
@@ -14,6 +14,7 @@ urlpatterns = patterns('administration.views',
     url(r'^user/new/$', is_staff(CreateUser.as_view()), name='administration_user_create'),
     url(r'^user/(?P<pk>\d+)/$', is_staff(DetailUser.as_view()), name='administration_user_detail'),
     url(r'^user/(?P<pk>\d+)/update/$', is_staff(UpdateUser.as_view()), name='administration_user_update'),
+    url(r'^user/(?P<pk>\d+)/delete/$', is_staff(DeleteUser.as_view()), name='administration_user_delete'),
 
     url(r'^section/$', is_staff(ListView.as_view(model=SubSection, template_name='administration/section_list.haml')), name='administration_section_list'),
     url(r'^section/new/$', is_staff(CreateSubSection.as_view()), name='administration_section_create'),

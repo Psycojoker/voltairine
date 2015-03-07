@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.core.exceptions import PermissionDenied
-from django.views.generic import DetailView
+from django.views.generic import DetailView, DeleteView
 from django.views.generic.edit import UpdateView, CreateView
 from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
@@ -39,6 +39,9 @@ class CreateUser(CreateView):
         self.object.save()
         return to_return
 
+
+class DeleteUser(DeleteView):
+    model=User
 
 class CreateSubSection(CreateView):
     model=SubSection
