@@ -20,7 +20,7 @@
         %small.pull-right
           %a.btn.btn-primary{href: "{% url 'administration_user_update' object.pk %}"}
             Modifier
-          %a.btn.btn-danger{href: ""}
+          %a.btn.btn-danger{href: "{% url 'administration_user_delete' object.pk %}"}
             Supprimer
 
       %hr
