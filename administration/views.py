@@ -42,6 +42,8 @@ class CreateUser(CreateView):
 
 class DeleteUser(DeleteView):
     model=User
+    template_name="administration/user_confirm_delete.haml"
+
 
 class CreateSubSection(CreateView):
     model=SubSection
