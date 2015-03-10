@@ -8,3 +8,5 @@
           Êtes-vous sûr de vouloir supprimer l'utilisateur "{{ object }}" ?
         %hr
         %input.btn.btn-danger{type: "submit", value: "Oui"}
+        %a.btn.btn-info{href: "{% url 'administration_user_detail' object.pk %}"}
+          Annuler
