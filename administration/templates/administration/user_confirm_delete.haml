@@ -1,9 +1,10 @@
 -extends "base.haml"
 
 -block content
-  %form{method: "POST"}
-    -csrf_token
-    %h2
-      Êtes-vous sûr de vouloir supprimer l'utilisateur "{{ object }}" ?
-    %hr
-    %input.btn.btn-danger{type: "submit", value: "Oui"}
+    %form.well.col-md-4.col-md-offset-4{method: "POST"}
+      %center
+        -csrf_token
+        %h2{style: "margin-top: 0px"}
+          Êtes-vous sûr de vouloir supprimer l'utilisateur "{{ object }}" ?
+        %hr
+        %input.btn.btn-danger{type: "submit", value: "Oui"}
