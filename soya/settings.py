@@ -71,6 +71,10 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'soya.urls'
 
+import hamlpy
+
+hamlpy.nodes.TagNode.self_closing["recursetree"] = "endrecursetree"
+
 TEMPLATE_LOADERS = (
     'hamlpy.template.loaders.HamlPyFilesystemLoader',
     'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
