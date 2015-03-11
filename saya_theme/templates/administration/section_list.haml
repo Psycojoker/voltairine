@@ -1,70 +1,13 @@
 -extends "base.haml"
+-load mptt_tags
 
 -block content
   %h1 Sections
   %hr
 
-  %h2 Tournages
   %ul
-    -for subsection in subsection_list
-      -if subsection.section == "1"
-        %li= subsection.title
-        %ul
-          -for subsubsection in subsection.subsubsection_set.all
-            %li= subsubsection.title
-          %li
-            %form.form-inline{method: "POST", action: "../subsubsection/new/"}
-              -csrf_token
-              .form-group
-                %input#id_subsection.form-control{type: "text", placeholder: "titre", required: "", style: "display: none;", value: '{{ subsection.id }}', name: "subsection"}
-                %input#id_title.form-control{type: "text", placeholder: "titre", required: "", name: "title"}
-              %button.btn.btn-default{type: "submit"}
-                Rajouter un nouveau jours de tournage
-    %li
-      %form.form-inline{method: "POST", action: "new/"}
-        -csrf_token
-        .form-group
-          %input#id_section.form-control{type: "text", placeholder: "titre", required: "", style: "display: none;", value: '1', name: "section"}
-          %input#id_title.form-control{type: "text", placeholder: "titre", required: "", name: "title"}
-        %button.btn.btn-default{type: "submit"}
-          Rajouter un nouveau tournage
-
-  -#
-    %h2 Montages
-    %ul
-      -for subsection in subsection_list
-        -if subsection.section == "2"
-          %li= subsection.title
-      %li
-        %form.form-inline{method: "POST", action: "new/"}
-          -csrf_token
-          .form-group
-            %input#id_section.form-control{type: "text", placeholder: "titre", required: "", style: "display: none;", value: '2', name: "section"}
-            %input#id_title.form-control{type: "text", placeholder: "titre", required: "", name: "title"}
-          %button.btn.btn-default{type: "submit"}
-            Rajouter un nouveau montage
-
-    %h2 Producteurs
-    %ul
-      -for subsection in subsection_list
-        -if subsection.section == "3"
-          %li= subsection.title
-          %ul
-            -for subsubsection in subsection.subsubsection_set.all
-              %li= subsubsection.title
-            %li
-              %form.form-inline{method: "POST", action: "../subsubsection/new/"}
-                -csrf_token
-                .form-group
-                  %input#id_subsection.form-control{type: "text", placeholder: "titre", required: "", style: "display: none;", value: '{{ subsection.id }}', name: "subsection"}
-                  %input#id_title.form-control{type: "text", placeholder: "titre", required: "", name: "title"}
-                %button.btn.btn-default{type: "submit"}
-                  Rajouter un nouveau film/une nouvelle série
-      %li
-        %form.form-inline{method: "POST", action: "new/"}
-          -csrf_token
-          .form-group
-            %input#id_section.form-control{type: "text", placeholder: "titre", required: "", style: "display: none;", value: '3', name: "section"}
-            %input#id_title.form-control{type: "text", placeholder: "titre", required: "", name: "title"}
-          %button.btn.btn-default{type: "submit"}
-            Rajouter un nouveau producteur
+    -recursetree section_list
+      %li= node.title
+      -if not node.is_leaf_node
+        %ul.children
+          =children
