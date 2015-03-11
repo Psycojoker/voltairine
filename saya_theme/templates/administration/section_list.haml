@@ -5,9 +5,12 @@
   %h1 Sections
   %hr
 
-  %ul
-    -recursetree section_list
-      %li= node.title
-      -if not node.is_leaf_node
-        %ul.children
-          =children
+  -for section, structure in section_list|tree_info
+    -if structure.new_level
+      <ul><li>
+    -else
+      </li><li>
+
+    =section.title
+    -for level in structure.closed_levels
+      </li></ul>
