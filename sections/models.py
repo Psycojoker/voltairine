@@ -10,7 +10,7 @@ class Section(MPTTModel):
     def __unicode__(self):
         return self.title
 
-    class Meta:
+    class MPTTMeta:
         order_insertion_by = ['title']
 
 
