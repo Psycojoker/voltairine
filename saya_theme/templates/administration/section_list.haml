@@ -1,16 +1,46 @@
 -extends "base.haml"
 -load mptt_tags
 
+-block head
+  %link{href: "{{ STATIC_URL }}css/fuelux.min.css", rel: "stylesheet"}
+
+-block javascript
+  %script{src: "{{ STATIC_URL }}js/fuelux.min.js"}
+
 -block content
   %h1 Sections
   %hr
 
-  -for section, structure in section_list|tree_info
-    -if structure.new_level
-      <ul><li>
-    -else
-      </li><li>
+  .fuelux
+    -for section, structure in section_list|tree_info
+      -if structure.new_level
+        -if not forloop.first
+                </span>
+              </button>
+            </div>
+        <ul class="{% if forloop.first %}tree tree-folder-select{% else %}tree-branch-children{% endif %}">
+          <li class="tree-branch">
+            <div class="tree-branch-header">
+              <button class="glyphicon icon-caret glyphicon-play"><span class="sr-only">Open</span></button>
+              <button class="tree-branch-name">
+                <span class="glyphicon icon-folder glyphicon-folder-close"></span>
+                <span class="tree-label">
+      -else
+                </span>
+              </button>
+            </div>
+          </li>
+          <li class="tree-branch">
+            <div class="tree-branch-header">
+              <button class="glyphicon icon-caret glyphicon-play"><span class="sr-only">Open</span></button>
+              <button class="tree-branch-name">
+                <span class="glyphicon icon-folder glyphicon-folder-close"></span>
+                <span class="tree-label">
 
-    =section.title
-    -for level in structure.closed_levels
-      </li></ul>
+      =section.title
+      -for level in structure.closed_levels
+                </span>
+              </button>
+            </div>
+          </li>
+          </ul>
