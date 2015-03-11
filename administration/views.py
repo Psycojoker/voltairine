@@ -124,7 +124,7 @@ def change_section_permission(request):
 @is_staff
 def video_list(request):
     return render(request, 'administration/video_list.haml', {
-        "section_list": Section.objects.annotate(Count("subsubsection")).filter(subsubsection__count__gt=0).annotate(Count("subsubsection__videosection")).filter(subsubsection__videosection__count__gt=0),  # I don't want any empty sections
+        "section_list": Section.objects.annotate(Count("children")).filter(children__count__gt=0).annotate(Count("children__videosection")).filter(children__videosection__count__gt=0),  # I don't want any empty sections
         "video_list": Video.objects.filter(videosection__isnull=True),
     })
 
