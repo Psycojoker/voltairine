@@ -14,6 +14,7 @@ from video.models import Video
 from .utils import generate_random_string
 from .forms import ResumableForm
 
+
 @is_staff
 def upload_video(request):
     if request.method == "GET":

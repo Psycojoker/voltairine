@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
 from django.db.models import Count
 
-from sections.models import SubSection, SubSubSection, Permission, VideoSection
+from sections.models import Section, Permission, VideoSection
 from video.models import Video
 
 from .forms import PermissionForm, VideoForm, FormUser
@@ -21,7 +21,7 @@ class DetailUser(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(DetailUser, self).get_context_data(*args, **kwargs)
-        context["subsection_list"] = SubSection.objects.all()
+        context["section_list"] = Section.objects.all()
         return context
 
 
@@ -46,17 +46,17 @@ class DeleteUser(DeleteView):
     success_url=reverse_lazy('administration_user_list')
 
 
-class CreateSubSection(CreateView):
-    model=SubSection
+class CreateSection(CreateView):
+    model=Section
     template_name='administration/section_list.haml'
     fields=['title', 'section']
     success_url=reverse_lazy('administration_section_list')
 
 
-class CreateSubSubSection(CreateView):
-    model=SubSubSection
+class CreateSection(CreateView):
+    model=Section
     template_name='administration/section_list.haml'
-    fields=['title', 'subsection']
+    fields=['title', 'parent']
     success_url=reverse_lazy('administration_section_list')
 
 
@@ -87,7 +87,7 @@ def dashboard(request):
 
 @is_staff
 @require_POST
-def change_subsection_permission(request):
+def change_section_permission(request):
     form = PermissionForm(request.POST)
 
     if not form.is_valid():
@@ -97,25 +97,25 @@ def change_subsection_permission(request):
 
     if form.cleaned_data["state"]:
         # already have the autorisation, don't do anything
-        if Permission.objects.filter(user=form.cleaned_data["user"], subsubsection=form.cleaned_data["subsubsection"]).exists():
+        if Permission.objects.filter(user=form.cleaned_data["user"], section=form.cleaned_data["section"]).exists():
             return HttpResponse("ok")
 
         # autorised
         Permission.objects.create(
             user=form.cleaned_data["user"],
-            subsubsection=form.cleaned_data["subsubsection"],
+            section=form.cleaned_data["section"],
         )
 
         return HttpResponse("ok")
 
-    if not Permission.objects.filter(user=form.cleaned_data["user"], subsubsection=form.cleaned_data["subsubsection"]).exists():
+    if not Permission.objects.filter(user=form.cleaned_data["user"], section=form.cleaned_data["section"]).exists():
         # don't have the permission, don't do anything
         return HttpResponse("ok")
 
     # state is False
     Permission.objects.get(
         user=form.cleaned_data["user"],
-        subsubsection=form.cleaned_data["subsubsection"],
+        section=form.cleaned_data["section"],
     ).delete()
 
     return HttpResponse("ok")
@@ -124,7 +124,7 @@ def change_subsection_permission(request):
 @is_staff
 def video_list(request):
     return render(request, 'administration/video_list.haml', {
-        "subsection_list": SubSection.objects.annotate(Count("subsubsection")).filter(subsubsection__count__gt=0).annotate(Count("subsubsection__videosection")).filter(subsubsection__videosection__count__gt=0),  # I don't want any empty sections
+        "section_list": Section.objects.annotate(Count("subsubsection")).filter(subsubsection__count__gt=0).annotate(Count("subsubsection__videosection")).filter(subsubsection__videosection__count__gt=0),  # I don't want any empty sections
         "video_list": Video.objects.filter(videosection__isnull=True),
     })
 
@@ -167,5 +167,5 @@ def video_detail(request, pk):
 
     return render(request, "administration/video_detail.haml", {
         "object": video,
-        "subsection_list": SubSection.objects.all(),
+        "subsection_list": Section.objects.all(),
     })
