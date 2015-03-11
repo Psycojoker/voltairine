@@ -11,7 +11,7 @@ class Section(MPTTModel):
         return self.title
 
     class Meta:
-        ordering = ['title']
+        order_insertion_by = ['title']
 
 
 class Permission(models.Model):
