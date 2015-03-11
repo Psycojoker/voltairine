@@ -22,20 +22,19 @@
 
 
 
-      <div class="tree-branch-header">
-        <button class="glyphicon icon-caret glyphicon-play" style="transform: rotate(90deg);"><span class="sr-only">Open</span></button>
-        <button class="tree-branch-name">
-          <span class="tree-label">
+      .tree-branch-header
+        %button.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
+          %span.sr-only Open
+        %button.tree-branch-name
+          %span.tree-label
             =section.title
-          <span style="margin-left: 10px" class="glyphicon glyphicon-plus"></span>
-          <span class="glyphicon glyphicon-pencil"></span>
-          <span class="glyphicon glyphicon-remove"></span>
-          <span class="glyphicon glyphicon-arrow-up"></span>
-          <span class="glyphicon glyphicon-arrow-down"></span>
-          </span>
-        </button>
-      </div>
+            %span.glyphicon.glyphicon-plus{style: "margin-left: 10px"}
+            %span.glyphicon.glyphicon-pencil
+            %span.glyphicon.glyphicon-remove
+            -#
+              %span.glyphicon.glyphicon-arrow-up
+              %span.glyphicon.glyphicon-arrow-down
 
-        -for level in structure.closed_levels
-            </li>
-            </ul>
+      -for level in structure.closed_levels
+          </li>
+          </ul>
