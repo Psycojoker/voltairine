@@ -41,7 +41,7 @@
   .fuelux{style: "font-size: 18px"}
     -for section, structure in section_list|tree_info
       -if structure.new_level
-        <ul class="{% if forloop.first %}tree tree-folder-select{% else %}tree-branch-children{% endif %}" data-parent-id="{{ section.id }}">
+        <ul class="{% if forloop.first %}tree tree-folder-select{% else %}tree-branch-children{% endif %}" data-parent-id="{{ section.parent.id }}">
           <li class="tree-branch">
       -else
           </li>
