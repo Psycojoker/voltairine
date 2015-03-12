@@ -64,8 +64,13 @@
       -for level in structure.closed_levels
         </li>
         %li.tree-branch
-          .tree-branch-header
-            %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
-              %span.sr-only Open
-            %input.input-sm{type: "text"}
+          %form.form-inline{method: "POST", action: "new/"}
+            .tree-branch-header
+              %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
+                %span.sr-only Open
+              -csrf_token
+              %input{type: "text", style: "display: none;", value: '', name: "parent"}
+              %input.input-sm{type: "text", value: "{{ level }}"}
+              %button.btn.btn-default.btn-sm{type: "submit"}
+                Rajouter
         </ul>
