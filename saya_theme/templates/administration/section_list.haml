@@ -40,6 +40,11 @@
       node.attributes["value"].value = $(node).parents("ul")[0].attributes["data-parent-id"].value;
     })
 
+    $(".add").click(function(node) {
+      console.log(arguments)
+      $(node.target).parent().next().show();
+    })
+
 -block content
   %h1 Sections
   %hr
@@ -73,8 +78,8 @@
                 %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
                   %span.sr-only Open
                 -csrf_token
-                %input{type: "text", style: "display: none;", value: '', name: "parent"}
-                %input.input-sm{type: "text", value: "{{ level }}"}
+                %input{type: "text", style: "display: none;", value: '{{ section.id }}', name: "parent"}
+                %input.input-sm{type: "text", value: "{{ level }}", name: "title"}
                 %button.btn.btn-default.btn-sm{type: "submit"}
                   Rajouter
 
