@@ -49,13 +49,6 @@ class DeleteUser(DeleteView):
 class CreateSection(CreateView):
     model=Section
     template_name='administration/section_list.haml'
-    fields=['title', 'section']
-    success_url=reverse_lazy('administration_section_list')
-
-
-class CreateSection(CreateView):
-    model=Section
-    template_name='administration/section_list.haml'
     fields=['title', 'parent']
     success_url=reverse_lazy('administration_section_list')
 
