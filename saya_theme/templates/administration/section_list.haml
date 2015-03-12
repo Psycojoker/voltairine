@@ -8,20 +8,21 @@
       margin-left: 10px;
     }
 
-    a.add:hover {
+    a.section-button {
       text-decoration: none;
+    }
+
+    a.add:hover {
       color: lawngreen;
     }
 
 
     a.edit:hover {
-      text-decoration: none;
       color: cornflowerblue;
     }
 
 
     a.remove:hover {
-      text-decoration: none;
       color: red;
     }
 
@@ -53,9 +54,9 @@
           %span.sr-only Open
         %span.tree-label
           =section.title
-          %a.add.glyphicon.glyphicon-plus{href: "#"}
-          %a.edit.glyphicon.glyphicon-pencil{href: "#"}
-          %a.remove.glyphicon.glyphicon-remove{href: "#"}
+          %a.section-button.add.glyphicon.glyphicon-plus{href: "#"}
+          %a.section-button.edit.glyphicon.glyphicon-pencil{href: "#"}
+          %a.section-button.remove.glyphicon.glyphicon-remove{href: "#"}
           -#
             %span.glyphicon.glyphicon-arrow-up
             %span.glyphicon.glyphicon-arrow-down
