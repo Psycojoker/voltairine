@@ -11,7 +11,7 @@
   %h1 Sections
   %hr
 
-  .fuelux
+  .fuelux{style: "font-size: 18px"}
     -for section, structure in section_list|tree_info
       -if structure.new_level
         <ul class="{% if forloop.first %}tree tree-folder-select{% else %}tree-branch-children{% endif %}">
