@@ -3,6 +3,28 @@
 
 -block head
   %link{href: "{{ STATIC_URL }}css/fuelux.min.css", rel: "stylesheet"}
+  :css
+    a.add {
+      margin-left: 10px;
+    }
+
+    a.add:hover {
+      text-decoration: none;
+      color: lawngreen;
+    }
+
+
+    a.edit:hover {
+      text-decoration: none;
+      color: cornflowerblue;
+    }
+
+
+    a.remove:hover {
+      text-decoration: none;
+      color: red;
+    }
+
 
 -block javascript
   %script{src: "{{ STATIC_URL }}js/fuelux.min.js"}
@@ -25,15 +47,14 @@
       .tree-branch-header
         %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
           %span.sr-only Open
-        %button.tree-branch-name
-          %span.tree-label
-            =section.title
-            %span.glyphicon.glyphicon-plus{style: "margin-left: 10px"}
-            %span.glyphicon.glyphicon-pencil
-            %span.glyphicon.glyphicon-remove
-            -#
-              %span.glyphicon.glyphicon-arrow-up
-              %span.glyphicon.glyphicon-arrow-down
+        %span.tree-label
+          =section.title
+          %a.add.glyphicon.glyphicon-plus{href: "#"}
+          %a.edit.glyphicon.glyphicon-pencil{href: "#"}
+          %a.remove.glyphicon.glyphicon-remove{href: "#"}
+          -#
+            %span.glyphicon.glyphicon-arrow-up
+            %span.glyphicon.glyphicon-arrow-down
 
       -for level in structure.closed_levels
           </li>
