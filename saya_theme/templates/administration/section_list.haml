@@ -34,6 +34,12 @@
 -block javascript
   %script{src: "{{ STATIC_URL }}js/fuelux.min.js"}
 
+  :javascript
+    $(".new-same-section").each(function(_, node) {
+      // awesomely dirty code to get the id of the parent of current level stored in the <ul> because |tree_info sucks for that
+      node.attributes["value"].value = $(node).parents("ul")[0].attributes["data-parent-id"].value;
+    })
+
 -block content
   %h1 Sections
   %hr
@@ -80,8 +86,8 @@
               %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
                 %span.sr-only Open
               -csrf_token
-              %input{type: "text", style: "display: none;", value: '', name: "parent"}
-              %input.input-sm{type: "text", value: "{{ level }}"}
+              %input.new-same-section{type: "text", style: "display: none;", value: '', name: "parent"}
+              %input.input-sm{type: "text", name: "title"}
               %button.btn.btn-default.btn-sm{type: "submit"}
                 Rajouter
         </ul>
