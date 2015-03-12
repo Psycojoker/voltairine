@@ -57,5 +57,10 @@
             %span.glyphicon.glyphicon-arrow-down
 
       -for level in structure.closed_levels
-          </li>
-          </ul>
+        </li>
+        %li.tree-branch
+          .tree-branch-header
+            %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
+              %span.sr-only Open
+            %input.input-sm{type: "text"}
+        </ul>
