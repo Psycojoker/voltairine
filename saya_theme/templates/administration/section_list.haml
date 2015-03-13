@@ -81,6 +81,12 @@
             %input.input-sm{type: "text", value: "{{ section.title }}", name: "title"}
             %button.btn.btn-default.btn-sm{type: "submit"}
               Modifier
+        %form.remove-form{method: "POST", action: "", style: "display: none"}
+          %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
+            %span.sr-only Open
+          -csrf_token
+          %input.btn.btn-sm.btn-danger{type: "submit", value: "Confirmer la suppression"}
+          %a.btn.btn-sm.btn-primary{href: "#"} Annuler
         %span.section
           %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
             %span.sr-only Open
