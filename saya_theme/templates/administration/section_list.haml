@@ -91,7 +91,7 @@
             %input.input-sm{type: "text", value: "{{ section.title }}", name: "title"}
             %button.btn.btn-default.btn-sm{type: "submit"}
               Modifier
-        %form.remove-form{method: "POST", action: "", style: "display: none"}
+        %form.remove-form{method: "POST", action: "{% url 'administration_section_delete' section.pk %}", style: "display: none"}
           %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
             %span.sr-only Open
           -csrf_token

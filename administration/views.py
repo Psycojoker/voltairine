@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.core.exceptions import PermissionDenied
@@ -63,7 +63,7 @@ class UpdateSection(UpdateView):
 @is_staff
 def delete_section_and_childrens(request, pk):
     get_object_or_404(Section, pk=pk).delete()
-    return HttpResponseBadRequest(reverse('administration_section_list'))
+    return HttpResponseRedirect((reverse('administration_section_list')))
 
 
 class UpdateUser(UpdateView):
