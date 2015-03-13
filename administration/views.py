@@ -60,6 +60,12 @@ class UpdateSection(UpdateView):
     success_url=reverse_lazy('administration_section_list')
 
 
+@is_staff
+def delete_section_and_childrens(request, pk):
+    get_object_or_404(Section, pk=pk).delete()
+    return HttpResponseBadRequest(reverse('administration_section_list'))
+
+
 class UpdateUser(UpdateView):
     model=User
     template_name='administration/user_update_form.haml'

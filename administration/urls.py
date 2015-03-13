@@ -19,6 +19,7 @@ urlpatterns = patterns('administration.views',
     url(r'^section/$', is_staff(ListView.as_view(model=Section, template_name='administration/section_list.haml')), name='administration_section_list'),
     url(r'^section/new/$', is_staff(CreateSection.as_view()), name='administration_section_create'),
     url(r'^section/(?P<pk>\d+)/update/$', is_staff(UpdateSection.as_view()), name='administration_section_update'),
+    url(r'^section/(?P<pk>\d+)/delete/$', 'delete_section_and_childrens', name='administration_section_delete'),
 
     url(r'^change_subsection_permission/$', 'change_section_permission', name='administration_change_subsection_permission'),
 
