@@ -41,7 +41,7 @@
     })
 
     $(".add").click(function(node) {
-      $(node.target).parent().next().show();
+      $($(node.target).parents(".tree-branch-header")[0]).find(".hidden-add").show();
     })
 
     $(".edit").click(function(node) {
@@ -88,7 +88,7 @@
             -#
               %span.glyphicon.glyphicon-arrow-up
               %span.glyphicon.glyphicon-arrow-down
-        %ul.tree-branch-children{style: "display: none"}
+        %ul.tree-branch-children.hidden-add{style: "display: none"}
           %li.tree-branch
             %form.form-inline{method: "POST", action: "new/"}
               .tree-branch-header
