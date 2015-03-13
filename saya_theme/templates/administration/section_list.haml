@@ -44,10 +44,14 @@
       $($(node.target).parents(".tree-branch-header")[0]).find(".hidden-add").show();
     })
 
-    $(".edit").click(function(node) {
-      // reset previous hidden edit form
+    reset = function() {
       $(".edit-form").hide();
       $(".section").show();
+    }
+
+    $(".edit").click(function(node) {
+      // reset previous hidden edit form
+      reset();
 
       var parent = $($(node.target).parents(".tree-branch-header")[0]);
       parent.find(".section").hide();
