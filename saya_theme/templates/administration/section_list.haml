@@ -47,6 +47,7 @@
     reset = function() {
       $(".edit-form").hide();
       $(".remove-form").hide();
+      $(".hidden-add").hide();
       $(".section").show();
     }
 
@@ -67,6 +68,8 @@
       parent.find(".section").hide();
       parent.find(".remove-form").show();
     })
+
+    $(".cancel").click(reset);
 
 -block content
   %h1 Sections
@@ -91,12 +94,13 @@
             %input.input-sm{type: "text", value: "{{ section.title }}", name: "title"}
             %button.btn.btn-default.btn-sm{type: "submit"}
               Modifier
+            %a.cancel.btn.btn-sm.btn-primary{href: "#"} Annuler
         %form.remove-form{method: "POST", action: "{% url 'administration_section_delete' section.pk %}", style: "display: none"}
           %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
             %span.sr-only Open
           -csrf_token
           =section.title
-          %a.btn.btn-sm.btn-primary{href: "#"} Annuler
+          %a.cancel.btn.btn-sm.btn-primary{href: "#"} Annuler
           %input.btn.btn-sm.btn-danger{type: "submit", value: "Confirmer la suppression"}
         %span.section
           %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
@@ -120,6 +124,7 @@
                 %input.input-sm{type: "text", value: "", name: "title"}
                 %button.btn.btn-default.btn-sm{type: "submit"}
                   Rajouter
+                %a.cancel.btn.btn-sm.btn-primary{href: "#"} Annuler
 
       -for level in structure.closed_levels
         </li>
