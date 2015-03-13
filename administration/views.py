@@ -53,6 +53,13 @@ class CreateSection(CreateView):
     success_url=reverse_lazy('administration_section_list')
 
 
+class UpdateSection(UpdateView):
+    model=Section
+    template_name='administration/section_list.haml'
+    fields=['title']
+    success_url=reverse_lazy('administration_section_list')
+
+
 class UpdateUser(UpdateView):
     model=User
     template_name='administration/user_update_form.haml'
