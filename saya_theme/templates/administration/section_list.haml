@@ -70,7 +70,7 @@
 
 
       .tree-branch-header
-        %form.edit-form.form-inline{method: "POST", action: "{{ section.id }}/update/", style: "display: none"}
+        %form.edit-form.form-inline{method: "POST", action: "{% url 'administration_section_update' section.pk %}", style: "display: none"}
             %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
               %span.sr-only Open
             -csrf_token
@@ -90,7 +90,7 @@
               %span.glyphicon.glyphicon-arrow-down
         %ul.tree-branch-children.hidden-add{style: "display: none"}
           %li.tree-branch
-            %form.form-inline{method: "POST", action: "new/"}
+            %form.form-inline{method: "POST", action: "{% url 'administration_section_create' %}"}
               .tree-branch-header
                 %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
                   %span.sr-only Open
@@ -103,7 +103,7 @@
       -for level in structure.closed_levels
         </li>
         %li.tree-branch
-          %form.form-inline{method: "POST", action: "new/"}
+          %form.form-inline{method: "POST", action: "{% url 'administration_section_create' %}"}
             .tree-branch-header
               %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
                 %span.sr-only Open
