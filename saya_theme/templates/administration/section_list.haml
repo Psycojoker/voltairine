@@ -45,6 +45,10 @@
     })
 
     $(".edit").click(function(node) {
+      // reset previous hidden edit form
+      $(".edit-form").hide();
+      $(".section").show();
+
       var parent = $($(node.target).parents(".tree-branch-header")[0]);
       parent.find(".section").hide();
       parent.find(".edit-form").show();
