@@ -46,6 +46,7 @@
 
     reset = function() {
       $(".edit-form").hide();
+      $(".remove-form").hide();
       $(".section").show();
     }
 
@@ -56,6 +57,15 @@
       var parent = $($(node.target).parents(".tree-branch-header")[0]);
       parent.find(".section").hide();
       parent.find(".edit-form").show();
+    })
+
+    $(".remove").click(function(node) {
+      // reset previous hidden edit form
+      reset();
+
+      var parent = $($(node.target).parents(".tree-branch-header")[0]);
+      parent.find(".section").hide();
+      parent.find(".remove-form").show();
     })
 
 -block content
