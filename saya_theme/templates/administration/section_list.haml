@@ -44,6 +44,12 @@
       $(node.target).parent().next().show();
     })
 
+    $(".edit").click(function(node) {
+      var parent = $($(node.target).parents(".tree-branch-header")[0]);
+      parent.find(".section").hide();
+      parent.find(".edit-form").show();
+    })
+
 -block content
   %h1 Sections
   %hr
@@ -60,16 +66,24 @@
 
 
       .tree-branch-header
-        %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
-          %span.sr-only Open
-        %span.tree-label
-          =section.title
-          %a.section-button.add.glyphicon.glyphicon-plus{href: "#"}
-          %a.section-button.edit.glyphicon.glyphicon-pencil{href: "#"}
-          %a.section-button.remove.glyphicon.glyphicon-remove{href: "#"}
-          -#
-            %span.glyphicon.glyphicon-arrow-up
-            %span.glyphicon.glyphicon-arrow-down
+        %form.edit-form.form-inline{method: "POST", action: "{{ section.id }}/update/", style: "display: none"}
+            %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
+              %span.sr-only Open
+            -csrf_token
+            %input.input-sm{type: "text", value: "{{ section.title }}", name: "title"}
+            %button.btn.btn-default.btn-sm{type: "submit"}
+              Modifier
+        %span.section
+          %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
+            %span.sr-only Open
+          %span.tree-label
+            =section.title
+            %a.section-button.add.glyphicon.glyphicon-plus{href: "#"}
+            %a.section-button.edit.glyphicon.glyphicon-pencil{href: "#"}
+            %a.section-button.remove.glyphicon.glyphicon-remove{href: "#"}
+            -#
+              %span.glyphicon.glyphicon-arrow-up
+              %span.glyphicon.glyphicon-arrow-down
         %ul.tree-branch-children{style: "display: none"}
           %li.tree-branch
             %form.form-inline{method: "POST", action: "new/"}
