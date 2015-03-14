@@ -65,7 +65,8 @@
                   %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
                     %span.sr-only Open
                   =node.title
-                -#%input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", data-user-id: "{{ object.id }}", data-section-id: "{{ section.id }}", data-has-permission: "{% is_user_have_access node object %}"}
+                  %span{style: "margin-left: 20px;"}
+                    %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", data-user-id: "{{ object.id }}", data-section-id: "{{ node.id }}", data-has-permission: "{% is_user_have_access node object %}"}
                 -if not node.is_leaf_node
                   %ul.tree-branch-children
                     =children
@@ -87,7 +88,7 @@
 
           $.post("{% url 'administration_change_subsection_permission' %}", {
             "user": attributes["data-user-id"].value,
-            "subsubsection": attributes["data-section-id"].value,
+            "section": attributes["data-section-id"].value,
             "state": value
           })
         })
