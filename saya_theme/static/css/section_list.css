@@ -1,0 +1,29 @@
+a.add {
+    margin-left: 10px;
+}
+
+a.section-button {
+    text-decoration: none;
+}
+
+a.add:hover {
+    color: lawngreen;
+}
+
+
+a.edit:hover {
+    color: cornflowerblue;
+}
+
+
+a.remove:hover {
+    color: red;
+}
+
+.fuelux .tree .tree-branch .tree-branch-children {
+    margin-left: 44px;
+}
+
+.fuelux .tree {
+    padding: 10px 15px 15px;
+}
