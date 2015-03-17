@@ -9,7 +9,7 @@ function editVideoDetailsController($scope) {
             $scope.production = $("#id_production").val();
             $scope.photo_direction = $("#id_photo_direction").val();
             $scope.observations = $("#id_observations").val();
-            $scope.subsubsection_id = $("#id_subsubsection").val();
+            $scope.section_id = $("#id_section").val();
 
             $.post("", {
                 title: $scope.title,
@@ -18,11 +18,11 @@ function editVideoDetailsController($scope) {
                 production: $scope.production,
                 photo_direction: $scope.photo_direction,
                 observations: $scope.observations,
-                subsubsection: $("#id_subsubsection").val(),
+                section: $("#id_section").val(),
                 "csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
-            }).done(function(subsubsection) {
+            }).done(function(section) {
                 $scope.inEditMode = false;
-                $scope.subsubsection = subsubsection;
+                $scope.section = section;
                 $scope.$digest();
             })
         } else {

@@ -59,8 +59,8 @@
     %div{ng-init: 'production="{{ object.production|default:"" }}"'}
     %div{ng-init: 'photo_direction="{{ object.photo_direction|default:"" }}"'}
     %div{ng-init: 'observations="{{ object.observations|default:"" }}"'}
-    %div{ng-init: 'subsubsection="{{ object.videosection|default:"" }}"'}
-    %div{ng-init: 'subsubsection_id="{{ object.videosection.subsubsection.id|default:"" }}"'}
+    %div{ng-init: 'section="{{ object.videosection|default:"" }}"'}
+    %div{ng-init: 'section_id="{{ object.videosection.section.id|default:"" }}"'}
     %div{style: "padding: 20px;"}
       %div{ng-if: "inEditMode == false"}
         %h2{style: "margin-top: 0px"}
@@ -91,7 +91,7 @@
 
         %p
           %b Section:
-          {& subsubsection &}
+          {& section &}
 
         %button.btn.btn-primary{ng-click: "toggleEditMode()"}
           Éditer
@@ -135,16 +135,15 @@
               Obersations:
             %textarea#id_observations.form-control{type: "text", ng-model: "observations"}
           .form-group
-            %label.control-label{for: "id_subsubsection"}
+            %label.control-label{for: "id_section"}
               Section
-            %select#id_subsubsection.form-control{name: "subsubsection", title: "", ng-model: "upload.subsubsection", ng-model: "subsubsection_id"}
+            %select#id_section.form-control{name: "section", title: "", ng-model: "upload.section", ng-model: "section_id"}
               %option{value: "", selected: "selected"}
                 \---------
-              -for subsection in subsection_list
-                %optgroup{label: "{{ subsection.title }}"}
-                -for subsubsection in subsection.subsubsection_set.all
-                  %option{value: "{{ subsubsection.id }}"}
-                    =subsubsection.title
+              -for id, section in form.section.field.choices
+                %option{value: "{{ id }}"}
+                  =section
+
 
           %p
             %button.btn.btn-primary{ng-click: "toggleEditMode()"}

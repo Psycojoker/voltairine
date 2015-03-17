@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from mptt.forms import TreeNodeChoiceField
 
 from sections.models import Section
 from video.models import Video
@@ -7,12 +8,12 @@ from video.models import Video
 
 class PermissionForm(forms.Form):
     user = forms.ModelChoiceField(queryset=User.objects.all())
-    section = forms.ModelChoiceField(queryset=Section.objects.all())
+    section = TreeNodeChoiceField(queryset=Section.objects.all())
     state = forms.BooleanField(required=False)
 
 
 class VideoForm(forms.ModelForm):
-    section = forms.ModelChoiceField(queryset=Section.objects.all(), required=False)
+    section = TreeNodeChoiceField(queryset=Section.objects.all(), required=False)
 
     class Meta:
         model = Video

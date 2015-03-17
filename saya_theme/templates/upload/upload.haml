@@ -33,18 +33,7 @@
                       %span.help-block= error
 
                 .col-md-6
-                  .form-group
-                    %label.control-label{for: "id_subsubsection"}
-                      Section
-                    %select#id_subsubsection.form-control{name: "subsubsection", title: "", ng-model: "upload.subsubsection"}
-                      %option{value: "", selected: "selected"}
-                        \---------
-                      -regroup form.fields.subsubsection.queryset by subsection as subsection_list
-                      -for subsection in subsection_list
-                        %optgroup{label: "{{ subsection.grouper.title }}"}
-                        -for subsubsection in subsection.list
-                          %option{value: "{{ subsubsection.id }}"}
-                            =subsubsection.title
+                  -bootstrap_field form.section
 
               .form-group
                 %input#id_file_name-path{type: "hidden", name: "file_name-path", value: "None"}

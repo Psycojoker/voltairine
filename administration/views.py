@@ -151,19 +151,19 @@ def video_detail(request, pk):
         video.photo_direction = form.cleaned_data["photo_direction"]
         video.observations = form.cleaned_data["observations"]
 
-        if form.cleaned_data["subsubsection"]:
+        if form.cleaned_data["section"]:
             if not hasattr(video, "videosection"):
                 VideoSection.objects.create(
                     video=video,
-                    subsubsection=form.cleaned_data["subsubsection"],
+                    section=form.cleaned_data["section"],
                 )
-            elif video.videosection.subsubsection != form.cleaned_data["subsubsection"]:
+            elif video.videosection.section != form.cleaned_data["section"]:
                 video.videosection.delete()
                 VideoSection.objects.create(
                     video=video,
-                    subsubsection=form.cleaned_data["subsubsection"],
+                    section=form.cleaned_data["section"],
                 )
-        elif form.cleaned_data["subsubsection"] is None and hasattr(video, "videosection"):
+        elif form.cleaned_data["section"] is None and hasattr(video, "ection"):
             video.videosection.delete()
             # need to do that, the instance isn't modified by the previous line
             del video.videosection
@@ -173,5 +173,5 @@ def video_detail(request, pk):
 
     return render(request, "administration/video_detail.haml", {
         "object": video,
-        "subsection_list": Section.objects.all(),
+        "form": VideoForm(),
     })
