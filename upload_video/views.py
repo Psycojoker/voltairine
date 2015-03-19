@@ -54,10 +54,10 @@ def upload_video(request):
         file_name=file_name,
     )
 
-    if form.cleaned_data["subsubsection"]:
+    if form.cleaned_data["section"]:
         VideoSection.objects.create(
             video=video,
-            subsubsection=form.cleaned_data["subsubsection"],
+            section=form.cleaned_data["section"],
         )
 
     if request.is_ajax():
