@@ -33,7 +33,13 @@
                       %span.help-block= error
 
                 .col-md-6
-                  -bootstrap_field form.section
+                  .form-group
+                    %label.control-label{for: "id_section"}
+                      Section
+                    %select#id_section.form-control{name: "section", title: "", ng-model: "upload.section"}
+                      -for id, section in form.section.field.choices
+                        %option{value: "{{ id }}"}
+                          =section
 
               .form-group
                 %input#id_file_name-path{type: "hidden", name: "file_name-path", value: "None"}
