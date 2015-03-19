@@ -22,7 +22,7 @@ SECRET_KEY = 'vv1*=h1969h3i+p12sa6=9)f&$xc)%&d*@2eqossm&f4^0(z#c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 DEBUG_PROPAGATE_EXCEPTIONS = DEBUG
 
