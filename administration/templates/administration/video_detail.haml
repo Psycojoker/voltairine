@@ -137,7 +137,7 @@
           .form-group
             %label.control-label{for: "id_section"}
               Section
-            %select#id_section.form-control{name: "section", title: "", ng-model: "upload.section", ng-model: "section_id"}
+            %select#id_section.form-control{name: "section", title: "", ng-model: "section_id"}
               %option{value: "", selected: "selected"}
                 \---------
               -for id, section in form.section.field.choices
