@@ -66,7 +66,9 @@
         %h2{style: "margin-top: 0px"}
           {& title &}
 
-          %a.btn.btn-small.btn-info.pull-right{href: "{{ MEDIA_URL }}videos/{{ object.file_name }}"} Télécharger
+          %span.pull-right
+            %a.btn.btn-small.btn-info{href: "{{ MEDIA_URL }}videos/{{ object.file_name }}"} Télécharger
+            %a.btn.btn-small.btn-danger{href: "{% url 'administration_video_delete' object.pk %}"} Supprimer
         %hr
 
         .row

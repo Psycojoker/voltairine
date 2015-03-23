@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 from sections.models import Section
 
-from .views import UpdateUser, CreateUser, CreateSection, DetailUser, DeleteUser, UpdateSection
+from .views import UpdateUser, CreateUser, CreateSection, DetailUser, DeleteUser, UpdateSection, DeleteVideo
 from .utils import is_staff
 
 
@@ -25,6 +25,7 @@ urlpatterns = patterns('administration.views',
 
     url(r'^video/$', 'video_list', name='administration_video_list'),
     url(r'^video/(?P<pk>\d+)/$', 'video_detail', name='administration_video_detail'),
+    url(r'^video/(?P<pk>\d+)/delete/$', is_staff(DeleteVideo.as_view()), name='administration_video_delete'),
 
     url(r'^', include('upload_video.urls')),
 )

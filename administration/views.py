@@ -85,6 +85,11 @@ class UpdateUser(UpdateView):
         return to_return
 
 
+class DeleteVideo(DeleteView):
+    model=Video
+    template_name="administration/video_confirm_delete.haml"
+    success_url=reverse_lazy('administration_video_list')
+
 
 @is_staff
 def dashboard(request):
