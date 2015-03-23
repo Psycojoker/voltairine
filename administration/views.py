@@ -6,7 +6,6 @@ from django.views.generic import DetailView, DeleteView
 from django.views.generic.edit import UpdateView, CreateView
 from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
-from django.db.models import Count
 
 from sections.models import Section, Permission, VideoSection
 from video.models import Video
@@ -135,7 +134,8 @@ def change_section_permission(request):
 @is_staff
 def video_list(request):
     return render(request, 'administration/video_list.haml', {
-        "section_list": Section.objects.annotate(Count("children")).filter(children__count__gt=0).annotate(Count("children__videosection")).filter(children__videosection__count__gt=0),  # I don't want any empty sections
+        "level": 1,
+        "section_list": Section.objects.all(),
         "video_list": Video.objects.filter(videosection__isnull=True),
     })
 

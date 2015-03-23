@@ -1,4 +1,6 @@
 -extends "base.haml"
+-load mptt_tags
+-load section_tags
 
 -block content
   -if video_list
@@ -16,20 +18,25 @@
                 %a.btn.btn-primary{href: "{% url 'administration_video_detail' video.id %}"}
                   Regarder
 
-  -for section in section_list
-    %h3= section.title
-    -for subsection in subsection.subsubsection_set.all
-      -if subsection.videosection_set.all.exists
-        %h4= subsection.title
-        .row
-          -for videosection in subsection.videosection_set.all
-            .col-md-3
-              .thumbnail
-                %img{src: "http://placekitten.com/420/270", alt: "videosection.video.title"}
-                .caption
-                  %h4= videosection.video.title
-                  %p
-                    %i= video.observations
+  -for section, structure in section_list|tree_info
+    -if structure.new_level and not forloop.first
+      -increment "level"
 
-                  %a.btn.btn-primary{href: "{% url 'administration_video_detail' videosection.video.id %}"}
-                    Regarder
+    <h{{ level }}>
+    =section.title
+    </h{{ level }}>
+
+    .row
+      -for videosection in section.videosection_set.all
+        .col-md-3
+          .thumbnail
+            %img{src: "http://placekitten.com/420/270", alt: "videosection.video.title"}
+            .caption
+              %h4= videosection.video.title
+              %p
+                %i= video.observations
+              %a.btn.btn-primary{href: "{% url 'administration_video_detail' videosection.video.id %}"}
+                Regarder
+
+    -for level in structure.closed_levels
+      -decrement "level"
