@@ -11,6 +11,7 @@ from sections.models import Section, Permission
 def dashboard(request):
     return render(request, 'regular_users_interface/dashboard.haml', {
         "section_list": Section.objects.all(),
+        "level": 1,
     })
 
 

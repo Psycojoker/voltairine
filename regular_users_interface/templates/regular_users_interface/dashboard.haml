@@ -1,27 +1,33 @@
 -extends "regular_users_interface/base.haml"
+-load mptt_tags
+-load section_tags
 
 -block content
   %h1{style: "margin-top: 0px"} Films
   %hr
 
-  -for section in section_list
-    %h3= section.title
-    -for section in section.section_set.all
-      -if section.videosection_set.all.exists
-        %h4= section.title
-        .row
-          -for videosection in section.videosection_set.all
-            .col-md-3
-              .thumbnail
-                %img{src: "http://placekitten.com/420/270", alt: "videosection.video.title"}
-                .caption
-                  %h5= videosection.video.title
-                  %p
-                    foobar
+  -for section, structure in section_list|tree_info
+    -if structure.new_level and not forloop.first
+      -increment "level"
 
-                  %a.btn.btn-primary{href: "{% url 'user_video_detail' videosection.video.id %}"}
-                    Regarder
+    <h{{ level }}>
+    =section.title
+    </h{{ level }}>
 
+    .row
+      -for videosection in section.videosection_set.all
+        .col-md-3
+          .thumbnail
+            %img{src: "http://placekitten.com/420/270", alt: "videosection.video.title"}
+            .caption
+              %h5= videosection.video.title
+              %p
+                foobar
 
+              %a.btn.btn-primary{href: "{% url 'user_video_detail' videosection.video.id %}"}
+                Regarder
+
+    -for level in structure.closed_levels
+      -decrement "level"
   -if not section_list
     %p Il n'y a aucune vidéo dans les catégories auxquelles vous avez accès.
