@@ -1,0 +1,22 @@
+-extends "base.haml"
+-load bootstrap3
+
+-block content
+  %h2 Rajouter un groupe
+  %hr
+
+  %form{method: "POST"}
+    -csrf_token
+    -bootstrap_field form.name
+
+    .row
+      .col-md-6
+        -bootstrap_field form.admins
+      .col-md-6
+        -bootstrap_field form.users
+
+    %button.btn.btn-lg.btn-primary{type: "submit"}
+      Enregistrer
+
+    %a.btn.btn-lg.btn-danger{href: "{% if object.pk %}{% url 'administration_group_detail' object.pk %}{% else %}{% url 'administration_user_list' %}{% endif %}"}
+      Annuler

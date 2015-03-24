@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from mptt.forms import TreeNodeChoiceField
+from permissions_groups.models import Group
 
 from sections.models import Section
 from video.models import Video

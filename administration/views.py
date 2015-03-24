@@ -1,3 +1,4 @@
+from django import forms
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -6,6 +7,7 @@ from django.views.generic import DetailView, DeleteView
 from django.views.generic.edit import UpdateView, CreateView
 from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
+from django.forms.models import modelform_factory
 
 from sections.models import Section, Permission, VideoSection
 from video.models import Video
@@ -57,10 +59,16 @@ class DeleteUser(DeleteView):
 class CreateGroup(CreateView):
     model = Group
     template_name = 'administration/group_update_form.haml'
-    fields = ['name', 'admins', 'users']
+    form_class = modelform_factory(Group,
+        widgets={
+            "admins": forms.CheckboxSelectMultiple,
+            "users": forms.CheckboxSelectMultiple,
+        },
+        fields=['name', 'users', 'admins']
+    )
 
     def get_success_url(self):
-        return reverse('administration_group', args=(self.object.pk,))
+        return reverse('administration_group_detail', args=(self.object.pk,))
 
 
 class CreateSection(CreateView):
