@@ -9,9 +9,18 @@ from django.contrib.auth.models import User
 
 from sections.models import Section, Permission, VideoSection
 from video.models import Video
+from permissions_groups.models import Group
 
 from .forms import PermissionForm, VideoForm, FormUser
 from .utils import is_staff
+
+
+@is_staff
+def user_and_groups(request):
+    return render(request, "administration/user_list.haml", {
+        "user_list": User.objects.all(),
+        "group_list": Group.objects.all(),
+    })
 
 
 class DetailUser(DetailView):

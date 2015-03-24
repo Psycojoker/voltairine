@@ -1,6 +1,5 @@
 from django.conf.urls import patterns, url, include
 from django.views.generic import ListView
-from django.contrib.auth.models import User
 
 from sections.models import Section
 
@@ -10,7 +9,7 @@ from .utils import is_staff
 
 urlpatterns = patterns('administration.views',
     url(r'^$', 'dashboard', name='administration_dashboard'),
-    url(r'^user/$', is_staff(ListView.as_view(model=User, template_name='administration/user_list.haml')), name='administration_user_list'),
+    url(r'^user/$', 'user_and_groups', name='administration_user_list'),
     url(r'^user/new/$', is_staff(CreateUser.as_view()), name='administration_user_create'),
     url(r'^user/(?P<pk>\d+)/$', is_staff(DetailUser.as_view()), name='administration_user_detail'),
     url(r'^user/(?P<pk>\d+)/update/$', is_staff(UpdateUser.as_view()), name='administration_user_update'),

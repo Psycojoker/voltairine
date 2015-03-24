@@ -1,25 +1,27 @@
 -extends "base.haml"
 
 -block content
-  %h1 Utilisateurs
-  %hr
+  .row
+    .col-md-6
+      %h1 Utilisateurs
+      %hr
 
-  .list-group
-    -for user in user_list
-      %a.list-group-item{href: "{% url 'administration_user_detail' user.pk %}"}
-        -if user.is_staff
-          <b>
-        -if user.first_name and user.last_name
-          =user.first_name
-          =user.last_name
-          ({{ user.username }})
-        -else
-          =user.username
-        \-
-        =user.email
-        -if user.is_staff
-          \- administrateur
-          </b>
+      .list-group
+        -for user in user_list
+          %a.list-group-item{href: "{% url 'administration_user_detail' user.pk %}"}
+            -if user.is_staff
+              <b>
+            -if user.first_name and user.last_name
+              =user.first_name
+              =user.last_name
+              ({{ user.username }})
+            -else
+              =user.username
+            \-
+            =user.email
+            -if user.is_staff
+              \- administrateur
+              </b>
 
   %a.btn.btn-lg.btn-primary{href: "{% url 'administration_user_create' %}"}
     Rajouter un nouvel utilisateur
