@@ -30,6 +30,13 @@
 
       %hr
 
+      .panel.panel-primary
+        .panel-heading Administrateurs du groupe
+        .list-group
+          -for admin in object.admins.all
+            %a.list-group-item{href: "{% url 'administration_user_detail' admin.pk %}"}
+              =admin
+
     .col-md-6
       %h2 Permissions
       %hr
