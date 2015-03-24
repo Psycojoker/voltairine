@@ -24,8 +24,8 @@ def user_and_groups(request):
 
 
 class DetailUser(DetailView):
-    model=User
-    template_name='administration/user_detail.haml'
+    model = User
+    template_name = 'administration/user_detail.haml'
 
     def get_context_data(self, *args, **kwargs):
         context = super(DetailUser, self).get_context_data(*args, **kwargs)
@@ -34,9 +34,9 @@ class DetailUser(DetailView):
 
 
 class CreateUser(CreateView):
-    model=User
-    template_name='administration/user_update_form.haml'
-    fields=['username', 'password', 'is_staff', 'first_name', 'last_name', 'email']
+    model = User
+    template_name = 'administration/user_update_form.haml'
+    fields = ['username', 'password', 'is_staff', 'first_name', 'last_name', 'email']
 
     def get_success_url(self):
         return reverse('administration_user_detail', args=(self.object.pk,))
@@ -49,32 +49,32 @@ class CreateUser(CreateView):
 
 
 class DeleteUser(DeleteView):
-    model=User
-    template_name="administration/user_confirm_delete.haml"
-    success_url=reverse_lazy('administration_user_list')
+    model = User
+    template_name = "administration/user_confirm_delete.haml"
+    success_url = reverse_lazy('administration_user_list')
 
 
 class CreateGroup(CreateView):
-    model=Group
-    template_name='administration/group_update_form.haml'
-    fields=['name', 'admins', 'users']
+    model = Group
+    template_name = 'administration/group_update_form.haml'
+    fields = ['name', 'admins', 'users']
 
     def get_success_url(self):
         return reverse('administration_group', args=(self.object.pk,))
 
 
 class CreateSection(CreateView):
-    model=Section
-    template_name='administration/section_list.haml'
-    fields=['title', 'parent']
-    success_url=reverse_lazy('administration_section_list')
+    model = Section
+    template_name = 'administration/section_list.haml'
+    fields = ['title', 'parent']
+    success_url = reverse_lazy('administration_section_list')
 
 
 class UpdateSection(UpdateView):
-    model=Section
-    template_name='administration/section_list.haml'
-    fields=['title']
-    success_url=reverse_lazy('administration_section_list')
+    model = Section
+    template_name = 'administration/section_list.haml'
+    fields = ['title']
+    success_url = reverse_lazy('administration_section_list')
 
 
 @is_staff
@@ -84,9 +84,9 @@ def delete_section_and_childrens(request, pk):
 
 
 class UpdateUser(UpdateView):
-    model=User
-    template_name='administration/user_update_form.haml'
-    form_class=FormUser
+    model = User
+    template_name = 'administration/user_update_form.haml'
+    form_class = FormUser
 
     def get_success_url(self):
         return reverse('administration_user_detail', args=(self.object.pk,))
@@ -103,9 +103,9 @@ class UpdateUser(UpdateView):
 
 
 class DeleteVideo(DeleteView):
-    model=Video
-    template_name="administration/video_confirm_delete.haml"
-    success_url=reverse_lazy('administration_video_list')
+    model = Video
+    template_name = "administration/video_confirm_delete.haml"
+    success_url = reverse_lazy('administration_video_list')
 
 
 @is_staff
