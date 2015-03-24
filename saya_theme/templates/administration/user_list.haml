@@ -23,6 +23,9 @@
               \- administrateur
               </b>
 
+      %a.btn.btn-lg.btn-primary{href: "{% url 'administration_user_create' %}"}
+        Rajouter un nouvel utilisateur
+
     .col-md-6
       %h1 Groupes
       %hr
@@ -31,6 +34,3 @@
         -for group in group_list
           %a.list-group-item{href: ""}
             =group.name
-
-  %a.btn.btn-lg.btn-primary{href: "{% url 'administration_user_create' %}"}
-    Rajouter un nouvel utilisateur
