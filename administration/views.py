@@ -50,6 +50,25 @@ class CreateUser(CreateView):
         return to_return
 
 
+class UpdateUser(UpdateView):
+    model = User
+    template_name = 'administration/user_update_form.haml'
+    form_class = FormUser
+
+    def get_success_url(self):
+        return reverse('administration_user_detail', args=(self.object.pk,))
+
+    def form_valid(self, form):
+        old_password_hash = self.object.password
+        to_return = super(UpdateView, self).form_valid(form)
+        if form.cleaned_data["password"]:
+            self.object.set_password(form.cleaned_data["password"])
+        else:
+            self.object.password = old_password_hash
+        self.object.save()
+        return to_return
+
+
 class DeleteUser(DeleteView):
     model = User
     template_name = "administration/user_confirm_delete.haml"
@@ -89,25 +108,6 @@ class UpdateSection(UpdateView):
 def delete_section_and_childrens(request, pk):
     get_object_or_404(Section, pk=pk).delete()
     return HttpResponseRedirect((reverse('administration_section_list')))
-
-
-class UpdateUser(UpdateView):
-    model = User
-    template_name = 'administration/user_update_form.haml'
-    form_class = FormUser
-
-    def get_success_url(self):
-        return reverse('administration_user_detail', args=(self.object.pk,))
-
-    def form_valid(self, form):
-        old_password_hash = self.object.password
-        to_return = super(UpdateView, self).form_valid(form)
-        if form.cleaned_data["password"]:
-            self.object.set_password(form.cleaned_data["password"])
-        else:
-            self.object.password = old_password_hash
-        self.object.save()
-        return to_return
 
 
 class DeleteVideo(DeleteView):
