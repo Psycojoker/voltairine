@@ -26,5 +26,8 @@ class VideoSection(models.Model):
     video = models.OneToOneField("video.Video")
     section = models.ForeignKey(Section)
 
+    class Meta:
+        unique_together = (('video', 'section'),)
+
     def __unicode__(self):
         return self.section.__unicode__()
