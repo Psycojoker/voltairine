@@ -55,24 +55,21 @@
     .col-md-6
       %h2 Permissions
       %hr
-      -#
 
-        -if object.is_staff
-          %p L'utilisateur est un membre de l'équipe, il a accès à toutes les vidéos.
-        -else
-          .fuelux
-            %ul.tree.tree-folder-select
-              -recursetree section_list
-                %li.tree-branch
-                  .tree-branch-header
-                    %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
-                      %span.sr-only Open
-                    =node.title
-                    %span{style: "margin-left: 20px;"}
-                      %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", data-user-id: "{{ object.id }}", data-section-id: "{{ node.id }}", data-has-permission: "{% is_user_have_access node object %}"}
-                  -if not node.is_leaf_node
-                    %ul.tree-branch-children
-                      =children
+      -#
+        .fuelux
+          %ul.tree.tree-folder-select
+            -recursetree section_list
+              %li.tree-branch
+                .tree-branch-header
+                  %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
+                    %span.sr-only Open
+                  =node.title
+                  %span{style: "margin-left: 20px;"}
+                    %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", data-user-id: "{{ object.id }}", data-section-id: "{{ node.id }}", data-has-permission: "{% is_user_have_access node object %}"}
+                -if not node.is_leaf_node
+                  %ul.tree-branch-children
+                    =children
 
 
 -block javascript
