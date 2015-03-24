@@ -21,9 +21,8 @@
       %h2 Group :
         =object.name
         %small.pull-right
-          -#
-            %a.btn.btn-primary{href: "{% url 'administration_group_update' object.pk %}"}
-              Modifier
+          %a.btn.btn-primary{href: "{% url 'administration_group_update' object.pk %}"}
+            Modifier
           -#
             %a.btn.btn-danger{href: "{% url 'administration_group_delete' object.pk %}"}
               Supprimer

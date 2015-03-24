@@ -90,6 +90,21 @@ class CreateGroup(CreateView):
         return reverse('administration_group_detail', args=(self.object.pk,))
 
 
+class UpdateGroup(UpdateView):
+    model = Group
+    template_name = 'administration/group_update_form.haml'
+    form_class = modelform_factory(Group,
+        widgets={
+            "admins": forms.CheckboxSelectMultiple,
+            "users": forms.CheckboxSelectMultiple,
+        },
+        fields=['name', 'users', 'admins']
+    )
+
+    def get_success_url(self):
+        return reverse('administration_group_detail', args=(self.object.pk,))
+
+
 class CreateSection(CreateView):
     model = Section
     template_name = 'administration/section_list.haml'
