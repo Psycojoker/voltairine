@@ -24,7 +24,7 @@ class Permission(models.Model):
 
 class VideoSection(models.Model):
     video = models.OneToOneField("video.Video")
-    section = models.ForeignKey(Section, null=True)
+    section = models.ForeignKey(Section)
 
     def __unicode__(self):
         return self.section.__unicode__()
