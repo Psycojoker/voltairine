@@ -1,3 +1,5 @@
+import operator
+
 from django.shortcuts import render
 from django.views.generic import DetailView
 from django.core.exceptions import PermissionDenied
@@ -9,8 +11,11 @@ from sections.models import Section, Permission
 
 @login_required
 def dashboard(request):
+    section_I_can_read = set(reduce(operator.add, map(lambda x: list(x.get_descendants(True)), Section.objects.filter(permission__user=request.user)), []))
+
     return render(request, 'regular_users_interface/dashboard.haml', {
         "section_list": Section.objects.all(),
+        "section_I_can_read": section_I_can_read,
         "level": 1,
     })
 
