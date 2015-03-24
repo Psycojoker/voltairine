@@ -16,7 +16,7 @@ class Section(MPTTModel):
 
 class Permission(models.Model):
     user = models.ForeignKey(User)
-    section = models.ForeignKey(Section, null=True)
+    section = models.ForeignKey(Section)
 
 
 class VideoSection(models.Model):
