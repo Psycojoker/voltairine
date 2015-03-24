@@ -18,6 +18,9 @@ class Permission(models.Model):
     user = models.ForeignKey(User)
     section = models.ForeignKey(Section)
 
+    class Meta:
+        unique_together = (('user', 'section'),)
+
 
 class VideoSection(models.Model):
     video = models.OneToOneField("video.Video")
