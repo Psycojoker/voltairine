@@ -105,6 +105,12 @@ class UpdateGroup(UpdateView):
         return reverse('administration_group_detail', args=(self.object.pk,))
 
 
+class DeleteGroup(DeleteView):
+    model = Group
+    template_name = "administration/group_confirm_delete.haml"
+    success_url = reverse_lazy('administration_user_list')
+
+
 class CreateSection(CreateView):
     model = Section
     template_name = 'administration/section_list.haml'
