@@ -4,13 +4,13 @@
   %h1{style: "margin-top: 0px"} Films
   %hr
 
-  -for subsection in subsection_list
-    %h3= subsection.title
-    -for subsubsection in subsection.subsubsection_set.all
-      -if subsubsection.videosection_set.all.exists
-        %h4= subsubsection.title
+  -for section in section_list
+    %h3= section.title
+    -for section in section.section_set.all
+      -if section.videosection_set.all.exists
+        %h4= section.title
         .row
-          -for videosection in subsubsection.videosection_set.all
+          -for videosection in section.videosection_set.all
             .col-md-3
               .thumbnail
                 %img{src: "http://placekitten.com/420/270", alt: "videosection.video.title"}
@@ -23,5 +23,5 @@
                     Regarder
 
 
-  -if not subsection_list
+  -if not section_list
     %p Il n'y a aucune vidéo dans les catégories auxquelles vous avez accès.

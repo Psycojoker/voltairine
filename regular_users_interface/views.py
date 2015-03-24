@@ -10,7 +10,7 @@ from sections.models import Section, Permission
 @login_required
 def dashboard(request):
     return render(request, 'regular_users_interface/dashboard.haml', {
-        "subsection_list": Section.objects.filter(subsubsection__permission__user=request.user).distinct(),
+        "section_list": Section.objects.all(),
     })
 
 
@@ -21,7 +21,7 @@ class UserVideoDetail(DetailView):
     def get(self, request, *args, **kwargs):
         to_return = super(UserVideoDetail, self).get(request, *args, **kwargs)
 
-        if not Permission.objects.filter(user=request.user, subsubsection__videosection__video=self.object).exists():
+        if not Permission.objects.filter(user=request.user, section__videosection__video=self.object).exists():
             raise PermissionDenied()
 
         return to_return
