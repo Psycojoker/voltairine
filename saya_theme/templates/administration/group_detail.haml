@@ -41,6 +41,17 @@
         %p
           Ce groupe n'a pas d'administrateurs.
 
+      -if object.users.all.exists
+        .panel.panel-primary
+          .panel-heading Membres du groupe
+          .list-group
+            -for group_user in object.users.all
+              %a.list-group-item{href: "{% url 'administration_user_detail' group_user.pk %}"}
+                =group_user
+      -else
+        %p
+          Ce groupe n'a pas de membres.
+
     .col-md-6
       %h2 Permissions
       %hr
