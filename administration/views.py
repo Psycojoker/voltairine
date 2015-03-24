@@ -90,6 +90,16 @@ class CreateGroup(CreateView):
         return reverse('administration_group_detail', args=(self.object.pk,))
 
 
+class DetailGroup(DetailView):
+    model = Group
+    template_name = 'administration/group_detail.haml'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(DetailGroup, self).get_context_data(*args, **kwargs)
+        context["section_list"] = Section.objects.all()
+        return context
+
+
 class UpdateGroup(UpdateView):
     model = Group
     template_name = 'administration/group_update_form.haml'
