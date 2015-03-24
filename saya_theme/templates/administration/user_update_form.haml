@@ -2,7 +2,10 @@
 -load bootstrap3
 
 -block content
-  %h2 Modifier l'utilisateur
+  -if object.pk
+    %h2 Modifier l'utilisateur
+  -else
+    %h2 Rajouter un nouvel utilisateur
   %hr
 
   %form{method: "POST"}
