@@ -3,7 +3,7 @@ from django.views.generic import ListView
 
 from sections.models import Section
 
-from .views import UpdateUser, CreateUser, CreateSection, DetailUser, DeleteUser, UpdateSection, DeleteVideo
+from .views import UpdateUser, CreateUser, CreateSection, DetailUser, DeleteUser, UpdateSection, DeleteVideo, CreateGroup
 from .utils import is_staff
 
 
@@ -14,6 +14,8 @@ urlpatterns = patterns('administration.views',
     url(r'^user/(?P<pk>\d+)/$', is_staff(DetailUser.as_view()), name='administration_user_detail'),
     url(r'^user/(?P<pk>\d+)/update/$', is_staff(UpdateUser.as_view()), name='administration_user_update'),
     url(r'^user/(?P<pk>\d+)/delete/$', is_staff(DeleteUser.as_view()), name='administration_user_delete'),
+
+    url(r'^group/new/$', is_staff(CreateGroup.as_view()), name='administration_group_create'),
 
     url(r'^section/$', is_staff(ListView.as_view(model=Section, template_name='administration/section_list.haml')), name='administration_section_list'),
     url(r'^section/new/$', is_staff(CreateSection.as_view()), name='administration_section_create'),

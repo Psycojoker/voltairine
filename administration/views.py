@@ -54,6 +54,15 @@ class DeleteUser(DeleteView):
     success_url=reverse_lazy('administration_user_list')
 
 
+class CreateGroup(CreateView):
+    model=Group
+    template_name='administration/group_update_form.haml'
+    fields=['name', 'admins', 'users']
+
+    def get_success_url(self):
+        return reverse('administration_group', args=(self.object.pk,))
+
+
 class CreateSection(CreateView):
     model=Section
     template_name='administration/section_list.haml'

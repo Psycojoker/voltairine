@@ -34,3 +34,6 @@
         -for group in group_list
           %a.list-group-item{href: ""}
             =group.name
+
+      %a.btn.btn-lg.btn-primary{href: "{% url 'administration_group_create' %}"}
+        Rajouter un nouvel groupe
