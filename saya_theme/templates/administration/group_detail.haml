@@ -1,0 +1,77 @@
+-extends "base.haml"
+-load section_tags
+-load mptt_tags
+
+-block head
+  %link{href: "{{ STATIC_URL }}css/bootstrap-switch.min.css", rel: "stylesheet"}
+  %link{href: "{{ STATIC_URL }}css/fuelux.min.css", rel: "stylesheet"}
+  %link{href: "{{ STATIC_URL }}css/section_list.css", rel: "stylesheet"}
+  :css
+    .bootstrap-switch {
+      border-color: #3A3D44;
+    }
+
+    .bootstrap-switch .bootstrap-switch-label {
+      background: #D0D0D0;
+    }
+
+-block content
+  .row
+    .col-md-6
+      %h2 Group :
+        =object.name
+        %small.pull-right
+          -#
+            %a.btn.btn-primary{href: "{% url 'administration_group_update' object.pk %}"}
+              Modifier
+          -#
+            %a.btn.btn-danger{href: "{% url 'administration_group_delete' object.pk %}"}
+              Supprimer
+
+      %hr
+
+    .col-md-6
+      %h2 Permissions
+      %hr
+      -#
+
+        -if object.is_staff
+          %p L'utilisateur est un membre de l'équipe, il a accès à toutes les vidéos.
+        -else
+          .fuelux
+            %ul.tree.tree-folder-select
+              -recursetree section_list
+                %li.tree-branch
+                  .tree-branch-header
+                    %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
+                      %span.sr-only Open
+                    =node.title
+                    %span{style: "margin-left: 20px;"}
+                      %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", data-user-id: "{{ object.id }}", data-section-id: "{{ node.id }}", data-has-permission: "{% is_user_have_access node object %}"}
+                  -if not node.is_leaf_node
+                    %ul.tree-branch-children
+                      =children
+
+
+-block javascript
+  %script{src: "{{ STATIC_URL }}js/ajax_django_magic.js"}
+  %script{src: "{{ STATIC_URL }}js/bootstrap-switch.min.js"}
+  :javascript
+    $(function() {
+      $("[name='foobar']").each(function(index, data) {
+        if (data.attributes["data-has-permission"].value == "true") {
+          data.checked = true;
+        }
+        $(data).bootstrapSwitch();
+        $(data).on("switchChange.bootstrapSwitch", function(event, value) {
+          attributes = event.currentTarget.attributes;
+          console.log(value);
+
+          $.post("{% url 'administration_change_subsection_permission' %}", {
+            "user": attributes["data-user-id"].value,
+            "section": attributes["data-section-id"].value,
+            "state": value
+          })
+        })
+      });
+    })

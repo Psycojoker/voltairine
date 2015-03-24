@@ -32,7 +32,7 @@
 
       .list-group
         -for group in group_list
-          %a.list-group-item{href: ""}
+          %a.list-group-item{href: "{% url 'administration_group_detail' group.pk %}"}
             =group.name
 
       %a.btn.btn-lg.btn-primary{href: "{% url 'administration_group_create' %}"}
