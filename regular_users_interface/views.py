@@ -11,10 +11,18 @@ from sections.models import Section, Permission
 
 @login_required
 def dashboard(request):
+    # this is just bad but I think that I've just eat the limit of what sql can do
+    # still: optimisation can be made (to avoid requiering all the time)
     section_I_can_read = set(reduce(operator.add, map(lambda x: list(x.get_descendants(True)), Section.objects.filter(permission__user=request.user)), []))
 
+    section_list = []
+
+    for section in Section.objects.all():
+        if section_I_can_read & set(section.get_descendants(True)):
+            section_list.append(section)
+
     return render(request, 'regular_users_interface/dashboard.haml', {
-        "section_list": Section.objects.all(),
+        "section_list": section_list,
         "section_I_can_read": section_I_can_read,
         "level": 1,
     })
