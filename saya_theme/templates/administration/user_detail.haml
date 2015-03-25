@@ -50,6 +50,25 @@
           -else
             L'utilisateur n'est pas un membre de l'équipe.
 
+      %h2 Groupes :
+      %hr
+
+      .panel.panel-primary
+        .panel-heading
+          Est admin de
+        .list-group
+          -for group in object.group_is_admin_set.all
+            %a.list-group-item{href: "{% url 'administration_group_detail' group.pk %}"}
+              =group
+
+      .panel.panel-primary
+        .panel-heading
+          Est membre de
+        .list-group
+          -for group in object.group_is_member_set.all
+            %a.list-group-item{href: "{% url 'administration_group_detail' group.pk %}"}
+              =group
+
     .col-md-6
       %h2 Permissions
       %hr
