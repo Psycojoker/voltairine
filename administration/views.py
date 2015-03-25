@@ -13,7 +13,7 @@ from sections.models import Section, Permission, VideoSection
 from video.models import Video
 from permissions_groups.models import Group
 
-from .forms import PermissionForm, VideoForm, FormUser
+from .forms import UserPermissionForm, VideoForm, FormUser
 from .utils import is_staff
 
 
@@ -155,7 +155,7 @@ def dashboard(request):
 @is_staff
 @require_POST
 def change_user_section_permission(request):
-    form = PermissionForm(request.POST)
+    form = UserPermissionForm(request.POST)
 
     if not form.is_valid():
         # sucks for debugging

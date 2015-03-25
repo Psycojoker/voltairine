@@ -7,7 +7,7 @@ from sections.models import Section
 from video.models import Video
 
 
-class PermissionForm(forms.Form):
+class UserPermissionForm(forms.Form):
     user = forms.ModelChoiceField(queryset=User.objects.all())
     section = TreeNodeChoiceField(queryset=Section.objects.all())
     state = forms.BooleanField(required=False)
