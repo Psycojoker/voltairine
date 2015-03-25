@@ -53,21 +53,29 @@
       %h2 Groupes :
       %hr
 
-      .panel.panel-primary
-        .panel-heading
-          Est admin de
-        .list-group
-          -for group in object.group_is_admin_set.all
-            %a.list-group-item{href: "{% url 'administration_group_detail' group.pk %}"}
-              =group
+      -if object.group_is_admin_set.all.exists
+        .panel.panel-primary
+          .panel-heading
+            Est admin de
+          .list-group
+            -for group in object.group_is_admin_set.all
+              %a.list-group-item{href: "{% url 'administration_group_detail' group.pk %}"}
+                =group
+      -else
+        %p
+          L'utilisateur n'est admin d'aucun groupe.
 
-      .panel.panel-primary
-        .panel-heading
-          Est membre de
-        .list-group
-          -for group in object.group_is_member_set.all
-            %a.list-group-item{href: "{% url 'administration_group_detail' group.pk %}"}
+      -if object.group_is_member_set.all.exists
+        .panel.panel-primary
+          .panel-heading
+            Est membre de
+          .list-group
+            -for group in object.group_is_member_set.all
+              %a.list-group-item{href: "{% url 'administration_group_detail' group.pk %}"}
               =group
+      -else
+        %p
+          L'utilisateur n'est membre d'aucun groupe.
 
     .col-md-6
       %h2 Permissions
