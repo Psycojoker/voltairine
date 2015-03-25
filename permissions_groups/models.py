@@ -11,3 +11,6 @@ class Group(models.Model):
     users = models.ManyToManyField(User, related_name="group_is_member_set", verbose_name="Utilisateurs", blank=True)
 
     permissions = models.ManyToManyField(Section)
+
+    def __unicode__(self):
+        return self.name
