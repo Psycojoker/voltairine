@@ -63,7 +63,7 @@
                   %span.sr-only Open
                 =node.title
                 %span{style: "margin-left: 20px;"}
-                  %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", data-user-id: "{{ object.id }}", data-section-id: "{{ node.id }}", data-has-permission: "{% is_group_have_access node object %}"}
+                  %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", data-group-id: "{{ object.id }}", data-section-id: "{{ node.id }}", data-has-permission: "{% is_group_have_access node object %}"}
               -if not node.is_leaf_node
                 %ul.tree-branch-children
                   =children
@@ -83,8 +83,8 @@
           attributes = event.currentTarget.attributes;
           console.log(value);
 
-          $.post("{% url 'administration_change_subsection_permission' %}", {
-            "user": attributes["data-user-id"].value,
+          $.post("{% url 'administration_change_group_section_permission' %}", {
+            "group": attributes["data-group-id"].value,
             "section": attributes["data-section-id"].value,
             "state": value
           })

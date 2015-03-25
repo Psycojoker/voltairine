@@ -13,7 +13,7 @@ from sections.models import Section, Permission, VideoSection
 from video.models import Video
 from permissions_groups.models import Group
 
-from .forms import UserPermissionForm, VideoForm, FormUser
+from .forms import UserPermissionForm, GroupPermissionForm, VideoForm, FormUser
 from .utils import is_staff
 
 
@@ -184,6 +184,39 @@ def change_user_section_permission(request):
         user=form.cleaned_data["user"],
         section=form.cleaned_data["section"],
     ).delete()
+
+    return HttpResponse("ok")
+
+
+@is_staff
+@require_POST
+def change_group_section_permission(request):
+    form = GroupPermissionForm(request.POST)
+
+    if not form.is_valid():
+        # sucks for debugging
+        print form.errors
+        raise PermissionDenied()
+
+    group = form.cleaned_data["group"]
+    section_id = form.cleaned_data["section"].id
+
+    if form.cleaned_data["state"]:
+        # already have the autorisation, don't do anything
+        if group.permissions.filter(id=section_id).exists():
+            return HttpResponse("ok")
+
+        # autorised
+        group.permissions.add(section_id)
+
+        return HttpResponse("ok")
+
+    if not group.permissions.filter(id=section_id).exists():
+        # don't have the permission, don't do anything
+        return HttpResponse("ok")
+
+    # state is False
+    group.permissions.remove(section_id)
 
     return HttpResponse("ok")
 

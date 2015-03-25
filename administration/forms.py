@@ -13,6 +13,12 @@ class UserPermissionForm(forms.Form):
     state = forms.BooleanField(required=False)
 
 
+class GroupPermissionForm(forms.Form):
+    group = forms.ModelChoiceField(queryset=Group.objects.all())
+    section = TreeNodeChoiceField(queryset=Section.objects.all())
+    state = forms.BooleanField(required=False)
+
+
 class VideoForm(forms.ModelForm):
     section = TreeNodeChoiceField(queryset=Section.objects.all(), required=False)
 
