@@ -86,7 +86,7 @@
           attributes = event.currentTarget.attributes;
           console.log(value);
 
-          $.post("{% url 'administration_change_subsection_permission' %}", {
+          $.post("{% url 'administration_change_user_section_permission' %}", {
             "user": attributes["data-user-id"].value,
             "section": attributes["data-section-id"].value,
             "state": value

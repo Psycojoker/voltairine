@@ -25,7 +25,7 @@ urlpatterns = patterns('administration.views',
     url(r'^section/(?P<pk>\d+)/update/$', is_staff(UpdateSection.as_view()), name='administration_section_update'),
     url(r'^section/(?P<pk>\d+)/delete/$', 'delete_section_and_childrens', name='administration_section_delete'),
 
-    url(r'^change_subsection_permission/$', 'change_section_permission', name='administration_change_subsection_permission'),
+    url(r'^change_user_section_permission/$', 'change_user_section_permission', name='administration_change_user_section_permission'),
 
     url(r'^video/$', 'video_list', name='administration_video_list'),
     url(r'^video/(?P<pk>\d+)/$', 'video_detail', name='administration_video_detail'),

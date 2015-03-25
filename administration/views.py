@@ -154,7 +154,7 @@ def dashboard(request):
 
 @is_staff
 @require_POST
-def change_section_permission(request):
+def change_user_section_permission(request):
     form = PermissionForm(request.POST)
 
     if not form.is_valid():
