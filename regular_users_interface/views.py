@@ -18,6 +18,7 @@ def dashboard(request):
     sections_I_can_read = set()
 
     for i in section_user_has_access_to:
+        sections_I_can_read.add(i)
         map(sections_I_can_read.add, node_to_childrens[i])
 
     return render(request, 'regular_users_interface/dashboard.haml', {
