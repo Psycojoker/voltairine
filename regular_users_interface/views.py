@@ -1,5 +1,3 @@
-import operator
-
 from django.shortcuts import render
 from django.views.generic import DetailView
 from django.core.exceptions import PermissionDenied
@@ -8,22 +6,21 @@ from django.contrib.auth.decorators import login_required
 from video.models import Video
 from sections.models import Section, Permission
 
+from sections.utils import unfold_tree
+
 
 @login_required
 def dashboard(request):
-    # this is just bad but I think that I've just eat the limit of what sql can do
-    # still: optimisation can be made (to avoid requiering all the time)
-    section_I_can_read = set(reduce(operator.add, map(lambda x: list(x.get_descendants(True)), Section.objects.filter(permission__user=request.user)), []))
+    node_to_childrens = unfold_tree(Section.objects.all().as_python_tree())
+    section_user_has_access_to = Section.objects.filter(permission__user=request.user)
 
-    section_list = []
+    section_I_can_read = set()
 
-    for section in Section.objects.all():
-        if section_I_can_read & set(section.get_descendants(True)):
-            section_list.append(section)
+    for i in section_user_has_access_to:
+        map(section_I_can_read.add, node_to_childrens[i])
 
     return render(request, 'regular_users_interface/dashboard.haml', {
-        "section_list": section_list,
-        "section_I_can_read": section_I_can_read,
+        "section_list": Section.objects.filter(id__in=map(lambda x: x.id, section_I_can_read)),
         "level": 1,
     })
 

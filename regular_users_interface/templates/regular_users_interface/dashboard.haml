@@ -14,19 +14,18 @@
     =section.title
     </h{{ level }}>
 
-    -if section in section_I_can_read
-      .row
-        -for videosection in section.videosection_set.all
-          .col-md-3
-            .thumbnail
-              %img{src: "http://placekitten.com/420/270", alt: "videosection.video.title"}
-              .caption
-                %h5= videosection.video.title
-                %p
-                  foobar
+    .row
+      -for videosection in section.videosection_set.all
+        .col-md-3
+          .thumbnail
+            %img{src: "http://placekitten.com/420/270", alt: "videosection.video.title"}
+            .caption
+              %h5= videosection.video.title
+              %p
+                foobar
 
-                %a.btn.btn-primary{href: "{% url 'user_video_detail' videosection.video.id %}"}
-                  Regarder
+              %a.btn.btn-primary{href: "{% url 'user_video_detail' videosection.video.id %}"}
+                Regarder
 
     -for level in structure.closed_levels
       -decrement "level"
