@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models import Q
 from django.views.generic import DetailView
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
@@ -12,7 +13,7 @@ from sections.utils import unfold_tree
 @login_required
 def dashboard(request):
     node_to_childrens = unfold_tree(Section.objects.all().as_python_tree())
-    section_user_has_access_to = Section.objects.filter(permission__user=request.user)
+    section_user_has_access_to = Section.objects.filter(Q(permission__user=request.user)|Q(group__users=request.user))
 
     section_I_can_read = set()
 
