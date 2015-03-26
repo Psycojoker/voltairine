@@ -13,7 +13,8 @@ from sections.utils import unfold_tree
 @login_required
 def dashboard(request):
     # no, that was not easy to write at all
-    node_to_childrens = unfold_tree(Section.objects.all().as_python_tree())
+    all_sections = Section.objects.all()
+    node_to_childrens = unfold_tree(all_sections.as_python_tree())
     section_user_has_access_to = Section.objects.filter(Q(permission__user=request.user)|Q(group__users=request.user))
 
     sections_I_can_read = set()
@@ -24,7 +25,7 @@ def dashboard(request):
 
     section_list = []
 
-    for section in Section.objects.all():
+    for section in all_sections:
         if section in sections_I_can_read or set(node_to_childrens[section]) & sections_I_can_read:
             section_list.append(section)
 
