@@ -12,6 +12,7 @@ from sections.utils import unfold_tree
 
 @login_required
 def dashboard(request):
+    # no, that was not easy to write at all
     node_to_childrens = unfold_tree(Section.objects.all().as_python_tree())
     section_user_has_access_to = Section.objects.filter(Q(permission__user=request.user)|Q(group__users=request.user))
 
