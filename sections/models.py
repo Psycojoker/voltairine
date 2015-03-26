@@ -5,15 +5,10 @@ from mptt.models import MPTTModel, TreeForeignKey
 from mptt.utils import tree_item_iterator
 
 
-class Section(MPTTModel):
-    title = models.CharField(max_length=255)
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+class SectionManager(models.Manager):
+    def as_python_tree(self):
+        queryset = super(SectionManager, self).get_queryset()
 
-    def __unicode__(self):
-        return self.title
-
-    @staticmethod
-    def as_python_tree(queryset):
         iterator = tree_item_iterator(queryset)
         first = True
 
@@ -32,6 +27,16 @@ class Section(MPTTModel):
                 current = stack.pop()
 
         return current
+
+
+class Section(MPTTModel):
+    objects = SectionManager()
+
+    title = models.CharField(max_length=255)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+
+    def __unicode__(self):
+        return self.title
 
     class MPTTMeta:
         order_insertion_by = ['title']
