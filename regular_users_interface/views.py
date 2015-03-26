@@ -21,8 +21,17 @@ def dashboard(request):
         sections_I_can_read.add(i)
         map(sections_I_can_read.add, node_to_childrens[i])
 
+    section_list = []
+
+    for section in Section.objects.all():
+        if section in sections_I_can_read or set(node_to_childrens[section]) & sections_I_can_read:
+            section_list.append(section)
+
+    print sections_I_can_read
+
     return render(request, 'regular_users_interface/dashboard.haml', {
-        "section_list": Section.objects.filter(id__in=map(lambda x: x.id, sections_I_can_read)),
+        "sections_I_can_read": sections_I_can_read,
+        "section_list": section_list,
         "level": 1,
     })
 
