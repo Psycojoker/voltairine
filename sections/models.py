@@ -2,14 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from mptt.models import MPTTModel, TreeForeignKey
+from mptt.managers import TreeManager
 from mptt.utils import tree_item_iterator
 
 
-class SectionManager(models.Manager):
+class SectionQuerySet(models.QuerySet):
     def as_python_tree(self):
-        queryset = super(SectionManager, self).get_queryset()
-
-        iterator = tree_item_iterator(queryset)
+        iterator = tree_item_iterator(self)
         first = True
 
         current = []
@@ -24,9 +23,15 @@ class SectionManager(models.Manager):
             first = False
 
             for i in infos["closed_levels"]:
-                current = stack.pop()
+                if stack:
+                    current = stack.pop()
 
         return current
+
+
+class SectionManager(TreeManager):
+    def get_queryset(self):
+        return SectionQuerySet(self.model, using=self._db).order_by(self.tree_id_attr, self.left_attr)
 
 
 class Section(MPTTModel):
