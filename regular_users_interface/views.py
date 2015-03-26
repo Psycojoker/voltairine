@@ -28,8 +28,6 @@ def dashboard(request):
         if section in sections_I_can_read or set(node_to_childrens[section]) & sections_I_can_read:
             section_list.append(section)
 
-    print sections_I_can_read
-
     return render(request, 'regular_users_interface/dashboard.haml', {
         "sections_I_can_read": sections_I_can_read,
         "section_list": section_list,
