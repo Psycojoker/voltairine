@@ -15,13 +15,13 @@ def dashboard(request):
     node_to_childrens = unfold_tree(Section.objects.all().as_python_tree())
     section_user_has_access_to = Section.objects.filter(Q(permission__user=request.user)|Q(group__users=request.user))
 
-    section_I_can_read = set()
+    sections_I_can_read = set()
 
     for i in section_user_has_access_to:
-        map(section_I_can_read.add, node_to_childrens[i])
+        map(sections_I_can_read.add, node_to_childrens[i])
 
     return render(request, 'regular_users_interface/dashboard.haml', {
-        "section_list": Section.objects.filter(id__in=map(lambda x: x.id, section_I_can_read)),
+        "section_list": Section.objects.filter(id__in=map(lambda x: x.id, sections_I_can_read)),
         "level": 1,
     })
 
