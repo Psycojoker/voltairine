@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 from mptt.models import MPTTModel, TreeForeignKey
+from mptt.utils import tree_item_iterator
 
 
 class Section(MPTTModel):
@@ -9,6 +11,27 @@ class Section(MPTTModel):
 
     def __unicode__(self):
         return self.title
+
+    @staticmethod
+    def as_python_tree(queryset):
+        iterator = tree_item_iterator(queryset)
+        first = True
+
+        current = []
+        stack = [current]
+        for row, infos in iterator:
+            if infos["new_level"] and not first:
+                stack.append(current)
+                current = current[-1][1]
+
+            current.append([row, []])
+
+            first = False
+
+            for i in infos["closed_levels"]:
+                current = stack.pop()
+
+        return current
 
     class MPTTMeta:
         order_insertion_by = ['title']
