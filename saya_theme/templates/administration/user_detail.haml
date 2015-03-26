@@ -72,7 +72,7 @@
           .list-group
             -for group in object.group_is_member_set.all
               %a.list-group-item{href: "{% url 'administration_group_detail' group.pk %}"}
-              =group
+                =group
       -else
         %p
           L'utilisateur n'est membre d'aucun groupe.
