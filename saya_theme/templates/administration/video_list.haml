@@ -8,17 +8,18 @@
     %hr
     .row
       -for video in video_list
-        .col-md-3
-          .thumbnail
-            %a{href: "{% url 'administration_video_detail' video.id %}"}
-              %img{src: "http://placekitten.com/250/160", alt: "video.title"}
-            .caption
-              %h4= video.title
-              %p
-                %i= video.observations|default:""
+        .col-md-4
+          .panel.panel-default{style: "height: 253px"}
+            .panel-heading
+              =video.title|truncatechars:"60"
+            .panel-body
+              .row
+                .col-md-8
+                  %a{href: "{% url 'administration_video_detail' video.id %}"}
+                    %img{src: "http://placekitten.com/250/160", alt: "video.title"}
+                .col-md-4
+                  %p foobar
 
-              %a.btn.btn-primary{href: "{% url 'administration_video_detail' video.id %}"}
-                Regarder
 
   -for section, structure in section_list|tree_info
     -if structure.new_level and not forloop.first
