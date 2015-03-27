@@ -43,5 +43,15 @@ class Video(models.Model):
 
         return "%d:%.2d" % (minutes, seconds)
 
+    @property
+    def width_x_height(self):
+        if "height" not in self.additional_infos or "width" not in self.additional_infos:
+            # video stream always appears to be the first one, I'm not convinced that it's always the case
+            self.additional_infos["height"] = av.open(self.absolute_path).streams[0].height
+            self.additional_infos["width"] = av.open(self.absolute_path).streams[0].width
+            self.save()
+
+        return "%sx%s" % (self.additional_infos["width"], self.additional_infos["height"])
+
     def __unicode__(self):
         return self.title
