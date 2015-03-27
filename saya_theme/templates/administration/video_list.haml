@@ -14,7 +14,7 @@
               %a{href: "{% url 'administration_video_detail' video.id %}"}
                 %img{src: "http://placekitten.com/230/146", alt: "video.title"}
                 %span{style: "position: absolute; right: 215px; bottom: 24px; background-color: rgba(0, 0, 0, .7); padding: 5px; padding-top: 0px"}
-                  13:42
+                  =video.duration
             %a{href: "{% url 'administration_video_detail' video.id %}"}
               %h5{style: "margin-top: 3px"}
                 =video.title|truncatechars:"60"
