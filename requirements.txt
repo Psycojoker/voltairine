@@ -8,3 +8,4 @@ werkzeug
 django-resumable
 django-mptt
 jsonfield
+av
