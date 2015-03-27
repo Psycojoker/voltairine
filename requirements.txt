@@ -7,3 +7,4 @@ hamlpy
 werkzeug
 django-resumable
 django-mptt
+jsonfield
