@@ -9,3 +9,4 @@ django-resumable
 django-mptt
 jsonfield
 av
+pillow
