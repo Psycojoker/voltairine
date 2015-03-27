@@ -25,6 +25,12 @@
               =video.fps|floatformat|cut:".0"
               fps
 
+            %p{style: "margin-top: 30px"}
+              %a.btn.btn-sm.btn-primary{href: "{% url 'administration_video_detail' video.id %}"}
+                regarder
+              %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                télécharger
+
 
   -for section, structure in section_list|tree_info
     -if structure.new_level and not forloop.first
