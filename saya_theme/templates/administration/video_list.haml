@@ -25,7 +25,7 @@
               =video.fps|floatformat|cut:".0"
               fps
 
-            %p{style: "margin-top: 30px"}
+            %p{style: "position: absolute; right: 20px; bottom: 16px"}
               %a.btn.btn-sm.btn-primary{href: "{% url 'administration_video_detail' video.id %}"}
                 regarder
               %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
