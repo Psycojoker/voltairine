@@ -39,26 +39,32 @@ class Video(models.Model):
             os.makedirs(thumbnails_dir)
 
         if not self.thumbnail_name or not os.path.exists(os.path.join(thumbnails_dir, self.thumbnail_name)):
-            video = av.open(self.absolute_path)
             self.thumbnail_name = slugify(".".join(self.file_name.split(".")[:-1])) + ".png"
 
-            image = None
-            until_2_seconds = 0
-
-            for i in video.demux():
-                for frame in i.decode():
-                    if frame.__class__.__name__ == "VideoFrame":
-                        if until_2_seconds > 60:  # ~2 seconds on 60 fps
-                            image = frame.to_image()
-                            break
-                        until_2_seconds += 1
-                if image is not None:
-                    break
+            image = self._generate_thumbnail_image_from_video()
 
             image.resize((230, 146)).save(os.path.join(thumbnails_dir, self.thumbnail_name))
             self.save()
 
         return os.path.join(settings.MEDIA_URL, "thumbnails", self.thumbnail_name)
+
+    def _generate_thumbnail_image_from_video(self):
+        video = av.open(self.absolute_path)
+
+        image = None
+        until_2_seconds = 0
+
+        for i in video.demux():
+            for frame in i.decode():
+                if frame.__class__.__name__ == "VideoFrame":
+                    if until_2_seconds > 60:  # ~2 seconds on 60 fps
+                        image = frame.to_image()
+                        break
+                    until_2_seconds += 1
+            if image is not None:
+                break
+
+        return image
 
     @property
     def duration(self):
