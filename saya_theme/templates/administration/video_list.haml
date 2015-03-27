@@ -17,6 +17,19 @@
               %h5{style: "margin-top: 3px"}
                 =video.title|truncatechars:"60"
 
+            %p
+              %b Durée :
+              123
+              %br
+              %b Définition :
+              123
+              %br
+              %b Taille :
+              123
+              %br
+              %b Fréquence :
+              123
+
 
   -for section, structure in section_list|tree_info
     -if structure.new_level and not forloop.first
