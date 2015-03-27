@@ -24,9 +24,13 @@ class Video(models.Model):
     additional_infos = JSONField()
 
     @property
+    def absolute_path(self):
+        return os.path.join(settings.MEDIA_ROOT, "videos", self.file_name.encode("Utf-8"))
+
+    @property
     def duration(self):
         if "duration" not in self.additional_infos:
-            self.additional_infos["duration"] = av.open(os.path.join(settings.MEDIA_ROOT, "videos", self.file_name.encode("Utf-8"))).duration
+            self.additional_infos["duration"] = av.open(self.absolute_path).duration
             self.save()
 
         video_duration = float(self.additional_infos["duration"]) / av.time_base
