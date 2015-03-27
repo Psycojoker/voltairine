@@ -57,7 +57,7 @@ class Video(models.Model):
         for i in video.demux():
             for frame in i.decode():
                 if frame.__class__.__name__ == "VideoFrame":
-                    if until_2_seconds > 60:  # ~2 seconds on 60 fps
+                    if until_2_seconds > self.fps * 2:  # ~2 seconds
                         image = frame.to_image()
                         break
                     until_2_seconds += 1
