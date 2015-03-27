@@ -9,16 +9,13 @@
     .row
       -for video in video_list
         .col-md-4
-          .panel.panel-default{style: "height: 253px"}
-            .panel-heading
-              =video.title|truncatechars:"60"
-            .panel-body
-              .row
-                .col-md-8
-                  %a{href: "{% url 'administration_video_detail' video.id %}"}
-                    %img{src: "http://placekitten.com/250/160", alt: "video.title"}
-                .col-md-4
-                  %p foobar
+          .well.well-sm{style: "padding: 0px; height: 148px"}
+            .pull-left{style: "margin-right: 10px"}
+              %a{href: "{% url 'administration_video_detail' video.id %}"}
+                %img{src: "http://placekitten.com/230/146", alt: "video.title"}
+            %a{href: "{% url 'administration_video_detail' video.id %}"}
+              %h5{style: "margin-top: 3px"}
+                =video.title|truncatechars:"60"
 
 
   -for section, structure in section_list|tree_info
