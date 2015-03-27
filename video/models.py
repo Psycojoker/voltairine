@@ -43,12 +43,15 @@ class Video(models.Model):
             self.thumbnail_name = slugify(".".join(self.file_name.split(".")[:-1])) + ".png"
 
             image = None
+            until_2_seconds = 0
 
             for i in video.demux():
                 for frame in i.decode():
                     if frame.__class__.__name__ == "VideoFrame":
-                        image = frame.to_image()
-                        break
+                        if until_2_seconds > 60:  # ~2 seconds on 60 fps
+                            image = frame.to_image()
+                            break
+                        until_2_seconds += 1
                 if image is not None:
                     break
 
