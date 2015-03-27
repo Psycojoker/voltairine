@@ -22,9 +22,8 @@
             %p
               =video.width_x_height
               =video.file_size
-              %br
-              %b Fréquence :
-              123
+              =video.fps|floatformat|cut:".0"
+              fps
 
 
   -for section, structure in section_list|tree_info

@@ -68,5 +68,15 @@ class Video(models.Model):
 
         return sizeof_fmt(self.additional_infos["size"])
 
+    @property
+    def fps(self):
+        if "fps" not in self.additional_infos:
+            video = av.open(self.absolute_path)
+            video_stream = video.streams[0]
+            self.additional_infos["fps"] = video_stream.frames / (float(video.duration) / av.time_base)
+            self.save()
+
+        return self.additional_infos["fps"]
+
     def __unicode__(self):
         return self.title
