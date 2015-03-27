@@ -9,7 +9,10 @@ from jsonfield import JSONField
 
 class Video(models.Model):
     title = models.CharField(max_length=255)
+
     file_name = models.CharField(max_length=255)
+    thumbnail_name = models.CharField(max_length=255, null=True, blank=True)
+
     film_name = models.CharField(max_length=255, null=True, blank=True)
     realisation = models.CharField(max_length=255, null=True, blank=True)
     production = models.CharField(max_length=255, null=True, blank=True)
