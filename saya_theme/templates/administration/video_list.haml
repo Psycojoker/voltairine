@@ -20,15 +20,8 @@
 
     .row
       -for videosection in section.videosection_set.all
-        .col-md-3
-          .thumbnail
-            %img{src: "http://placekitten.com/420/270", alt: "videosection.video.title"}
-            .caption
-              %h4= videosection.video.title
-              %p
-                %i= video.observations
-              %a.btn.btn-primary{href: "{% url 'administration_video_detail' videosection.video.id %}"}
-                Regarder
+        -with video=videosection.video
+          -include "video/thumbnail.haml"
 
     -for level in structure.closed_levels
       -decrement "level"
