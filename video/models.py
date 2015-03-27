@@ -3,6 +3,7 @@ import av
 
 from django.db import models
 from django.conf import settings
+from django.template.defaultfilters import slugify
 
 from jsonfield import JSONField
 
@@ -29,6 +30,32 @@ class Video(models.Model):
     @property
     def absolute_path(self):
         return os.path.join(settings.MEDIA_ROOT, "videos", self.file_name.encode("Utf-8"))
+
+
+    @property
+    def thumbnail_uri(self):
+        thumbnails_dir = os.path.join(settings.MEDIA_ROOT, "thumbnails")
+        if not os.path.exists(thumbnails_dir):
+            os.makedirs(thumbnails_dir)
+
+        if not self.thumbnail_name or not os.path.exists(os.path.join(thumbnails_dir, self.thumbnail_name)):
+            video = av.open(self.absolute_path)
+            self.thumbnail_name = slugify(".".join(self.file_name.split(".")[:-1])) + ".png"
+
+            image = None
+
+            for i in video.demux():
+                for frame in i.decode():
+                    if frame.__class__.__name__ == "VideoFrame":
+                        image = frame.to_image()
+                        break
+                if image is not None:
+                    break
+
+            image.resize((230, 146)).save(os.path.join(thumbnails_dir, self.thumbnail_name))
+            self.save()
+
+        return os.path.join(settings.MEDIA_URL, "thumbnails", self.thumbnail_name)
 
     @property
     def duration(self):
