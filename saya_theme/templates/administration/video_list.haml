@@ -8,7 +8,8 @@
     %hr
     .row
       -for video in video_list
-        -include "video/thumbnail.haml"
+        .col-md-4
+          -include "video/thumbnail.haml"
 
   -for section, structure in section_list|tree_info
     -if structure.new_level and not forloop.first
@@ -20,8 +21,9 @@
 
     .row
       -for videosection in section.videosection_set.all
-        -with video=videosection.video
-          -include "video/thumbnail.haml"
+        .col-md-4
+          -with video=videosection.video
+            -include "video/thumbnail.haml"
 
     -for level in structure.closed_levels
       -decrement "level"

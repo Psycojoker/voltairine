@@ -1,22 +1,21 @@
-.col-md-4
-  .well.well-sm{style: "padding: 0px; height: 148px"}
-    .pull-left{style: "margin-right: 10px"}
-      %a{href: "{% url 'administration_video_detail' video.id %}"}
-        %img{src: "http://placekitten.com/230/146", alt: "video.title"}
-        %span{style: "position: absolute; left: 20px; bottom: 24px; background-color: rgba(0, 0, 0, .7); padding: 5px; padding-top: 0px"}
-          =video.duration
+.well.well-sm{style: "padding: 0px; height: 148px"}
+  .pull-left{style: "margin-right: 10px"}
     %a{href: "{% url 'administration_video_detail' video.id %}"}
-      %h5{style: "margin-top: 3px"}
-        =video.title|truncatechars:"60"
+      %img{src: "http://placekitten.com/230/146", alt: "video.title"}
+      %span{style: "position: absolute; left: 20px; bottom: 24px; background-color: rgba(0, 0, 0, .7); padding: 5px; padding-top: 0px"}
+        =video.duration
+  %a{href: "{% url 'administration_video_detail' video.id %}"}
+    %h5{style: "margin-top: 3px"}
+      =video.title|truncatechars:"60"
 
-    %p
-      =video.width_x_height
-      =video.file_size
-      =video.fps|floatformat|cut:".0"
-      fps
+  %p
+    =video.width_x_height
+    =video.file_size
+    =video.fps|floatformat|cut:".0"
+    fps
 
-    %p{style: "position: absolute; right: 20px; bottom: 16px"}
-      %a.btn.btn-sm.btn-primary{href: "{% url 'administration_video_detail' video.id %}"}
-        regarder
-      %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
-        télécharger
+  %p{style: "position: absolute; right: 20px; bottom: 16px"}
+    %a.btn.btn-sm.btn-primary{href: "{% url 'administration_video_detail' video.id %}"}
+      regarder
+    %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+      télécharger
