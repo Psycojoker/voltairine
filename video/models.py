@@ -63,10 +63,10 @@ class Video(models.Model):
             return "%.1f%so" % (num, 'Y')
 
         if "file_size" not in self.additional_infos:
-            self.additional_infos["size"] = av.open(self.absolute_path).size
+            self.additional_infos["file_size"] = av.open(self.absolute_path).size
             self.save()
 
-        return sizeof_fmt(self.additional_infos["size"])
+        return sizeof_fmt(self.additional_infos["file_size"])
 
     @property
     def fps(self):
