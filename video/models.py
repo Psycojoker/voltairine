@@ -53,5 +53,20 @@ class Video(models.Model):
 
         return "%sx%s" % (self.additional_infos["width"], self.additional_infos["height"])
 
+    @property
+    def file_size(self):
+        def sizeof_fmt(num):
+            for unit in ['','K','M','G','T','P','E','Z']:
+                if abs(num) < 1024.0:
+                    return "%3.1f%so" % (num, unit)
+                num /= 1024.0
+            return "%.1f%so" % (num, 'Y')
+
+        if "file_size" not in self.additional_infos:
+            self.additional_infos["size"] = av.open(self.absolute_path).size
+            self.save()
+
+        return sizeof_fmt(self.additional_infos["size"])
+
     def __unicode__(self):
         return self.title
