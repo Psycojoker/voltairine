@@ -38,6 +38,11 @@
       .col-md-4.col-md-offset-4
         .well
           %h1 Connexion
+
+          -if form.errors
+            .alert.alert-danger
+              L'e-mail ou le mot de passe saisi est incorrect.
+
           %form{method: "POST"}
             -csrf_token
 
@@ -55,6 +60,4 @@
               -for error in form.password.errors
                 %span.help-block= error
 
-            -if form.errors
-              %span.help-block= error
             %input.btn.btn-primary{type: "submit", value: "Se connecter"}
