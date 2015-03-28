@@ -41,14 +41,14 @@
           %form{method: "POST"}
             -csrf_token
 
-            .form-group{class: "{% if form.username.errors %}has-error{% elif form.data and form.username %}has-success{% endif %}"}
+            .form-group
               %label.control-label{for: "username"}
                 Nom d'utilisateur
               %input#id_username.form-control{type: "text", required: "required", placeholder: 'Nom d´utilisateur', name: "username", maxlength: "254"}
               -for error in form.username.errors
                 %span.help-block= error
 
-            .form-group{class: "{% if form.password.errors %}has-error{% elif form.data and form.password %}has-success{% endif %}"}
+            .form-group
               %label.control-label{for: "password"}
                 Mot de passe
               %input#id_password.form-control{type: "password", required: "", placeholder: "Mot de passe", name: "password", value: ""}
