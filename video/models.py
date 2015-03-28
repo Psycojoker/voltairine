@@ -51,20 +51,14 @@ class Video(models.Model):
     def _generate_thumbnail_image_from_video(self):
         video = av.open(self.absolute_path)
 
-        image = None
         until_2_seconds = 0
 
         for i in video.demux():
             for frame in i.decode():
                 if frame.__class__.__name__ == "VideoFrame":
                     if until_2_seconds > self.fps * 2:  # ~2 seconds
-                        image = frame.to_image()
-                        break
+                        return frame.to_image()
                     until_2_seconds += 1
-            if image is not None:
-                break
-
-        return image
 
     @property
     def duration(self):
