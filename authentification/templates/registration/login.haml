@@ -46,7 +46,7 @@
           %form{method: "POST"}
             -csrf_token
 
-            .form-group{class: "{% if form.errors %}has-error{% endif %}"}
+            .form-group
               %label.control-label{for: "username"}
                 Nom d'utilisateur
               %input#id_username.form-control{type: "text", required: "required", placeholder: 'Nom d´utilisateur', name: "username", maxlength: "254", value: "{% if form.username.value %}{{ form.username.value }}{% endif %}"}
