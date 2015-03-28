@@ -44,7 +44,7 @@
             .form-group
               %label.control-label{for: "username"}
                 Nom d'utilisateur
-              %input#id_username.form-control{type: "text", required: "required", placeholder: 'Nom d´utilisateur', name: "username", maxlength: "254"}
+              %input#id_username.form-control{type: "text", required: "required", placeholder: 'Nom d´utilisateur', name: "username", maxlength: "254", value: "{% if form.username.value %}{{ form.username.value }}{% endif %}"}
               -for error in form.username.errors
                 %span.help-block= error
 
