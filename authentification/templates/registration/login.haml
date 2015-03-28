@@ -41,20 +41,20 @@
           %form{method: "POST"}
             -csrf_token
 
-            .form-group
+            .form-group{class: "{% if form.errors %}has-error{% endif %}"}
               %label.control-label{for: "username"}
                 Nom d'utilisateur
               %input#id_username.form-control{type: "text", required: "required", placeholder: 'Nom d´utilisateur', name: "username", maxlength: "254", value: "{% if form.username.value %}{{ form.username.value }}{% endif %}"}
               -for error in form.username.errors
                 %span.help-block= error
 
-            .form-group
+            .form-group{class: "{% if form.errors %}has-error{% endif %}"}
               %label.control-label{for: "password"}
                 Mot de passe
               %input#id_password.form-control{type: "password", required: "", placeholder: "Mot de passe", name: "password", value: ""}
               -for error in form.password.errors
                 %span.help-block= error
 
-            -for error in form.errors
+            -if form.errors
               %span.help-block= error
             %input.btn.btn-primary{type: "submit", value: "Se connecter"}
