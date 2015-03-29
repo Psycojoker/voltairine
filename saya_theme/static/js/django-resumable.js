@@ -17,6 +17,7 @@ var DjangoResumable = function (options) {
         angularReference: {},
         resumableOptions: {}
     };
+    this.startTime = -1;
     this.previousProgressNumber = 0;
     this.options = this.extend(defaults, options);
     this.csrfToken = document.querySelector('input[name=' + this.options.csrfInputName + ']').value;
@@ -75,9 +76,12 @@ DjangoResumable.prototype.getForm = function (el) {
 
 DjangoResumable.prototype.initField = function (el) {
     "use strict";
-    var progress, fileName, filePath, filePathName;
+    var progress, fileName, filePath, filePathName, timer;
 
     progress = this.initProgressBar();
+    timer = this.initTimer();
+    progress.timer = timer;
+    el.parentNode.parentNode.insertBefore(timer, el.parentNode.nextSibling);
     el.parentNode.parentNode.insertBefore(progress, el.parentNode.nextSibling);
 
     filePathName = el.getAttribute('name') + '-path';
@@ -96,6 +100,13 @@ DjangoResumable.prototype.initProgressBar = function () {
     progress.innerHTML = '<div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%</div>';
     progress.style.display = 'none';
     return progress;
+};
+
+DjangoResumable.prototype.initTimer = function() {
+    "use strict";
+    var timer = document.createElement('p');
+    timer.style.display = 'none';
+    return timer;
 };
 
 
@@ -144,6 +155,7 @@ DjangoResumable.prototype.onFileAdded = function (r, file, event, el, progress, 
     }
     r.upload();
     progress.style.display = this.options.progressDisplay;
+    progress.timer.style.display = this.options.progressDisplay;
 };
 
 
@@ -158,6 +170,7 @@ DjangoResumable.prototype.onFileSuccess = function (r, file, message, el, progre
 DjangoResumable.prototype.onProgress = function (r, el, progress, filePath, fileName) {
     "use strict";
     var number = Math.floor(r.progress() * 100);
+    this.calculateRemainigUploadTime(r, progress.timer);
     if (number == this.previousProgressNumber) {
         return;
     }
@@ -169,7 +182,18 @@ DjangoResumable.prototype.onProgress = function (r, el, progress, filePath, file
 
 DjangoResumable.prototype.startUpload = function (r, progress) {
     r.upload();
+    this.startTime = Date.now();
     progress.style.display = this.options.progressDisplay;
+    progress.timer.style.display = this.options.progressDisplay;
     this.options.angularReference.state = "running";
     this.el.style.display = "none";
-}
+};
+
+DjangoResumable.prototype.calculateRemainigUploadTime = function(r, timer) {
+    var progress = r.progress();
+    var remainingProgress = 1.0 - progress;
+
+    var estimatedCompletionTime = Math.round((remainingProgress / progress) * ((Date.now() - this.startTime) / 1000));
+
+    timer.innerHTML = estimatedCompletionTime + " seconds";
+};
