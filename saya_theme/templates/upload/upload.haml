@@ -49,12 +49,14 @@
               %div{data-toggle: "tooltip", data-placement: "left", title: "Choisissez un fichier à uploader"}
                 %button.btn.btn-primary{type: "submit", ng-click: "saveVideo(upload.id)", ng-if: 'upload.isSubmited == false', disabled: "disabled"}
                   Enregistrer
+                %button.btn.btn-danger{disabled: "disabled"}
+                  Annuler
             %div{ng-if: 'upload.state != "empty"'}
               %button.btn.btn-primary{type: "submit", ng-click: "saveVideo(upload.id)", ng-if: 'upload.isSubmited == false'}
                 Enregistrer
-            -#
-              %button.btn.btn-danger{ng-disabled: 'upload.state != "running"'}
-                Stop
+              %button.btn.btn-danger{ng-click: ''}
+                Annuler
+
 
         %div{ng-if: 'upload.isSubmited == true && upload.state == "done"'}
           %p{style: "margin-bottom: 0px"}
