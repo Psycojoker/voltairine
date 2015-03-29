@@ -23,6 +23,7 @@ function VideoUploadController($scope) {
             state: "empty",
             isSubmited: false,
             section: "",
+            confirmCancelShow: false,
             title: ""
         };
 

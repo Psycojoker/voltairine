@@ -54,7 +54,7 @@
             %div{ng-if: 'upload.state != "empty"'}
               %button.btn.btn-primary{type: "submit", ng-click: "saveVideo(upload.id)", ng-if: 'upload.isSubmited == false'}
                 Enregistrer
-              %button.btn.btn-danger{ng-click: ''}
+              %button.btn.btn-danger{ng-hide: 'upload.confirmCancelShow', ng-click: 'upload.confirmCancelShow=true'}
                 Annuler
 
 
