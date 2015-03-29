@@ -195,5 +195,27 @@ DjangoResumable.prototype.calculateRemainigUploadTime = function(r, timer) {
 
     var estimatedCompletionTime = Math.round((remainingProgress / progress) * ((Date.now() - this.startTime) / 1000));
 
-    timer.innerHTML = estimatedCompletionTime + " seconds";
+    var estimatedHours, estimatedMinutes, estimatedSeconds, displayHours, displayMinutes, displaySeconds;
+
+    // If progress is complete then quit
+    if (progress >= 1.0) {
+        return;
+    }
+
+    // If the estimated time is valid then calculate the time values.
+    // NOTE: It might take 1 or 2 iterations to get a valid estimate.
+    if (isFinite(estimatedCompletionTime)) {
+        estimatedHours = Math.floor(estimatedCompletionTime / 3600);
+        estimatedMinutes = Math.floor((estimatedCompletionTime / 60) % 60);
+        estimatedSeconds = estimatedCompletionTime % 60;
+
+        if (estimatedHours > 0) {
+            timer.innerHTML = estimatedHours + "h " + estimatedMinutes + "min " + estimatedSeconds + "s";
+        } else if (estimatedMinutes > 0) {
+            timer.innerHTML = estimatedMinutes + "min " + estimatedSeconds + "s";
+        } else {
+            timer.innerHTML = estimatedSeconds + "s";
+        }
+
+    }
 };
