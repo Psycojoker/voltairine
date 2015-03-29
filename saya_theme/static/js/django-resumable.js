@@ -18,6 +18,7 @@ var DjangoResumable = function (options) {
         resumableOptions: {}
     };
     this.startTime = -1;
+    this.lastTimerUpdateTime = -1;
     this.previousProgressNumber = 0;
     this.options = this.extend(defaults, options);
     this.csrfToken = document.querySelector('input[name=' + this.options.csrfInputName + ']').value;
@@ -183,6 +184,7 @@ DjangoResumable.prototype.onProgress = function (r, el, progress, filePath, file
 DjangoResumable.prototype.startUpload = function (r, progress) {
     r.upload();
     this.startTime = Date.now();
+    this.lastTimerUpdateTime = Date.now();
     progress.style.display = this.options.progressDisplay;
     progress.timer.style.display = this.options.progressDisplay;
     this.options.angularReference.state = "running";
@@ -190,6 +192,11 @@ DjangoResumable.prototype.startUpload = function (r, progress) {
 };
 
 DjangoResumable.prototype.calculateRemainigUploadTime = function(r, timer) {
+    // update the display only once per second at max
+    if (((Date.now() - this.lastTimerUpdateTime) / 1000) < 1) {
+        return;
+    }
+
     var progress = r.progress();
     var remainingProgress = 1.0 - progress;
 
@@ -201,6 +208,8 @@ DjangoResumable.prototype.calculateRemainigUploadTime = function(r, timer) {
     if (progress >= 1.0) {
         return;
     }
+
+    this.lastTimerUpdateTime = Date.now();
 
     // If the estimated time is valid then calculate the time values.
     // NOTE: It might take 1 or 2 iterations to get a valid estimate.
