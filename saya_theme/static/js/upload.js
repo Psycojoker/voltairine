@@ -42,6 +42,15 @@ function VideoUploadController($scope) {
 
     $scope.addUpload();
 
+    $scope.cancelUpload = function(id) {
+        var video = $scope.uploads[id];
+        video.r.cancel();  // a bit too much spaguetti :(
+        video.state = "canceled";
+        video.isSubmited = true;  // ng-if is behaving strangly :/
+        startNextUpload();
+        $scope.$digest;
+    }
+
     $scope.saveVideo = function(id) {
         var video = $scope.uploads[id];
         var data = {

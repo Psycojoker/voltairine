@@ -15,7 +15,7 @@
   %div{ng-app: "soya", ng-controller: "VideoUploadController"}
     %div{ng-repeat: "upload in uploads"}
       .well
-        %div{ng-if: 'upload.isSubmited == false || upload.state != "done"'}
+        %div{ng-if: 'upload.isSubmited == false || (upload.state != "canceled" && upload.state != "done")'}
           %form{method: "post", id: "upload_form_{& upload.id &}"}
             %fieldset
               -csrf_token
@@ -58,8 +58,12 @@
                 Annuler
               %button.btn.btn-success{ng-show: 'upload.confirmCancelShow', ng-click: 'upload.confirmCancelShow=false'}
                 Continuer l'upload de cette vidéo
-              %button.btn.btn-danger{ng-show: 'upload.confirmCancelShow', ng-click: ''}
+              %button.btn.btn-danger{ng-show: 'upload.confirmCancelShow', ng-click: 'cancelUpload(upload.id)'}
                 Confirmer l'annulation
+
+        %div{ng-if: 'upload.state == "canceled"'}
+          %p
+            L'upload de {& upload.title &} a été annulé.
 
 
         %div{ng-if: 'upload.isSubmited == true && upload.state == "done"'}
