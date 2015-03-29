@@ -164,7 +164,7 @@ DjangoResumable.prototype.onFileSuccess = function (r, file, message, el, progre
     "use strict";
     filePath.setAttribute('value', file.size + '_' + file.fileName);
     progress.firstChild.className += ' progress-bar-success';
-    progress.firstChild.innerHTML = 'Upload terminé'
+    progress.firstChild.innerHTML = 'Upload terminé';
 };
 
 
