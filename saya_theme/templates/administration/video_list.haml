@@ -55,15 +55,22 @@
     });
 
 
+  :css
+    .nav.nav-pills {
+      font-size: 20px;
+    }
+
 -block content
   %div{role: "tabpanel"}
-    %ul#myTab.nav.nav-tabs
-      %li.active{role: "tablist"}
-        %a{href: "#videosList", aria-controls: "videosList", data-toggle: "tab"}
-          Liste
-      %li{role: "tablist"}
-        %a{href: "#videosTable", aria-controls: "videosTable", data-toogle: "tab"}
-          Table
+    .row
+      .col-xs-2.col-md-offset-10
+        %ul#myTab.nav.nav-pills.pull-right
+          %li.active{role: "tablist"}
+            %a{href: "#videosList", aria-controls: "videosList", data-toggle: "tab"}
+              %span.glyphicon.glyphicon-align-left{aria-hidden: "true"}
+          %li{role: "tablist"}
+            %a{href: "#videosTable", aria-controls: "videosTable", data-toogle: "tab"}
+              %span.glyphicon.glyphicon-list-alt{aria-hidden: "true"}
 
     .tab-content
       #videosList.tab-pane.active{role: "tabpanel"}
