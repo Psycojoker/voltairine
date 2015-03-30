@@ -18,6 +18,7 @@ class Video(models.Model):
     realisation = models.CharField(max_length=255, null=True, blank=True)
     production = models.CharField(max_length=255, null=True, blank=True)
     photo_direction = models.CharField(max_length=255, null=True, blank=True)
+    lto_archive_number = models.CharField(max_length=255, null=True, blank=True)
     observations = models.TextField(null=True, blank=True)
 
     # montage_date = models.DateField(null=True)
