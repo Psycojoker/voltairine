@@ -2,11 +2,11 @@
   .col-md-6
     .well.well-sm{style: "padding: 0px; height: 148px"}
       .pull-left{style: "margin-right: 10px"}
-        %a{href: "{% url 'administration_video_detail' video.id %}"}
+        %a{href: "{% if user.is_staff %}{% url 'administration_video_detail' video.id %}{% else %}{% url 'user_video_detail' video.id %}{% endif %}"}
           %img{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}"}
           %span{style: "position: absolute; left: 20px; bottom: 24px; background-color: rgba(0, 0, 0, .7); padding: 5px; padding-top: 0px"}
             =video.duration
-      %a{href: "{% url 'administration_video_detail' video.id %}"}
+      %a{href: "{% if user.is_staff %}{% url 'administration_video_detail' video.id %}{% else %}{% url 'user_video_detail' video.id %}{% endif %}"}
         %h5{style: "margin-top: 3px"}
           =video.title|truncatechars:"60"
 
@@ -17,14 +17,14 @@
         fps
 
       %p{style: "position: absolute; right: 20px; bottom: 16px"}
-        %a.btn.btn-sm.btn-primary{href: "{% url 'administration_video_detail' video.id %}"}
+        %a.btn.btn-sm.btn-primary{href: "{% if user.is_staff %}{% url 'administration_video_detail' video.id %}{% else %}{% url 'user_video_detail' video.id %}{% endif %}"}
           regarder
         %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
           télécharger
 .hidden-md.hidden-lg
   .col-md-4.col-sm-6
     .thumbnail
-      %a{href: "{% url 'administration_video_detail' video.id %}"}
+      %a{href: "{% if user.is_staff %}{% url 'administration_video_detail' video.id %}{% else %}{% url 'user_video_detail' video.id %}{% endif %}"}
         %img{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}"}
       .caption
         %h4{style: "margin-top: 3px"}
@@ -35,7 +35,7 @@
           =video.file_size
 
         %p
-          %a.btn.btn-sm.btn-primary{href: "{% url 'administration_video_detail' video.id %}"}
+          %a.btn.btn-sm.btn-primary{href: "{% if user.is_staff %}{% url 'administration_video_detail' video.id %}{% else %}{% url 'user_video_detail' video.id %}{% endif %}"}
             regarder
           %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
             télécharger
