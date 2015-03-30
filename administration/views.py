@@ -225,7 +225,7 @@ def change_group_section_permission(request):
 def video_list(request):
     return render(request, 'administration/video_list.haml', {
         "level": 1,
-        "section_list": Section.objects.all(),
+        "section_list": Section.objects.prefetch_related("videosection_set__video"),
         "video_list": Video.objects.filter(videosection__isnull=True),
     })
 
