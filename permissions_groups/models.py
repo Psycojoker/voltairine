@@ -12,5 +12,10 @@ class Group(models.Model):
 
     permissions = models.ManyToManyField(Section)
 
+    def get_permissions(self):
+        if not hasattr(self, "_permissions_cache"):
+            self._permissions_cache = self.permissions.all()
+        return self._permissions_cache
+
     def __unicode__(self):
         return self.name

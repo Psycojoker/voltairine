@@ -1,7 +1,6 @@
 from django import template
 
 from sections.models import Permission
-from permissions_groups.models import Group
 
 
 register = template.Library()
@@ -16,7 +15,7 @@ def is_user_have_access(section, user):
 
 @register.simple_tag
 def is_group_have_access(section, group):
-    if Group.objects.filter(pk=group.pk, permissions=section).exists():
+    if section in group.get_permissions():
         return "true"
     return "false"
 

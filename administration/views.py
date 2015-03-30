@@ -91,7 +91,7 @@ class CreateGroup(CreateView):
 
 
 class DetailGroup(DetailView):
-    model = Group
+    queryset = Group.objects.prefetch_related("permissions")
     template_name = 'administration/group_detail.haml'
 
     def get_context_data(self, *args, **kwargs):
