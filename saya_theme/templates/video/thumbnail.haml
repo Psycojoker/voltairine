@@ -1,7 +1,7 @@
 .well.well-sm{style: "padding: 0px; height: 148px"}
   .pull-left{style: "margin-right: 10px"}
     %a{href: "{% url 'administration_video_detail' video.id %}"}
-      %img{src: "{{ video.thumbnail_uri }}", alt: "video.title"}
+      %img{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}"}
       %span{style: "position: absolute; left: 20px; bottom: 24px; background-color: rgba(0, 0, 0, .7); padding: 5px; padding-top: 0px"}
         =video.duration
   %a{href: "{% url 'administration_video_detail' video.id %}"}
