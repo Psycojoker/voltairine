@@ -244,6 +244,7 @@ def video_detail(request, pk):
         video.realisation = form.cleaned_data["realisation"]
         video.production = form.cleaned_data["production"]
         video.photo_direction = form.cleaned_data["photo_direction"]
+        video.lto_archive_number = form.cleaned_data["lto_archive_number"]
         video.observations = form.cleaned_data["observations"]
 
         if form.cleaned_data["section"]:

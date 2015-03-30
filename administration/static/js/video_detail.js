@@ -10,6 +10,7 @@ function editVideoDetailsController($scope) {
             $scope.photo_direction = $("#id_photo_direction").val();
             $scope.observations = $("#id_observations").val();
             $scope.section_id = $("#id_section").val();
+            $scope.lto_archive_number = $("#id_lto_archive_number").val();
 
             $.post("", {
                 title: $scope.title,
@@ -17,6 +18,7 @@ function editVideoDetailsController($scope) {
                 realisation: $scope.realisation,
                 production: $scope.production,
                 photo_direction: $scope.photo_direction,
+                lto_archive_number: $scope.lto_archive_number,
                 observations: $scope.observations,
                 section: $("#id_section").val(),
                 "csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()

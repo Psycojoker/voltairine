@@ -24,7 +24,7 @@ class VideoForm(forms.ModelForm):
 
     class Meta:
         model = Video
-        fields = ['title', 'film_name', 'realisation', 'production', 'photo_direction', 'observations']
+        fields = ['title', 'film_name', 'realisation', 'production', 'photo_direction', 'lto_archive_number', 'observations']
 
 
 class FormUser(forms.ModelForm):

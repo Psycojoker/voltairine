@@ -58,6 +58,7 @@
     %div{ng-init: 'realisation="{{ object.realisation|default:"" }}"'}
     %div{ng-init: 'production="{{ object.production|default:"" }}"'}
     %div{ng-init: 'photo_direction="{{ object.photo_direction|default:"" }}"'}
+    %div{ng-init: 'lto_archive_number="{{ object.lto_archive_number|default:"" }}"'}
     %div{ng-init: 'observations="{{ object.observations|default:"" }}"'}
     %div{ng-init: 'section="{{ object.videosection|default:"" }}"'}
     %div{ng-init: 'section_id="{{ object.videosection.section.id|default:"" }}"'}
@@ -87,6 +88,10 @@
             %p
               %b Direction photo :
               {& photo_direction &}
+
+        %p
+          %b Numéro d'archive LTO :
+          {& lto_archive_number &}
 
         %p
           %i {& observations &}
@@ -131,6 +136,11 @@
                 .input-group
                   %span.input-group-addon Direction photo :
                   %input#id_photo_direction.form-control{type: "text", ng-model: "photo_direction"}
+
+          %p
+            .input-group
+              %span.input-group-addon Numéro d'archive LTO :
+              %input#id_lto_archive_number.form-control{type: "text", ng-model: "lto_archive_number"}
 
           .form-group
             %label{for: "id_observations"}
