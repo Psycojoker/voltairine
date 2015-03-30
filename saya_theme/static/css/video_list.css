@@ -1,0 +1,27 @@
+.nav.nav-pills {
+    font-size: 20px;
+}
+
+#videosList .glyphicon {
+    font-size: 65%;
+}
+
+.toggled span {
+    transform: rotate(90deg);
+}
+
+a.caret-toggle:link {
+    text-decoration: none;
+}
+
+a.caret-toggle:visited {
+    text-decoration: none;
+}
+
+a.caret-toggle:active {
+    text-decoration: none;
+}
+
+a.caret-toggle:hover {
+    text-decoration: none;
+}

@@ -4,39 +4,11 @@
 
 -block javascript
   %link{href: "{{ STATIC_URL }}css/theme.bootstrap.css", rel: "stylesheet"}
+  %link{href: "{{ STATIC_URL }}css/video_list.css", rel: "stylesheet"}
   %script{src: "{{ STATIC_URL }}js/bootstrap.min.js"}
   %script{src: "{{ STATIC_URL }}js/jquery.tablesorter.js"}
   %script{src: "{{ STATIC_URL }}js/jquery.tablesorter.widgets.js"}
   %script{src: "{{ STATIC_URL }}js/video_list.js"}
-
-  :css
-    .nav.nav-pills {
-      font-size: 20px;
-    }
-
-    #videosList .glyphicon {
-      font-size: 65%;
-    }
-
-    .toggled span {
-      transform: rotate(90deg);
-    }
-
-    a.caret-toggle:link {
-      text-decoration: none;
-    }
-
-    a.caret-toggle:visited {
-      text-decoration: none;
-    }
-
-    a.caret-toggle:active {
-      text-decoration: none;
-    }
-
-    a.caret-toggle:hover {
-      text-decoration: none;
-    }
 
 -block content
   %div{role: "tabpanel"}
