@@ -50,6 +50,26 @@
 
 
 -block content
+  -if video_list
+    %h3 Vidéos non classées
+    %hr
+    .row
+      -for video in video_list
+        .col-md-6
+          -include "video/thumbnail.haml"
+
+  -for section, structure in section_list|tree_info
+    <h{% level_to_heading_number section.level %}>
+    =section.title
+    </h{% level_to_heading_number section.level %}>
+
+    .row
+      -for videosection in section.videosection_set.all
+        .col-md-6
+          -with video=videosection.video
+            -include "video/thumbnail.haml"
+
+
   %table.tablesorter
     %thead
       %tr
@@ -123,21 +143,3 @@
                 =video.fps|floatformat|cut:",0"
                 fps
 
-  -if video_list
-    %h3 Vidéos non classées
-    %hr
-    .row
-      -for video in video_list
-        .col-md-6
-          -include "video/thumbnail.haml"
-
-  -for section, structure in section_list|tree_info
-    <h{% level_to_heading_number section.level %}>
-    =section.title
-    </h{% level_to_heading_number section.level %}>
-
-    .row
-      -for videosection in section.videosection_set.all
-        .col-md-6
-          -with video=videosection.video
-            -include "video/thumbnail.haml"
