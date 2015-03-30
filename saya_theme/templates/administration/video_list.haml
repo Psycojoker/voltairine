@@ -52,6 +52,13 @@
         e.preventDefault()
         $(this).tab('show')
       });
+
+      $(".caret-toggle").click(function(e) {
+        var a = $(this);
+        e.preventDefault();
+        $(a.attr("data-target")).toggle();
+        a.toggleClass("toggled");
+      })
     });
 
 
@@ -62,6 +69,10 @@
 
     #videosList .glyphicon {
       font-size: 65%;
+    }
+
+    .toggled span {
+      transform: rotate(90deg);
     }
 
 -block content
@@ -75,7 +86,7 @@
               %a{href: "#videosList", aria-controls: "videosList", data-toggle: "tab"}
                 %span.glyphicon.glyphicon-align-left{aria-hidden: "true"}
             %li{role: "tablist"}
-              %a{href: "#videosTable", aria-controls: "videosTable", data-toogle: "tab"}
+              %a{href: "#videosTable", aria-controls: "videosTable", data-toggle: "tab"}
                 %span.glyphicon.glyphicon-list-alt{aria-hidden: "true"}
       %hr
 
@@ -83,25 +94,35 @@
       #videosList.tab-pane.active{role: "tabpanel"}
         -if video_list
           %h3
-            %span.glyphicon.glyphicon-play
+            %a.caret-toggle.toggled{href: "#", data-target: "#unClassified"}
+              %span.glyphicon.glyphicon-play
             Vidéos non classées
           %hr
-          .row
-            -for video in video_list
-              .col-md-6
-                -include "video/thumbnail.haml"
+          #unClassified
+            .row
+              -for video in video_list
+                .col-md-6
+                  -include "video/thumbnail.haml"
 
         -for section, structure in section_list|tree_info
+          -if not structure.new_level
+            </div>
+
           <h{% level_to_heading_number section.level %}>
-            %span.glyphicon.glyphicon-play
+            %a.caret-toggle.toggled{href: "#", data-target: "#{{ section.pk }}-childrens"}
+              %span.glyphicon.glyphicon-play
             =section.title
           </h{% level_to_heading_number section.level %}>
 
-          .row
-            -for videosection in section.videosection_set.all
-              .col-md-6
-                -with video=videosection.video
-                  -include "video/thumbnail.haml"
+          <div id="{{ section.pk }}-childrens">
+            .row
+              -for videosection in section.videosection_set.all
+                .col-md-6
+                  -with video=videosection.video
+                    -include "video/thumbnail.haml"
+
+          -for level in structure.closed_levels
+            </div>
 
 
       #videosTable.tab-pane{role: "tabpanel"}
