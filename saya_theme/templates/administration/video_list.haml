@@ -76,7 +76,8 @@
       -for video in video_list
         %tr
           %td
-            =video.title
+            %a{href: "{% url 'administration_video_detail' video.pk %}"}
+              =video.title
           %td
             \--
 
