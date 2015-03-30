@@ -13,7 +13,7 @@ from sections.utils import unfold_tree
 @login_required
 def dashboard(request):
     # no, that was not easy to write at all
-    all_sections = Section.objects.all()
+    all_sections = Section.objects.prefetch_related("videosection_set__video")
     node_to_childrens = unfold_tree(all_sections.as_python_tree())
     section_user_has_access_to = Section.objects.filter(Q(permission__user=request.user)|Q(group__users=request.user))
 
