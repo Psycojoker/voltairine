@@ -197,7 +197,7 @@ DjangoResumable.prototype.startUpload = function (r, progress) {
 
 DjangoResumable.prototype.calculateRemainigUploadTime = function(r) {
     // update the display only once per second at max
-    if (((Date.now() - this.lastTimerUpdateTime) / 1000) < 1) {
+    if (((Date.now() - this.lastTimerUpdateTime) / 100) < 1) {
         return null;
     }
 
