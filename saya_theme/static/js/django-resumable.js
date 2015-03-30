@@ -171,14 +171,18 @@ DjangoResumable.prototype.onFileSuccess = function (r, file, message, el, progre
 DjangoResumable.prototype.onProgress = function (r, el, progress, filePath, fileName) {
     "use strict";
     var number = Math.floor(r.progress() * 100);
-    this.calculateRemainigUploadTime(r, progress.timer);
+    var timeRemaning = this.calculateRemainigUploadTime(r);
     if (number == this.previousProgressNumber) {
         return;
     }
     this.previousProgressNumber = number;
     progress.firstChild.style.width = number + "%";
     progress.firstChild.setAttribute("aria-valuenow", number);
-    progress.firstChild.innerHTML = number + "%";
+    console.log(timeRemaning);
+    if (timeRemaning !== null) {
+        progress.firstChild.innerHTML = timeRemaning;
+    }
+    // progress.firstChild.innerHTML = number + "%";
 };
 
 DjangoResumable.prototype.startUpload = function (r, progress) {
@@ -191,10 +195,10 @@ DjangoResumable.prototype.startUpload = function (r, progress) {
     this.el.style.display = "none";
 };
 
-DjangoResumable.prototype.calculateRemainigUploadTime = function(r, timer) {
+DjangoResumable.prototype.calculateRemainigUploadTime = function(r) {
     // update the display only once per second at max
     if (((Date.now() - this.lastTimerUpdateTime) / 1000) < 1) {
-        return;
+        return null;
     }
 
     var progress = r.progress();
@@ -206,7 +210,7 @@ DjangoResumable.prototype.calculateRemainigUploadTime = function(r, timer) {
 
     // If progress is complete then quit
     if (progress >= 1.0) {
-        return;
+        return null;
     }
 
     this.lastTimerUpdateTime = Date.now();
@@ -219,11 +223,11 @@ DjangoResumable.prototype.calculateRemainigUploadTime = function(r, timer) {
         estimatedSeconds = estimatedCompletionTime % 60;
 
         if (estimatedHours > 0) {
-            timer.innerHTML = estimatedHours + "h " + estimatedMinutes + "min " + estimatedSeconds + "s";
+            return estimatedHours + "h " + estimatedMinutes + "min " + estimatedSeconds + "s";
         } else if (estimatedMinutes > 0) {
-            timer.innerHTML = estimatedMinutes + "min " + estimatedSeconds + "s";
+            return estimatedMinutes + "min " + estimatedSeconds + "s";
         } else {
-            timer.innerHTML = estimatedSeconds + "s";
+            return estimatedSeconds + "s";
         }
 
     }
