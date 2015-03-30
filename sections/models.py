@@ -43,6 +43,9 @@ class Section(MPTTModel):
     def __unicode__(self):
         return self.title
 
+    def display_level_indicator(self):
+        return "--" * self.level
+
     class MPTTMeta:
         order_insertion_by = ['title']
 
