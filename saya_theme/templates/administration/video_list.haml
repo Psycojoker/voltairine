@@ -55,6 +55,14 @@
           Nom
         %th.filter-select.filter-exact{data-placeholder: "Choisissez une section"}
           Section
+        %th
+          Durée
+        %th
+          Résolution
+        %th
+          taille
+        %th
+          Fps
 
     %tfoot
       %tr
@@ -62,6 +70,14 @@
           Nom
         %th
           Section
+        %th
+          Durée
+        %th
+          Résolution
+        %th
+          taille
+        %th
+          Fps
 
     %tbody
       -for video in video_list
@@ -70,6 +86,15 @@
             %a{href: "{% url 'administration_video_detail' video.pk %}"}
               =video.title
           %td
+          %td
+            =video.duration
+          %td
+            =video.width_x_height
+          %td
+            =video.file_size
+          %td
+            =video.fps|floatformat|cut:",0"
+            fps
       -for section, structure in section_list|tree_info
         -for videosection in section.videosection_set.all
           -with video=videosection.video
@@ -80,6 +105,15 @@
               %td
                 =section.display_level_indicator
                 =section.title
+              %td
+                =video.duration
+              %td
+                =video.width_x_height
+              %td
+                =video.file_size
+              %td
+                =video.fps|floatformat|cut:",0"
+                fps
 
   -if video_list
     %h3 Vidéos non classées
