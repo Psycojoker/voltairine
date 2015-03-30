@@ -44,6 +44,8 @@
 
       // beeeeeeeeeeeh
       $(".tablesorter-filter").addClass("form-control");
+      $(".tablesorter-filter").slice(2).parents("td").addClass("hidden-xs");
+      $(".tablesorter-filter").slice(3).parents("td").addClass("hidden-sm");
     });
 
 
@@ -55,13 +57,13 @@
           Nom
         %th.filter-select.filter-select-nosort{data-placeholder: "Choisissez une section"}
           Section
-        %th
+        %th.hidden-xs
           Durée
-        %th
+        %th.hidden-sm.hidden-xs
           Résolution
-        %th
+        %th.hidden-sm.hidden-xs
           taille
-        %th
+        %th.hidden-sm.hidden-xs
           Fps
 
     %tfoot
@@ -70,13 +72,13 @@
           Nom
         %th
           Section
-        %th
+        %th.hidden-xs
           Durée
-        %th
+        %th.hidden-sm.hidden-xs
           Résolution
-        %th
+        %th.hidden-sm.hidden-xs
           taille
-        %th
+        %th.hidden-sm.hidden-xs
           Fps
 
     %tbody
@@ -89,13 +91,13 @@
             %a{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
               Télécharger
           %td
-          %td
+          %td.hidden-xs
             =video.duration
-          %td
+          %td.hidden-sm.hidden-xs
             =video.width_x_height
-          %td
+          %td.hidden-sm.hidden-xs
             =video.file_size
-          %td
+          %td.hidden-sm.hidden-xs
             =video.fps|floatformat|cut:",0"
             fps
       -for section, structure in section_list|tree_info
@@ -111,13 +113,13 @@
               %td
                 =section.display_level_indicator
                 =section.title
-              %td
+              %td.hidden-xs
                 =video.duration
-              %td
+              %td.hidden-sm.hidden-xs
                 =video.width_x_height
-              %td
+              %td.hidden-sm.hidden-xs
                 =video.file_size
-              %td
+              %td.hidden-sm.hidden-xs
                 =video.fps|floatformat|cut:",0"
                 fps
 
