@@ -43,25 +43,13 @@ class UserVideoDetail(DetailView):
     def get(self, request, *args, **kwargs):
         to_return = super(UserVideoDetail, self).get(request, *args, **kwargs)
 
-        # XXX refactor (see previous view
-        # no, that was not easy to write at all
-        all_sections = Section.objects.all()
-        node_to_childrens = unfold_tree(all_sections.as_python_tree())
-        section_user_has_access_to = Section.objects.filter(Q(permission__user=request.user)|Q(group__users=request.user))
+        section_user_has_access_to = Section.objects.filter(Q(permission__user=request.user)|Q(group__users=request.user)).prefetch_related("children")
 
         sections_I_can_read = set()
 
         for i in section_user_has_access_to:
             sections_I_can_read.add(i)
-            map(sections_I_can_read.add, node_to_childrens[i])
-
-        section_list = []
-
-        for section in all_sections:
-            if section in sections_I_can_read or set(node_to_childrens[section]) & sections_I_can_read:
-                section_list.append(section)
-
-        # XXX refactor ^
+            map(sections_I_can_read.add, i.children.all())
 
         if not Section.objects.filter(videosection__video=self.object).filter(id__in=map(lambda x: x.pk, sections_I_can_read)).exists():
             raise PermissionDenied()
