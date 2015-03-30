@@ -136,8 +136,7 @@
           #unClassified.subsection
             .row
               -for video in video_list
-                .col-md-6
-                  -include "video/thumbnail.haml"
+                -include "video/thumbnail.haml"
 
         -for section, structure in section_list|tree_info
           -if not structure.new_level
@@ -152,9 +151,8 @@
           <div id="{{ section.pk }}-childrens" class="subsection">
             .row
               -for videosection in section.videosection_set.all
-                .col-md-6
-                  -with video=videosection.video
-                    -include "video/thumbnail.haml"
+                -with video=videosection.video
+                  -include "video/thumbnail.haml"
 
           -for level in structure.closed_levels
             </div>
