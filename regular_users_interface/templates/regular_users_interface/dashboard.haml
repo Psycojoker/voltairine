@@ -49,10 +49,11 @@
             </h{% level_to_heading_number section.level %}>
 
             <div id="{{ section.pk }}-childrens" class="subsection">
-              .row
-                -for videosection in section.videosection_set.all
-                  -with video=videosection.video
-                    -include "video/thumbnail.haml"
+              -if section in sections_I_can_read
+                .row
+                  -for videosection in section.videosection_set.all
+                    -with video=videosection.video
+                      -include "video/thumbnail.haml"
 
             -for level in structure.closed_levels
               </div>
@@ -92,26 +93,27 @@
 
             %tbody
               -for section, structure in section_list|tree_info
-                -for videosection in section.videosection_set.all
-                  -with video=videosection.video
-                    %tr
-                      %td
-                        %a{href: "{% url 'administration_video_detail' video.pk %}"}
-                          %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
-                        %a{href: "{% url 'administration_video_detail' video.pk %}"}
-                          =video.title
-                        %br
-                        %a.btn.btn-sm{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
-                          Télécharger
-                      %td
-                        =section.display_level_indicator
-                        =section.title
-                      %td.hidden-xs
-                        =video.duration
-                      %td.hidden-sm.hidden-xs
-                        =video.width_x_height
-                      %td.hidden-sm.hidden-xs
-                        =video.file_size
-                      %td.hidden-sm.hidden-xs
-                        =video.fps|floatformat|cut:",0"
-                        fps
+                -if section in sections_I_can_read
+                  -for videosection in section.videosection_set.all
+                    -with video=videosection.video
+                      %tr
+                        %td
+                          %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                            %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
+                          %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                            =video.title
+                          %br
+                          %a.btn.btn-sm{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                            Télécharger
+                        %td
+                          =section.display_level_indicator
+                          =section.title
+                        %td.hidden-xs
+                          =video.duration
+                        %td.hidden-sm.hidden-xs
+                          =video.width_x_height
+                        %td.hidden-sm.hidden-xs
+                          =video.file_size
+                        %td.hidden-sm.hidden-xs
+                          =video.fps|floatformat|cut:",0"
+                          fps
