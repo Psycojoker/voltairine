@@ -59,6 +59,18 @@
         $(a.attr("data-target")).toggle();
         a.toggleClass("toggled");
       })
+
+      $("#openAll").click(function(e) {
+        e.preventDefault();
+        $(".subsection").show();
+        $(".caret-toggle").addClass("toggled");
+      })
+
+      $("#closeAll").click(function(e) {
+        e.preventDefault();
+        $(".subsection").hide();
+        $(".toggled").removeClass("toggled");
+      })
     });
 
 
@@ -107,6 +119,13 @@
       %hr
 
     .tab-content
+      %p
+        %a#closeAll{href: "#"}
+          Tout fermer
+        \-
+        %a#openAll{href: "#"}
+          tout ouvrir
+
       #videosList.tab-pane.active{role: "tabpanel"}
         -if video_list
           %h3
@@ -114,7 +133,7 @@
               %span.glyphicon.glyphicon-play
             Vidéos non classées
           %hr
-          #unClassified
+          #unClassified.subsection
             .row
               -for video in video_list
                 .col-md-6
@@ -130,7 +149,7 @@
             =section.title
           </h{% level_to_heading_number section.level %}>
 
-          <div id="{{ section.pk }}-childrens">
+          <div id="{{ section.pk }}-childrens" class="subsection">
             .row
               -for videosection in section.videosection_set.all
                 .col-md-6
