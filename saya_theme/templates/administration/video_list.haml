@@ -85,6 +85,9 @@
           %td
             %a{href: "{% url 'administration_video_detail' video.pk %}"}
               =video.title
+            \-
+            %a{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+              Télécharger
           %td
           %td
             =video.duration
@@ -102,6 +105,9 @@
               %td
                 %a{href: "{% url 'administration_video_detail' video.pk %}"}
                   =video.title
+                  \-
+                  %a{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                    Télécharger
               %td
                 =section.display_level_indicator
                 =section.title
