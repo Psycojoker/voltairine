@@ -7,22 +7,16 @@
   %hr
 
   -for section, structure in section_list|tree_info
-    -if structure.new_level and not forloop.first
-      -increment "level"
 
-    <h{{ level }}>
+        <h{% level_to_heading_number section.level %}>
     =section.title
-    </h{{ level }}>
+    </h{% level_to_heading_number section.level %}>
 
     -if section in sections_I_can_read
       .row
         -for videosection in section.videosection_set.all
-          .col-md-6
-            -with video=videosection.video
-              -include "video/thumbnail.haml"
-
-    -for level in structure.closed_levels
-      -decrement "level"
+          -with video=videosection.video
+            -include "video/thumbnail.haml"
 
   -if not section_list
     %p Il n'y a aucune vidéo dans les catégories auxquelles vous avez accès.
