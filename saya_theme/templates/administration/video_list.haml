@@ -4,6 +4,7 @@
 
 -block javascript
   %link{href: "{{ STATIC_URL }}css/theme.bootstrap.css", rel: "stylesheet"}
+  %script{src: "{{ STATIC_URL }}js/bootstrap.min.js"}
   %script{src: "{{ STATIC_URL }}js/jquery.tablesorter.js"}
   %script{src: "{{ STATIC_URL }}js/jquery.tablesorter.widgets.js"}
   :javascript
@@ -46,100 +47,117 @@
       $(".tablesorter-filter").addClass("form-control");
       $(".tablesorter-filter").slice(2).parents("td").addClass("hidden-xs");
       $(".tablesorter-filter").slice(3).parents("td").addClass("hidden-sm");
+
+      $('#myTab a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+      });
     });
 
 
 -block content
-  -if video_list
-    %h3 Vidéos non classées
-    %hr
-    .row
-      -for video in video_list
-        .col-md-6
-          -include "video/thumbnail.haml"
+  %div{role: "tabpanel"}
+    %ul#myTab.nav.nav-tabs
+      %li.active{role: "tablist"}
+        %a{href: "#videosList", aria-controls: "videosList", data-toggle: "tab"}
+          Liste
+      %li{role: "tablist"}
+        %a{href: "#videosTable", aria-controls: "videosTable", data-toogle: "tab"}
+          Table
 
-  -for section, structure in section_list|tree_info
-    <h{% level_to_heading_number section.level %}>
-    =section.title
-    </h{% level_to_heading_number section.level %}>
+    .tab-content
+      #videosList.tab-pane.active{role: "tabpanel"}
+        -if video_list
+          %h3 Vidéos non classées
+          %hr
+          .row
+            -for video in video_list
+              .col-md-6
+                -include "video/thumbnail.haml"
 
-    .row
-      -for videosection in section.videosection_set.all
-        .col-md-6
-          -with video=videosection.video
-            -include "video/thumbnail.haml"
+        -for section, structure in section_list|tree_info
+          <h{% level_to_heading_number section.level %}>
+          =section.title
+          </h{% level_to_heading_number section.level %}>
+
+          .row
+            -for videosection in section.videosection_set.all
+              .col-md-6
+                -with video=videosection.video
+                  -include "video/thumbnail.haml"
 
 
-  %table.tablesorter
-    %thead
-      %tr
-        %th
-          Nom
-        %th.filter-select.filter-select-nosort{data-placeholder: "Choisissez une section"}
-          Section
-        %th.hidden-xs
-          Durée
-        %th.hidden-sm.hidden-xs
-          Résolution
-        %th.hidden-sm.hidden-xs
-          taille
-        %th.hidden-sm.hidden-xs
-          Fps
-
-    %tfoot
-      %tr
-        %th
-          Nom
-        %th
-          Section
-        %th.hidden-xs
-          Durée
-        %th.hidden-sm.hidden-xs
-          Résolution
-        %th.hidden-sm.hidden-xs
-          taille
-        %th.hidden-sm.hidden-xs
-          Fps
-
-    %tbody
-      -for video in video_list
-        %tr
-          %td
-            %a{href: "{% url 'administration_video_detail' video.pk %}"}
-              =video.title
-            \-
-            %a{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
-              Télécharger
-          %td
-          %td.hidden-xs
-            =video.duration
-          %td.hidden-sm.hidden-xs
-            =video.width_x_height
-          %td.hidden-sm.hidden-xs
-            =video.file_size
-          %td.hidden-sm.hidden-xs
-            =video.fps|floatformat|cut:",0"
-            fps
-      -for section, structure in section_list|tree_info
-        -for videosection in section.videosection_set.all
-          -with video=videosection.video
+      #videosTable.tab-pane{role: "tabpanel"}
+        %table.tablesorter
+          %thead
             %tr
-              %td
-                %a{href: "{% url 'administration_video_detail' video.pk %}"}
-                  =video.title
+              %th
+                Nom
+              %th.filter-select.filter-select-nosort{data-placeholder: "Choisissez une section"}
+                Section
+              %th.hidden-xs
+                Durée
+              %th.hidden-sm.hidden-xs
+                Résolution
+              %th.hidden-sm.hidden-xs
+                taille
+              %th.hidden-sm.hidden-xs
+                Fps
+
+          %tfoot
+            %tr
+              %th
+                Nom
+              %th
+                Section
+              %th.hidden-xs
+                Durée
+              %th.hidden-sm.hidden-xs
+                Résolution
+              %th.hidden-sm.hidden-xs
+                taille
+              %th.hidden-sm.hidden-xs
+                Fps
+
+          %tbody
+            -for video in video_list
+              %tr
+                %td
+                  %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                    =video.title
                   \-
                   %a{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
                     Télécharger
-              %td
-                =section.display_level_indicator
-                =section.title
-              %td.hidden-xs
-                =video.duration
-              %td.hidden-sm.hidden-xs
-                =video.width_x_height
-              %td.hidden-sm.hidden-xs
-                =video.file_size
-              %td.hidden-sm.hidden-xs
-                =video.fps|floatformat|cut:",0"
-                fps
+                %td
+                %td.hidden-xs
+                  =video.duration
+                %td.hidden-sm.hidden-xs
+                  =video.width_x_height
+                %td.hidden-sm.hidden-xs
+                  =video.file_size
+                %td.hidden-sm.hidden-xs
+                  =video.fps|floatformat|cut:",0"
+                  fps
+            -for section, structure in section_list|tree_info
+              -for videosection in section.videosection_set.all
+                -with video=videosection.video
+                  %tr
+                    %td
+                      %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                        =video.title
+                        \-
+                        %a{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                          Télécharger
+                    %td
+                      =section.display_level_indicator
+                      =section.title
+                    %td.hidden-xs
+                      =video.duration
+                    %td.hidden-sm.hidden-xs
+                      =video.width_x_height
+                    %td.hidden-sm.hidden-xs
+                      =video.file_size
+                    %td.hidden-sm.hidden-xs
+                      =video.fps|floatformat|cut:",0"
+                      fps
 
