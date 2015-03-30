@@ -63,14 +63,17 @@
 -block content
   %div{role: "tabpanel"}
     .row
-      .col-xs-2.col-md-offset-10
-        %ul#myTab.nav.nav-pills.pull-right
-          %li.active{role: "tablist"}
-            %a{href: "#videosList", aria-controls: "videosList", data-toggle: "tab"}
-              %span.glyphicon.glyphicon-align-left{aria-hidden: "true"}
-          %li{role: "tablist"}
-            %a{href: "#videosTable", aria-controls: "videosTable", data-toogle: "tab"}
-              %span.glyphicon.glyphicon-list-alt{aria-hidden: "true"}
+      %h1
+        Toutes les vidéos
+        %small.pull-right
+          %ul#myTab.nav.nav-pills
+            %li.active{role: "tablist"}
+              %a{href: "#videosList", aria-controls: "videosList", data-toggle: "tab"}
+                %span.glyphicon.glyphicon-align-left{aria-hidden: "true"}
+            %li{role: "tablist"}
+              %a{href: "#videosTable", aria-controls: "videosTable", data-toogle: "tab"}
+                %span.glyphicon.glyphicon-list-alt{aria-hidden: "true"}
+      %hr
 
     .tab-content
       #videosList.tab-pane.active{role: "tabpanel"}
