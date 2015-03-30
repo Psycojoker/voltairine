@@ -134,9 +134,11 @@
               %tr
                 %td
                   %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                    %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
+                  %a{href: "{% url 'administration_video_detail' video.pk %}"}
                     =video.title
-                  \-
-                  %a{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                  %br
+                  %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
                     Télécharger
                 %td
                 %td.hidden-xs
@@ -154,10 +156,12 @@
                   %tr
                     %td
                       %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                        %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
+                      %a{href: "{% url 'administration_video_detail' video.pk %}"}
                         =video.title
-                        \-
-                        %a{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
-                          Télécharger
+                      %br
+                      %a.btn.btn-sm{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                        Télécharger
                     %td
                       =section.display_level_indicator
                       =section.title
