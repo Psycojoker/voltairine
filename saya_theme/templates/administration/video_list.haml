@@ -132,18 +132,12 @@
           -include "video/thumbnail.haml"
 
   -for section, structure in section_list|tree_info
-    -if structure.new_level and not forloop.first
-      -increment "level"
-
-    <h{{ level }}>
+    <h{% level_to_heading_number section.level %}>
     =section.title
-    </h{{ level }}>
+    </h{% level_to_heading_number section.level %}>
 
     .row
       -for videosection in section.videosection_set.all
         .col-md-6
           -with video=videosection.video
             -include "video/thumbnail.haml"
-
-    -for level in structure.closed_levels
-      -decrement "level"

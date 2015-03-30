@@ -21,13 +21,6 @@ def is_group_have_access(section, group):
     return "false"
 
 
-@register.simple_tag(takes_context=True)
-def increment(context, variable_name):
-    context.dicts[2][variable_name] += 1
-    return ""
-
-
-@register.simple_tag(takes_context=True)
-def decrement(context, variable_name):
-    context.dicts[2][variable_name] -= 1
-    return ""
+@register.simple_tag
+def level_to_heading_number(level_number):
+    return 1 + level_number
