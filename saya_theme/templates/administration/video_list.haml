@@ -79,8 +79,16 @@
             %a{href: "{% url 'administration_video_detail' video.pk %}"}
               =video.title
           %td
-            \--
-
+      -for section, structure in section_list|tree_info
+        -for videosection in section.videosection_set.all
+          -with video=videosection.video
+            %tr
+              %td
+                %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                  =video.title
+              %td
+                =section.display_level_indicator
+                =section.title
 
   -if video_list
     %h3 Vidéos non classées
