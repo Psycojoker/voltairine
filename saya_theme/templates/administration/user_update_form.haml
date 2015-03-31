@@ -65,6 +65,9 @@
       -for error in form.is_staff.errors
         %span.help-block= error
 
+    -if not user.is_staff
+      -bootstrap_field form.group
+
     %button.btn.btn-lg.btn-primary{type: "submit"}
       Enregistrer
 

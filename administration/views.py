@@ -13,7 +13,7 @@ from sections.models import Section, Permission, VideoSection
 from video.models import Video
 from permissions_groups.models import Group
 
-from .forms import UserPermissionForm, GroupPermissionForm, VideoForm, FormUser
+from .forms import UserPermissionForm, GroupPermissionForm, VideoForm, FormUser, FormUserForGroupAdmin
 from .utils import user_can_see_administration_interface
 
 
@@ -51,6 +51,14 @@ class CreateUser(CreateView):
     model = User
     template_name = 'administration/user_update_form.haml'
     fields = ['username', 'password', 'is_staff', 'first_name', 'last_name', 'email']
+
+    def get_form(self, form_class):
+        # don't have to check if the user is an admin, the decorator in the
+        # urls.py have already do that
+        if not self.request.user.is_staff:
+            return FormUserForGroupAdmin(**self.get_form_kwargs())
+
+        return super(CreateUser, self).get_form(form_class)
 
     def get_success_url(self):
         return reverse('administration_user_detail', args=(self.object.pk,))
