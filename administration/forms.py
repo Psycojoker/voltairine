@@ -33,3 +33,12 @@ class FormUser(forms.ModelForm):
     class Meta:
         model=User
         fields=['username', 'is_staff', 'first_name', 'last_name', 'email']
+
+
+class FormUserForGroupAdmin(forms.ModelForm):
+    group = forms.ModelChoiceField(queryset=Group.objects.all(), empty_label=None)
+    password = forms.CharField(required=False)
+
+    class Meta:
+        model=User
+        fields=['username', 'first_name', 'last_name', 'email']
