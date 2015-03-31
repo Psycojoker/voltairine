@@ -27,10 +27,9 @@ def user_and_groups(request):
         })
 
     elif request.user.group_is_admin_set.exists():
-        groups_managed_by_user = request.user.group_is_admin_set.all()
         return render(request, "administration/user_list.haml", {
-            "user_list": User.objects.filter(Q(group_is_admin_set__in=groups_managed_by_user)|Q(group_is_member_set__in=groups_managed_by_user)),
-            "group_list": groups_managed_by_user,
+            "user_list": request.user.users_can_administrate(),
+            "group_list": request.user.groups_managed_by_user(),
         })
 
     else:
