@@ -42,6 +42,8 @@ class DetailUser(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(DetailUser, self).get_context_data(*args, **kwargs)
+        if not self.request.user.is_staff and self.object not in self.request.user.users_can_administrate():
+            raise PermissionDenied()
         context["section_list"] = Section.objects.all()
         return context
 
