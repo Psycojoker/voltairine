@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -19,10 +20,21 @@ from .utils import user_can_see_administration_interface
 
 @user_can_see_administration_interface
 def user_and_groups(request):
-    return render(request, "administration/user_list.haml", {
-        "user_list": User.objects.all(),
-        "group_list": Group.objects.all(),
-    })
+    if request.user.is_staff:
+        return render(request, "administration/user_list.haml", {
+            "user_list": User.objects.all(),
+            "group_list": Group.objects.all(),
+        })
+
+    elif request.user.group_is_admin_set.exists():
+        groups_managed_by_user = request.user.group_is_admin_set.all()
+        return render(request, "administration/user_list.haml", {
+            "user_list": User.objects.filter(Q(group_is_admin_set__in=groups_managed_by_user)|Q(group_is_member_set__in=groups_managed_by_user)),
+            "group_list": groups_managed_by_user,
+        })
+
+    else:
+        raise PermissionDenied()
 
 
 class DetailUser(DetailView):
