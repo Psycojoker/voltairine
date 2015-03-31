@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponse
 
-from administration.utils import is_staff
+from administration.utils import user_can_see_administration_interface
 
 from sections.models import VideoSection
 from video.models import Video
@@ -15,7 +15,7 @@ from .utils import generate_random_string
 from .forms import ResumableForm
 
 
-@is_staff
+@user_can_see_administration_interface
 def upload_video(request):
     if request.method == "GET":
         return render(request, "upload/upload.haml", {"form": ResumableForm()})

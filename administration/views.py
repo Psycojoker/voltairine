@@ -14,10 +14,10 @@ from video.models import Video
 from permissions_groups.models import Group
 
 from .forms import UserPermissionForm, GroupPermissionForm, VideoForm, FormUser
-from .utils import is_staff
+from .utils import user_can_see_administration_interface
 
 
-@is_staff
+@user_can_see_administration_interface
 def user_and_groups(request):
     return render(request, "administration/user_list.haml", {
         "user_list": User.objects.all(),
@@ -135,7 +135,7 @@ class UpdateSection(UpdateView):
     success_url = reverse_lazy('administration_section_list')
 
 
-@is_staff
+@user_can_see_administration_interface
 def delete_section_and_childrens(request, pk):
     get_object_or_404(Section, pk=pk).delete()
     return HttpResponseRedirect((reverse('administration_section_list')))
@@ -147,12 +147,12 @@ class DeleteVideo(DeleteView):
     success_url = reverse_lazy('administration_video_list')
 
 
-@is_staff
+@user_can_see_administration_interface
 def dashboard(request):
     return render(request, "administration/dashboard.haml")
 
 
-@is_staff
+@user_can_see_administration_interface
 @require_POST
 def change_user_section_permission(request):
     form = UserPermissionForm(request.POST)
@@ -188,7 +188,7 @@ def change_user_section_permission(request):
     return HttpResponse("ok")
 
 
-@is_staff
+@user_can_see_administration_interface
 @require_POST
 def change_group_section_permission(request):
     form = GroupPermissionForm(request.POST)
@@ -221,7 +221,7 @@ def change_group_section_permission(request):
     return HttpResponse("ok")
 
 
-@is_staff
+@user_can_see_administration_interface
 def video_list(request):
     return render(request, 'administration/video_list.haml', {
         "level": 1,
@@ -230,7 +230,7 @@ def video_list(request):
     })
 
 
-@is_staff
+@user_can_see_administration_interface
 def video_detail(request, pk):
     video = get_object_or_404(Video, pk=pk)
 
