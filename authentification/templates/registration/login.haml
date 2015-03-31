@@ -9,6 +9,10 @@
     .alert.alert-danger
       Le nom d'utilisateur ou le mot de passe saisi est incorrect.
 
+  -if next
+    .alert.alert-info
+      Veuillez vous connecter pour pouvoir voir cette page.
+
   %form{method: "POST"}
     -csrf_token
 
