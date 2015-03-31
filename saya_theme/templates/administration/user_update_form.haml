@@ -51,21 +51,22 @@
       -for error in form.last_name.errors
         %span.help-block= error
 
-    .form-group{class: "{% if form.is_staff.errors %}has-error{% elif form.data and form.is_staff %}has-success{% endif %}"}
-      .checkbox
-        %label{for: "id_is_staff"}
-          -if form.is_staff.value
-            %input#id_is_staff{type: "checkbox", name: "is_staff", checked: "checked"}.
-            Administrateur
-          -else
-            %input#id_is_staff{type: "checkbox", name: "is_staff"}.
-            Administrateur
-      %span.help-block
-        L'utilisateur peut se connecter sur l'interface d'administration
-      -for error in form.is_staff.errors
-        %span.help-block= error
+    -if user.is_staff
+      .form-group{class: "{% if form.is_staff.errors %}has-error{% elif form.data and form.is_staff %}has-success{% endif %}"}
+        .checkbox
+          %label{for: "id_is_staff"}
+            -if form.is_staff.value
+              %input#id_is_staff{type: "checkbox", name: "is_staff", checked: "checked"}.
+              Administrateur
+            -else
+              %input#id_is_staff{type: "checkbox", name: "is_staff"}.
+              Administrateur
+        %span.help-block
+          L'utilisateur peut se connecter sur l'interface d'administration
+        -for error in form.is_staff.errors
+          %span.help-block= error
 
-    -if not user.is_staff
+    -else
       -bootstrap_field form.group
 
     %button.btn.btn-lg.btn-primary{type: "submit"}
