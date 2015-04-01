@@ -185,6 +185,13 @@ class UpdateGroup(UpdateView):
         fields=['name', 'users', 'admins']
     )
 
+    def get_object(self, queryset=None):
+        object = super(UpdateGroup, self).get_object(queryset)
+        if not self.request.user.is_staff and object not in self.request.user.groups_managed_by_user():
+            raise PermissionDenied()
+
+        return object
+
     def get_success_url(self):
         return reverse('administration_group_detail', args=(self.object.pk,))
 
