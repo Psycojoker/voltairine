@@ -56,7 +56,9 @@ class CreateUser(CreateView):
         # don't have to check if the user is an admin, the decorator in the
         # urls.py have already do that
         if not self.request.user.is_staff:
-            return FormUserForGroupAdmin(**self.get_form_kwargs())
+            form = FormUserForGroupAdmin(**self.get_form_kwargs())
+            form["group"].field.queryset = self.request.user.groups_managed_by_user()
+            return form
 
         return super(CreateUser, self).get_form(form_class)
 
