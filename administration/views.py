@@ -14,6 +14,8 @@ from sections.models import Section, Permission, VideoSection
 from video.models import Video
 from permissions_groups.models import Group
 
+from sections.utils import unfold_tree
+
 from .forms import UserPermissionForm, GroupPermissionForm, VideoForm, FormUser, FormUserForGroupAdmin
 from .utils import user_can_see_administration_interface
 
@@ -159,7 +161,16 @@ class DetailGroup(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(DetailGroup, self).get_context_data(*args, **kwargs)
-        context["section_list"] = Section.objects.all()
+        if self.request.user.is_staff:
+            context["section_list"] = Section.objects.all()
+        else:
+            sections_tree = Section.objects.all().as_python_tree()
+            node_to_childrens = unfold_tree(sections_tree)
+
+            sections_of_group = self.object.permissions.all().prefetch_related("children")
+            childrens = set(sum([node_to_childrens[x] for x in sections_of_group], []))
+            # I don't want the children because that would break the display
+            context["section_list"] = [(section, node_to_childrens[section]) for section in self.object.permissions.exclude(pk__in=[x.pk for x in childrens])]
         return context
 
 
