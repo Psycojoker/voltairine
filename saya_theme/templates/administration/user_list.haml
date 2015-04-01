@@ -35,5 +35,6 @@
           %a.list-group-item{href: "{% url 'administration_group_detail' group.pk %}"}
             =group.name
 
-      %a.btn.btn-lg.btn-primary{href: "{% url 'administration_group_create' %}"}
-        Rajouter un nouveau groupe
+      -if user.is_staff
+        %a.btn.btn-lg.btn-primary{href: "{% url 'administration_group_create' %}"}
+          Rajouter un nouveau groupe

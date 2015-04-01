@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from sections.models import Section
 
 from .views import UpdateUser, CreateUser, CreateSection, DetailUser, DeleteUser, UpdateSection, DeleteVideo, CreateGroup, UpdateGroup, DeleteGroup, DetailGroup
-from .utils import user_can_see_administration_interface
+from .utils import user_can_see_administration_interface, user_is_staff
 
 
 urlpatterns = patterns('administration.views',
@@ -15,7 +15,7 @@ urlpatterns = patterns('administration.views',
     url(r'^user/(?P<pk>\d+)/update/$', user_can_see_administration_interface(UpdateUser.as_view()), name='administration_user_update'),
     url(r'^user/(?P<pk>\d+)/delete/$', user_can_see_administration_interface(DeleteUser.as_view()), name='administration_user_delete'),
 
-    url(r'^group/new/$', user_can_see_administration_interface(CreateGroup.as_view()), name='administration_group_create'),
+    url(r'^group/new/$', user_is_staff(CreateGroup.as_view()), name='administration_group_create'),
     url(r'^group/(?P<pk>\d+)/$', user_can_see_administration_interface(DetailGroup.as_view()), name='administration_group_detail'),
     url(r'^group/(?P<pk>\d+)/update/$', user_can_see_administration_interface(UpdateGroup.as_view()), name='administration_group_update'),
     url(r'^group/(?P<pk>\d+)/delete/$', user_can_see_administration_interface(DeleteGroup.as_view()), name='administration_group_delete'),
