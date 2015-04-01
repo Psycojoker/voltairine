@@ -99,7 +99,7 @@ class UpdateUser(UpdateView):
 
     def get_object(self, queryset=None):
         object = super(UpdateUser, self).get_object(queryset)
-        if object not in self.request.user.users_can_administrate():
+        if not self.request.user.is_staff and object not in self.request.user.users_can_administrate():
             raise PermissionDenied()
 
         return object
@@ -125,7 +125,7 @@ class DeleteUser(DeleteView):
 
     def get_object(self, queryset=None):
         object = super(DeleteUser, self).get_object(queryset)
-        if object not in self.request.user.users_can_administrate():
+        if not self.request.user.is_staff and object not in self.request.user.users_can_administrate():
             raise PermissionDenied()
 
         return object
@@ -152,7 +152,7 @@ class DetailGroup(DetailView):
 
     def get_object(self, queryset=None):
         object = super(DetailGroup, self).get_object(queryset)
-        if object not in self.request.user.groups_managed_by_user():
+        if not self.request.user.is_staff and object not in self.request.user.groups_managed_by_user():
             raise PermissionDenied()
 
         return object
