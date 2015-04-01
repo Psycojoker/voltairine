@@ -65,8 +65,12 @@
               %a.list-group-item{href: "{% url 'administration_group_detail' group.pk %}"}
                 =group
       -else
-        %p
-          L'utilisateur n'est admin d'aucun groupe.
+        -if user.is_staff
+          %p
+            L'utilisateur n'est admin d'aucun groupe.
+        -else
+          %p
+            L'utilisateur n'est admin d'aucun groupe dont vous avez la reponsabilité.
 
       -if group_is_member.exists
         .panel.panel-primary
@@ -77,8 +81,12 @@
               %a.list-group-item{href: "{% url 'administration_group_detail' group.pk %}"}
                 =group
       -else
-        %p
-          L'utilisateur n'est membre d'aucun groupe.
+        -if user.is_staff
+          %p
+            L'utilisateur n'est membre d'aucun groupe.
+        -else
+          %p
+            L'utilisateur n'est membre d'aucun groupe dont vous avez la responsabilité.
 
       -if not user.is_staff
         </div>
