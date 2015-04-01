@@ -17,7 +17,7 @@ from permissions_groups.models import Group
 from sections.utils import unfold_tree
 
 from .forms import UserPermissionForm, GroupPermissionForm, VideoForm, FormUser, FormUserForGroupAdmin
-from .utils import user_can_see_administration_interface
+from .utils import user_can_see_administration_interface, user_is_staff
 
 
 @user_can_see_administration_interface
@@ -239,7 +239,7 @@ def dashboard(request):
     return render(request, "administration/dashboard.haml")
 
 
-@user_can_see_administration_interface
+@user_is_staff
 @require_POST
 def change_user_section_permission(request):
     form = UserPermissionForm(request.POST)
@@ -275,7 +275,7 @@ def change_user_section_permission(request):
     return HttpResponse("ok")
 
 
-@user_can_see_administration_interface
+@user_is_staff
 @require_POST
 def change_group_section_permission(request):
     form = GroupPermissionForm(request.POST)
