@@ -95,6 +95,13 @@ class UpdateUser(UpdateView):
     template_name = 'administration/user_update_form.haml'
     form_class = FormUser
 
+    def get_object(self, queryset=None):
+        object = super(UpdateUser, self).get_object(queryset)
+        if object not in self.request.user.users_can_administrate():
+            raise PermissionDenied()
+
+        return object
+
     def get_success_url(self):
         return reverse('administration_user_detail', args=(self.object.pk,))
 
