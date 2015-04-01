@@ -1,4 +1,5 @@
 from django import forms
+from django.db import transaction
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -66,9 +67,18 @@ class CreateUser(CreateView):
         return reverse('administration_user_detail', args=(self.object.pk,))
 
     def form_valid(self, form):
-        to_return = super(CreateUser, self).form_valid(form)
-        self.object.set_password(form.cleaned_data["password"])
-        self.object.save()
+        with transaction.atomic():
+            to_return = super(CreateUser, self).form_valid(form)
+            self.object.set_password(form.cleaned_data["password"])
+            self.object.save()
+
+            if not self.request.user.is_staff:
+                # request.user is admin of only one group
+                if not form.cleaned_data["group"]:
+                    form["group"].field.queryset.first().users.add(self.object)
+                else:
+                    form.cleaned_data["group"].users.add(self.object)
+
         return to_return
 
 

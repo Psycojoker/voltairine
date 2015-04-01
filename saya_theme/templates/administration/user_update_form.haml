@@ -68,11 +68,14 @@
 
     -else
       -if form.group.field.queryset|length > 1
-        -bootstrap_field form.group
+          -bootstrap_field form.group
       -else
+        %div{style: "display: none"}
+          -bootstrap_field form.group
         %p
           L'utilisateur sera rajouté au groupe:
           =form.group.field.queryset.first.name
+
 
     %button.btn.btn-lg.btn-primary{type: "submit"}
       Enregistrer
