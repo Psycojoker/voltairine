@@ -18,7 +18,7 @@ urlpatterns = patterns('administration.views',
     url(r'^group/new/$', user_is_staff(CreateGroup.as_view()), name='administration_group_create'),
     url(r'^group/(?P<pk>\d+)/$', user_can_see_administration_interface(DetailGroup.as_view()), name='administration_group_detail'),
     url(r'^group/(?P<pk>\d+)/update/$', user_can_see_administration_interface(UpdateGroup.as_view()), name='administration_group_update'),
-    url(r'^group/(?P<pk>\d+)/delete/$', user_can_see_administration_interface(DeleteGroup.as_view()), name='administration_group_delete'),
+    url(r'^group/(?P<pk>\d+)/delete/$', user_is_staff(DeleteGroup.as_view()), name='administration_group_delete'),
 
     url(r'^section/$', user_can_see_administration_interface(ListView.as_view(model=Section, template_name='administration/section_list.haml')), name='administration_section_list'),
     url(r'^section/new/$', user_can_see_administration_interface(CreateSection.as_view()), name='administration_section_create'),
