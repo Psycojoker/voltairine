@@ -83,8 +83,10 @@ class CreateUser(CreateView):
             if not self.request.user.is_staff:
                 # request.user is admin of only one group
                 if not form.cleaned_data["group"]:
+                    assert form["group"].field.queryset.first() in self.request.user.groups_managed_by_user()
                     form["group"].field.queryset.first().users.add(self.object)
                 else:
+                    assert form.cleaned_data["group"] in self.request.user.groups_managed_by_user()
                     form.cleaned_data["group"].users.add(self.object)
 
         return to_return
