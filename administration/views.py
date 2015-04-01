@@ -44,7 +44,15 @@ class DetailUser(DetailView):
         context = super(DetailUser, self).get_context_data(*args, **kwargs)
         if not self.request.user.is_staff and self.object not in self.request.user.users_can_administrate():
             raise PermissionDenied()
-        context["section_list"] = Section.objects.all()
+
+        if not self.request.user.is_staff:
+            context["group_is_admin"] = self.object.group_is_admin_set.filter(pk__in=map(lambda x: x.pk, self.request.user.groups_managed_by_user()))
+            context["group_is_member"] = self.object.group_is_member_set.filter(pk__in=map(lambda x: x.pk, self.request.user.groups_managed_by_user()))
+
+        else:
+            context["group_is_admin"] = self.object.group_is_admin_set.all()
+            context["group_is_member"] = self.object.group_is_member_set.all()
+            context["section_list"] = Section.objects.all()
         return context
 
 
