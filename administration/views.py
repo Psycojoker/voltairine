@@ -150,6 +150,13 @@ class DetailGroup(DetailView):
     queryset = Group.objects.prefetch_related("permissions")
     template_name = 'administration/group_detail.haml'
 
+    def get_object(self, queryset=None):
+        object = super(DetailGroup, self).get_object(queryset)
+        if object not in self.request.user.groups_managed_by_user():
+            raise PermissionDenied()
+
+        return object
+
     def get_context_data(self, *args, **kwargs):
         context = super(DetailGroup, self).get_context_data(*args, **kwargs)
         context["section_list"] = Section.objects.all()
