@@ -185,6 +185,12 @@ class UpdateGroup(UpdateView):
         fields=['name', 'users', 'admins']
     )
 
+    def form_valid(self, form):
+        if not self.request.user.is_staff and not self.request.user in form.cleaned_data["admins"]:
+            form.cleaned_data["admins"] = list(form.cleaned_data["admins"]) + [self.request.user]
+        to_return = super(UpdateGroup, self).form_valid(form)
+        return to_return
+
     def get_object(self, queryset=None):
         object = super(UpdateGroup, self).get_object(queryset)
         if not self.request.user.is_staff and object not in self.request.user.groups_managed_by_user():
