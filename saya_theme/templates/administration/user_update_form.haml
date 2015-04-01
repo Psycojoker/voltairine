@@ -67,7 +67,12 @@
           %span.help-block= error
 
     -else
-      -bootstrap_field form.group
+      -if form.group.field.queryset|length > 1
+        -bootstrap_field form.group
+      -else
+        %p
+          L'utilisateur sera rajouté au groupe:
+          =form.group.field.queryset.first.name
 
     %button.btn.btn-lg.btn-primary{type: "submit"}
       Enregistrer
