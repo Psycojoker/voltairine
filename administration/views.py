@@ -123,6 +123,13 @@ class DeleteUser(DeleteView):
     template_name = "administration/user_confirm_delete.haml"
     success_url = reverse_lazy('administration_user_list')
 
+    def get_object(self, queryset=None):
+        object = super(DeleteUser, self).get_object(queryset)
+        if object not in self.request.user.users_can_administrate():
+            raise PermissionDenied()
+
+        return object
+
 
 class CreateGroup(CreateView):
     model = Group
