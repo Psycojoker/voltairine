@@ -25,7 +25,7 @@
         %input#id_password.form-control{type: "password", placeholder: "Nouveau mot de passe", name: "password"}
       -else
         %label.control-label{for: "id_password"}
-          Mot de passe (optionnel)
+          Mot de passe
         %input#id_password.form-control{type: "password", required: "required", placeholder: "Mot de passe", name: "password"}
       -for error in form.password.errors
         %span.help-block= error
