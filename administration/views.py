@@ -169,7 +169,9 @@ class DetailGroup(DetailView):
 
             sections_of_group = self.object.permissions.all()
             childrens = set(sum([node_to_childrens[x] for x in sections_of_group], []))
-            # I don't want the children because that would break the display
+            # in the sections that are directly assigned to the group admin
+            # some may be children of others, I don't want them because that
+            # would break the display
             context["section_list"] = [(section, node_to_childrens[section]) for section in self.object.permissions.exclude(pk__in=[x.pk for x in childrens])]
         return context
 
