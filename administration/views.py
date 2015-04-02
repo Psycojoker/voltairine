@@ -238,6 +238,12 @@ class CreateSection(CreateView):
     fields = ['title', 'parent']
     success_url = reverse_lazy('administration_section_list')
 
+    def form_valid(self, form):
+        if not self.request.user.is_staff and form.cleaned_data["parent"] not in self.request.user.sections_can_administrate():
+            raise PermissionDenied()
+
+        return super(CreateSection, self).form_valid(form)
+
 
 class UpdateSection(UpdateView):
     model = Section
