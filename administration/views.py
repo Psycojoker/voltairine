@@ -260,7 +260,12 @@ class UpdateSection(UpdateView):
 
 @user_can_see_administration_interface
 def delete_section_and_childrens(request, pk):
-    get_object_or_404(Section, pk=pk).delete()
+    section = get_object_or_404(Section, pk=pk)
+
+    if not request.user.is_staff and section not in request.user.sections_can_administrate():
+        raise PermissionDenied()
+
+    section.delete()
     return HttpResponseRedirect((reverse('administration_section_list')))
 
 
