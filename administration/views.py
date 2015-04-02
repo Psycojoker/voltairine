@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedire
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.core.exceptions import PermissionDenied
-from django.views.generic import DetailView, DeleteView
+from django.views.generic import DetailView, DeleteView, ListView
 from django.views.generic.edit import UpdateView, CreateView
 from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
@@ -206,6 +206,11 @@ class DeleteGroup(DeleteView):
     model = Group
     template_name = "administration/group_confirm_delete.haml"
     success_url = reverse_lazy('administration_user_list')
+
+
+class ListSection(ListView):
+    model = Section
+    template_name = 'administration/section_list.haml'
 
 
 class CreateSection(CreateView):

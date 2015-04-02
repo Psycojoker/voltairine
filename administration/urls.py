@@ -1,9 +1,6 @@
 from django.conf.urls import patterns, url, include
-from django.views.generic import ListView
 
-from sections.models import Section
-
-from .views import UpdateUser, CreateUser, CreateSection, DetailUser, DeleteUser, UpdateSection, DeleteVideo, CreateGroup, UpdateGroup, DeleteGroup, DetailGroup
+from .views import UpdateUser, CreateUser, CreateSection, DetailUser, DeleteUser, UpdateSection, DeleteVideo, CreateGroup, UpdateGroup, DeleteGroup, DetailGroup, ListSection
 from .utils import user_can_see_administration_interface, user_is_staff
 
 
@@ -20,7 +17,7 @@ urlpatterns = patterns('administration.views',
     url(r'^group/(?P<pk>\d+)/update/$', user_can_see_administration_interface(UpdateGroup.as_view()), name='administration_group_update'),
     url(r'^group/(?P<pk>\d+)/delete/$', user_is_staff(DeleteGroup.as_view()), name='administration_group_delete'),
 
-    url(r'^section/$', user_can_see_administration_interface(ListView.as_view(model=Section, template_name='administration/section_list.haml')), name='administration_section_list'),
+    url(r'^section/$', user_can_see_administration_interface(ListSection.as_view()), name='administration_section_list'),
     url(r'^section/new/$', user_can_see_administration_interface(CreateSection.as_view()), name='administration_section_create'),
     url(r'^section/(?P<pk>\d+)/update/$', user_can_see_administration_interface(UpdateSection.as_view()), name='administration_section_update'),
     url(r'^section/(?P<pk>\d+)/delete/$', 'delete_section_and_childrens', name='administration_section_delete'),
