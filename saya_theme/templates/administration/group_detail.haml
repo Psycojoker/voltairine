@@ -74,9 +74,9 @@
         %h2 Sections lisibles par les membres de ce groupe
         %hr
 
-        .fuelux
-          %ul.tree.tree-folder-select
-            -for top_section, childrens in section_list
+        -for top_section, childrens in section_list
+          .fuelux
+            %ul.tree.tree-folder-select
               %li.tree-branch
                 .tree-branch-header
                   %span.glyphicon.icon-caret.glyphicon-play
