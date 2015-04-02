@@ -345,9 +345,24 @@ def change_group_section_permission(request):
 
 @user_can_see_administration_interface
 def video_list(request):
+    if not request.user.is_staff:
+        sections_tree = Section.objects.prefetch_related("videosection_set__video").as_python_tree()
+        node_to_childrens = unfold_tree(sections_tree)
+
+        sections_of_groups = Section.objects.filter(group__admins=request.user).prefetch_related("videosection_set__video")
+        childrens = set(sum([node_to_childrens[x] for x in sections_of_groups], []))
+        # in the sections that are directly assigned to the group admin
+        # some may be children of others, I don't want them because that
+        # would break the display
+        return render(request, 'administration/video_list.haml', {
+            "level": 1,
+            "top_section_list": [[section] + node_to_childrens[section] for section in sections_of_groups.exclude(pk__in=[x.pk for x in childrens])],
+            "video_list": [],
+        })
+
     return render(request, 'administration/video_list.haml', {
         "level": 1,
-        "section_list": Section.objects.prefetch_related("videosection_set__video"),
+        "top_section_list": [Section.objects.prefetch_related("videosection_set__video")],
         "video_list": Video.objects.filter(videosection__isnull=True),
     })
 
