@@ -269,12 +269,6 @@ def delete_section_and_childrens(request, pk):
     return HttpResponseRedirect((reverse('administration_section_list')))
 
 
-class DeleteVideo(DeleteView):
-    model = Video
-    template_name = "administration/video_confirm_delete.haml"
-    success_url = reverse_lazy('administration_video_list')
-
-
 @user_can_see_administration_interface
 def dashboard(request):
     return render(request, "administration/dashboard.haml")
@@ -399,3 +393,9 @@ def video_detail(request, pk):
         "object": video,
         "form": VideoForm(),
     })
+
+
+class DeleteVideo(DeleteView):
+    model = Video
+    template_name = "administration/video_confirm_delete.haml"
+    success_url = reverse_lazy('administration_video_list')
