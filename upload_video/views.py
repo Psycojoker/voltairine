@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 from administration.utils import user_can_see_administration_interface
 
-from sections.models import VideoSection
+from sections.models import VideoSection, Section
 from video.models import Video
 
 from .utils import generate_random_string
@@ -18,14 +18,31 @@ from .forms import ResumableForm
 @user_can_see_administration_interface
 def upload_video(request):
     if request.method == "GET":
-        return render(request, "upload/upload.haml", {"form": ResumableForm()})
+        form = ResumableForm()
+
+        if not request.user.is_staff:
+            form["section"].field.queryset = Section.objects.filter(pk__in=map(lambda x: x.pk, request.user.sections_can_administrate()))
+            form["section"].field.required = True
+            form["section"].field.empty_label = None
+
+        return render(request, "upload/upload.haml", {"form": form})
 
     assert request.method == "POST"
 
     # POST
     form = ResumableForm(request.POST)
+
+    # bad: not dry
+    if not request.user.is_staff:
+        form["section"].field.queryset = Section.objects.filter(pk__in=map(lambda x: x.pk, request.user.sections_can_administrate()))
+        form["section"].field.required = True
+        form["section"].field.empty_label = None
+
     if not form.is_valid():
         return render(request, "upload/upload.haml", {"form": form}, status=400)
+
+    if not request.user.is_staff:
+        assert form.cleaned_data["section"] in request.user.sections_can_administrate()
 
     destination = os.path.join(settings.MEDIA_ROOT, "videos")
 

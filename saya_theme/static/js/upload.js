@@ -2,6 +2,7 @@ function VideoUploadController($scope) {
     "user strict";
     $scope.uploads = [];
     $scope.number = 0;
+    $scope.defaultSection = $("#defaultSection").attr("data");
 
     applyDjangoResumable = function(form) {
         var dj = new DjangoResumable({
@@ -16,13 +17,14 @@ function VideoUploadController($scope) {
     }
 
     $scope.addUpload = function() {
+        console.log($scope.defaultSection);
         var newForm = {
             id: $scope.number,
             elementId: "upload_form_" + $scope.number,
             djangoResumable: null,
             state: "empty",
             isSubmited: false,
-            section: "",
+            section: $scope.defaultSection,
             confirmCancelShow: false,
             title: ""
         };
