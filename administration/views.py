@@ -376,6 +376,12 @@ def video_detail(request, pk):
 
     if request.method == "POST":
         form = VideoForm(request.POST)
+
+        if not request.user.is_staff:
+            form["section"].field.queryset = Section.objects.filter(pk__in=map(lambda x: x.pk, request.user.sections_can_administrate()))
+            form["section"].field.required = True
+            form["section"].field.empty_label = None
+
         if not form.is_valid():
             return HttpResponseBadRequest()
 
@@ -407,9 +413,17 @@ def video_detail(request, pk):
         video.save()
         return HttpResponse(video.videosection.__unicode__() if hasattr(video, "videosection") else "")
 
+    form = VideoForm()
+
+    # not dry
+    if not request.user.is_staff:
+        form["section"].field.queryset = Section.objects.filter(pk__in=map(lambda x: x.pk, request.user.sections_can_administrate()))
+        form["section"].field.required = True
+        form["section"].field.empty_label = None
+
     return render(request, "administration/video_detail.haml", {
         "object": video,
-        "form": VideoForm(),
+        "form": form,
     })
 
 

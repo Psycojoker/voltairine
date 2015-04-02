@@ -150,8 +150,9 @@
             %label.control-label{for: "id_section"}
               Section
             %select#id_section.form-control{name: "section", title: "", ng-model: "section_id"}
-              %option{value: "", selected: "selected"}
-                \---------
+              -if user.is_staff
+                %option{value: "", selected: "selected"}
+                  \---------
               -for id, section in form.section.field.choices
                 %option{value: "{{ id }}"}
                   =section
