@@ -417,3 +417,11 @@ class DeleteVideo(DeleteView):
     model = Video
     template_name = "administration/video_confirm_delete.haml"
     success_url = reverse_lazy('administration_video_list')
+
+    def get_object(self, queryset=None):
+        object = super(DeleteVideo, self).get_object(queryset=queryset)
+
+        if not self.request.user.is_staff and object not in self.request.user.videos_can_administrate():
+            raise PermissionDenied()
+
+        return object
