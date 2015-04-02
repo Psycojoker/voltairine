@@ -371,6 +371,9 @@ def video_list(request):
 def video_detail(request, pk):
     video = get_object_or_404(Video, pk=pk)
 
+    if video not in request.user.videos_can_administrate():
+        raise PermissionDenied()
+
     if request.method == "POST":
         form = VideoForm(request.POST)
         if not form.is_valid():
