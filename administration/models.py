@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from sections.models import Section
 from sections.utils import unfold_tree
 
+from video.models import Video
+
+
 def render_user(self):
     if self.first_name and self.last_name:
         return "%s %s (%s) <%s>%s" % (self.first_name, self.last_name, self.username, self.email, (" - administrateur" if self.is_staff else ""))
@@ -27,6 +30,11 @@ def sections_can_administrate(self):
     return set(list(sections_of_groups) + sum([node_to_childrens[x] for x in sections_of_groups], []))
 
 
+def videos_can_administrate(self):
+    return Video.objects.filter(videosection__section__in=map(lambda x: x.pk, self.sections_can_administrate()))
+
+
 User.users_can_administrate = users_can_administrate
 User.groups_managed_by_user = lambda self: self.group_is_admin_set.all()
 User.sections_can_administrate = sections_can_administrate
+User.videos_can_administrate = videos_can_administrate
