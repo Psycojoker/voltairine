@@ -251,6 +251,12 @@ class UpdateSection(UpdateView):
     fields = ['title']
     success_url = reverse_lazy('administration_section_list')
 
+    def form_valid(self, form):
+        if not self.request.user.is_staff and self.object not in self.request.user.sections_can_administrate():
+            raise PermissionDenied()
+
+        return super(UpdateSection, self).form_valid(form)
+
 
 @user_can_see_administration_interface
 def delete_section_and_childrens(request, pk):
