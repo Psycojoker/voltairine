@@ -214,6 +214,23 @@ class ListSection(ListView):
     model = Section
     template_name = 'administration/section_list.haml'
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(ListSection, self).get_context_data(*args, **kwargs)
+        if self.request.user.is_staff:
+            context["top_section_list"] = [context["section_list"]]
+        else:
+            sections_tree = Section.objects.all().as_python_tree()
+            node_to_childrens = unfold_tree(sections_tree)
+
+            sections_of_groups = Section.objects.filter(group__admins=self.request.user)
+            childrens = set(sum([node_to_childrens[x] for x in sections_of_groups], []))
+            # in the sections that are directly assigned to the group admin
+            # some may be children of others, I don't want them because that
+            # would break the display
+            context["top_section_list"] = [[section] + node_to_childrens[section] for section in sections_of_groups.exclude(pk__in=[x.pk for x in childrens])]
+
+        return context
+
 
 class CreateSection(CreateView):
     model = Section
