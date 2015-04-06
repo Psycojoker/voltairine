@@ -50,16 +50,23 @@ class Video(models.Model):
         return os.path.join(settings.MEDIA_URL, "thumbnails", self.thumbnail_name)
 
     def _generate_thumbnail_image_from_video(self):
-        video = av.open(self.absolute_path)
+        try:
+            video = av.open(self.absolute_path)
 
-        until_2_seconds = 0
+            until_2_seconds = 0
 
-        for i in video.demux():
-            for frame in i.decode():
-                if frame.__class__.__name__ == "VideoFrame":
-                    if until_2_seconds > self.fps * 2:  # ~2 seconds
-                        return frame.to_image()
-                    until_2_seconds += 1
+            for i in video.demux():
+                for frame in i.decode():
+                    if frame.__class__.__name__ == "VideoFrame":
+                        if until_2_seconds > self.fps * 2:  # ~2 seconds
+                            return frame.to_image()
+                        until_2_seconds += 1
+        except Exception:
+            try:
+                from raven.contrib.django.raven_compat.models import client
+                client.captureException()
+            except ImportError:
+                pass
 
     @property
     def duration(self):
