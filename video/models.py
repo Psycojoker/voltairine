@@ -26,7 +26,7 @@ class Video(models.Model):
     # bar_code_lto_saya = models.CharField(max_length=255)
     # bar_code_lto_prod = models.CharField(max_length=255)
 
-    additional_infos = JSONField()
+    additional_infos = JSONField(default={})
 
     @property
     def absolute_path(self):
