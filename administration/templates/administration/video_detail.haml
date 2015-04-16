@@ -97,7 +97,7 @@
           %i {& observations &}
 
         %p
-          %b Section:
+          %b Section :
           {& section &}
 
         %button.btn.btn-primary{ng-click: "toggleEditMode()"}
@@ -109,7 +109,7 @@
           -csrf_token
           .col-md-10{style: "padding-left: 0px; margin-bottom: 36px"}
             .input-group
-              %span.input-group-addon Titre:
+              %span.input-group-addon Titre :
               %input#id_title.form-control{type: "text", ng-model: "title"}
 
           %a.btn.btn-small.btn-info.pull-right{href: "{{ MEDIA_URL }}videos/{{ object.file_name }}"} Télécharger
@@ -144,7 +144,7 @@
 
           .form-group
             %label{for: "id_observations"}
-              Obersations:
+              Obersations :
             %textarea#id_observations.form-control{type: "text", ng-model: "observations"}
           .form-group
             %label.control-label{for: "id_section"}
