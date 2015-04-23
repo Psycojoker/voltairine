@@ -30,14 +30,14 @@
         %hr
 
       .tab-content
-        %p
-          %a#closeAll{href: "#"}
-            Tout fermer
-          \-
-          %a#openAll{href: "#"}
-            tout ouvrir
-
         #videosList.tab-pane.active{role: "tabpanel"}
+          %p
+            %a#closeAll{href: "#"}
+              Tout fermer
+            \-
+            %a#openAll{href: "#"}
+              tout ouvrir
+
           -for section, structure in section_list|tree_info
             -if not structure.new_level
               </div>
