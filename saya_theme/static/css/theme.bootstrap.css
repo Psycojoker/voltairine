@@ -156,6 +156,34 @@ Bootstrap theme
     /* background-color: #e6bf99; */
 }
 
+/* saya blue */
+/* 0, 109, 152 */
+/* #006D98 */
+
+.btn-primary {
+    background-image: linear-gradient(#096488, #006D98 60%, #005A80);
+    background-repeat: no-repeat;
+    filter: none;
+}
+
+.btn-primary:hover {
+    background-image: linear-gradient(#002650, #003468 40%, #024371);
+    background-repeat: no-repeat;
+    filter: none;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    color: #FFF;
+    background-color: #006D98;
+    border-color: #002D58;
+}
+
+.btn-primary {
+    color: #FFF;
+    background-color: #006D98;
+    border-color: #006D98;
+}
+
 .navbar {
     min-height: 75px;
 }
