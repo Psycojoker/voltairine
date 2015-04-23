@@ -5,6 +5,9 @@
 -block javascript
   %link{href: "{{ STATIC_URL }}css/theme.bootstrap.css", rel: "stylesheet"}
   %link{href: "{{ STATIC_URL }}css/video_list.css", rel: "stylesheet"}
+  %link{href: "{{ STATIC_URL }}css/fuelux.min.css", rel: "stylesheet"}
+  %link{href: "{{ STATIC_URL }}css/section_list.css", rel: "stylesheet"}
+
   %script{src: "{{ STATIC_URL }}js/bootstrap.min.js"}
   %script{src: "{{ STATIC_URL }}js/jquery.tablesorter.js"}
   %script{src: "{{ STATIC_URL }}js/jquery.tablesorter.widgets.js"}
@@ -33,20 +36,24 @@
         #videosList.tab-pane.active{role: "tabpanel"}
           .row
             .col-md-4
-              -for section, structure in section_list|tree_info
-                -if not structure.new_level
-                  </ul>
+              .fuelux
+                -for section, structure in section_list|tree_info
+                  -if structure.new_level
+                    <ul class="{% if forloop.first %}tree tree-folder-select{% else %}tree-branch-children{% endif %}" data-parent-id="{{ section.parent.id }}">
+                      <li class="tree-branch">
+                  -else
+                      </li>
+                      <li class="tree-branch">
 
-                %li
                   <h{% level_to_heading_number section.level %}>
                     %a.caret-toggle.toggled{href: "#", data-target: "#{{ section.pk }}-childrens"}
                       %span.glyphicon.glyphicon-play
                     =section.title
                   </h{% level_to_heading_number section.level %}>
 
-                <ul id="{{ section.pk }}-childrens" class="subsection">
-                -for level in structure.closed_levels
-                  </ul>
+                  -for level in structure.closed_levels
+                    </li>
+                    </ul>
 
             .col-md-8
               -for section, structure in section_list|tree_info
