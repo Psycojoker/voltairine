@@ -47,16 +47,20 @@
                     <ul class="{% if forloop.first %}tree tree-folder-select{% else %}tree-branch-children{% endif %}" data-parent-id="{{ section.parent.id }}">
                       <li class="tree-branch">
                   -else
+                      </div>
                       </li>
                       <li class="tree-branch">
 
                   <h{% level_to_heading_number section.level %}>
-                    %a.caret-toggle.toggled{href: "#", data-target: "#{{ section.pk }}-childrens"}
+                    %a.caret-toggle.toggled{href: "#", data-target: "#{{ section.pk }}-menu-childrens"}
                       %span.glyphicon.glyphicon-play
                     =section.title
                   </h{% level_to_heading_number section.level %}>
 
+                  <div id="{{ section.pk }}-menu-childrens" class="subsection">
+
                   -for level in structure.closed_levels
+                    </div>
                     </li>
                     </ul>
 
