@@ -62,5 +62,11 @@ odd          : ''  // odd row zebra striping
         $(".toggled").removeClass("toggled");
     })
 
-    $('.section[visible="true"][has-video="true"]').first().show();
+    if ($('.section[visible="true"][has-video="true"]').length > 0) {
+        $('.section[visible="true"][has-video="true"]').first().show();
+    } else if ($('.section[visible="true"]').length > 0) {
+        $('.section[visible="true"]').first().show();
+    } else {
+        $('.section').first().show();
+    }
 });
