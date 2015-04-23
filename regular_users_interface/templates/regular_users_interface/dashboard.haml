@@ -31,32 +31,41 @@
 
       .tab-content
         #videosList.tab-pane.active{role: "tabpanel"}
-          %p
-            %a#closeAll{href: "#"}
-              Tout fermer
-            \-
-            %a#openAll{href: "#"}
-              tout ouvrir
+          .row
+            .col-md-4
+              -for section, structure in section_list|tree_info
+                -if not structure.new_level
+                  </div>
 
-          -for section, structure in section_list|tree_info
-            -if not structure.new_level
-              </div>
+                <h{% level_to_heading_number section.level %}>
+                  %a.caret-toggle.toggled{href: "#", data-target: "#{{ section.pk }}-childrens"}
+                    %span.glyphicon.glyphicon-play
+                  =section.title
+                </h{% level_to_heading_number section.level %}>
 
-            <h{% level_to_heading_number section.level %}>
-              %a.caret-toggle.toggled{href: "#", data-target: "#{{ section.pk }}-childrens"}
-                %span.glyphicon.glyphicon-play
-              =section.title
-            </h{% level_to_heading_number section.level %}>
+                <div id="{{ section.pk }}-childrens" class="subsection">
+                -for level in structure.closed_levels
+                  </div>
+            .col-md-8
+              -for section, structure in section_list|tree_info
+                -if not structure.new_level
+                  </div>
 
-            <div id="{{ section.pk }}-childrens" class="subsection">
-              -if section in sections_I_can_read
-                .row
-                  -for videosection in section.videosection_set.all
-                    -with video=videosection.video
-                      -include "video/thumbnail.haml"
+                <h{% level_to_heading_number section.level %}>
+                  %a.caret-toggle.toggled{href: "#", data-target: "#{{ section.pk }}-childrens"}
+                    %span.glyphicon.glyphicon-play
+                  =section.title
+                </h{% level_to_heading_number section.level %}>
 
-            -for level in structure.closed_levels
-              </div>
+                <div id="{{ section.pk }}-childrens" class="subsection">
+                  -if section in sections_I_can_read
+                    .row
+                      -for videosection in section.videosection_set.all
+                        -with video=videosection.video
+                          -include "video/thumbnail.haml"
+
+                -for level in structure.closed_levels
+                  </div>
 
 
         #videosTable.tab-pane{role: "tabpanel"}
