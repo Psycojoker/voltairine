@@ -155,3 +155,7 @@ Bootstrap theme
     cursor: pointer;
     /* background-color: #e6bf99; */
 }
+
+.navbar {
+    min-height: 75px;
+}
