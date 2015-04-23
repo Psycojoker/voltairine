@@ -22,4 +22,4 @@ def is_group_have_access(section, group):
 
 @register.simple_tag
 def level_to_heading_number(level_number):
-    return 1 + level_number
+    return 2 + level_number
