@@ -159,3 +159,8 @@ Bootstrap theme
 .navbar {
     min-height: 75px;
 }
+
+.navbar-nav > li > a {
+    padding-top: 27px;
+    padding-bottom: 26px;
+}
