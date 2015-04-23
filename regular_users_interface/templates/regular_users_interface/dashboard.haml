@@ -35,17 +35,19 @@
             .col-md-4
               -for section, structure in section_list|tree_info
                 -if not structure.new_level
-                  </div>
+                  </ul>
 
-                <h{% level_to_heading_number section.level %}>
-                  %a.caret-toggle.toggled{href: "#", data-target: "#{{ section.pk }}-childrens"}
-                    %span.glyphicon.glyphicon-play
-                  =section.title
-                </h{% level_to_heading_number section.level %}>
+                %li
+                  <h{% level_to_heading_number section.level %}>
+                    %a.caret-toggle.toggled{href: "#", data-target: "#{{ section.pk }}-childrens"}
+                      %span.glyphicon.glyphicon-play
+                    =section.title
+                  </h{% level_to_heading_number section.level %}>
 
-                <div id="{{ section.pk }}-childrens" class="subsection">
+                <ul id="{{ section.pk }}-childrens" class="subsection">
                 -for level in structure.closed_levels
-                  </div>
+                  </ul>
+
             .col-md-8
               -for section, structure in section_list|tree_info
                 -if not structure.new_level
