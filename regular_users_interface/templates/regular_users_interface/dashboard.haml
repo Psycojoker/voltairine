@@ -54,7 +54,7 @@
                   <h{% level_to_heading_number section.level %} visible="{% if section in sections_I_can_read %}true{% else %}false{% endif %}" has-video="{% if section in sections_I_can_read and section.videosection_set.exists %}true{% else %}false{% endif %}">
                     %a.caret-toggle.toggled{href: "#", data-target: "#{{ section.pk }}-menu-childrens"}
                       %span.glyphicon.glyphicon-play
-                    %a{id: "section-{{ section.pk }}-menu", data-target: "#section-{{ section.pk }}", href: "#"}
+                    %a.section-menu-link{id: "section-{{ section.pk }}-menu", data-target: "#section-{{ section.pk }}", href: "#"}
                       =section.title
                   </h{% level_to_heading_number section.level %}>
 
