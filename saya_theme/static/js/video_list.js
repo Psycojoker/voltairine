@@ -63,4 +63,6 @@ odd          : ''  // odd row zebra striping
     })
 
     $(".section").hide();
+
+    $('.section[visible="true"]').first().show();
 });
