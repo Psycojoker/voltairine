@@ -1,0 +1,37 @@
+.fuelux .tree {
+    border: none;
+}
+
+.menu-toggle {
+    background-color: #006D98;
+}
+
+.fat {
+    padding: 1px;
+}
+
+.fat-left {
+    padding-left: 15px;
+    padding-right: 0px;
+}
+
+.fat-right {
+    padding-right: 15px;
+    padding-left: 0px;
+}
+
+a.fat:link {
+    text-decoration: none;
+}
+
+a.fat:hover {
+    text-decoration: none;
+}
+
+.menu-row {
+    margin-bottom: 15px;
+}
+
+.fuelux .tree .tree-branch .tree-branch-children {
+    margin-left: 34px;
+}
