@@ -39,6 +39,14 @@
       text-decoration: none;
     }
 
+    .menu-row {
+      margin-bottom: 15px;
+    }
+
+    .fuelux .tree .tree-branch .tree-branch-children {
+        margin-left: 34px;
+    }
+
   %script{src: "{{ STATIC_URL }}js/bootstrap.min.js"}
   %script{src: "{{ STATIC_URL }}js/jquery.tablesorter.js"}
   %script{src: "{{ STATIC_URL }}js/jquery.tablesorter.widgets.js"}
@@ -77,7 +85,7 @@
                       </li>
                       <li class="tree-branch">
 
-                  <h{% level_to_heading_number section.level %} visible="{% if section in sections_I_can_read %}true{% else %}false{% endif %}" has-video="{% if section in sections_I_can_read and section.videosection_set.exists %}true{% else %}false{% endif %}">
+                  <h{% level_to_heading_number section.level %} visible="{% if section in sections_I_can_read %}true{% else %}false{% endif %}" has-video="{% if section in sections_I_can_read and section.videosection_set.exists %}true{% else %}false{% endif %}" class="menu-row">
                     %a.fat.fat-left.caret-toggle.toggled{href: "#", data-target: "#{{ section.pk }}-menu-childrens"}
                       %span.glyphicon.glyphicon-play
                     %a.fat.fat-right.section-menu-link{id: "section-{{ section.pk }}-menu", data-target: "#section-{{ section.pk }}", href: "#"}
