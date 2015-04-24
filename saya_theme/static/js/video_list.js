@@ -74,6 +74,9 @@ odd          : ''  // odd row zebra striping
         var a = $(this);
         e.preventDefault();
         $(".section").hide();
+        $(".menu-toggle").removeClass("menu-toggle");
         $(a.attr("data-target")).show();
+        a.addClass("menu-toggle");
+        a.prev().addClass("menu-toggle");
     });
 });
