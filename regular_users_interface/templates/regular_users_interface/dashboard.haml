@@ -1,4 +1,4 @@
--extends "regular_users_interface/base.haml"
+-extends "regular_users_interface/base_column.haml"
 -load mptt_tags
 -load section_tags
 
@@ -14,29 +14,7 @@
   %script{src: "{{ STATIC_URL }}js/jquery.tablesorter.widgets.js"}
   %script{src: "{{ STATIC_URL }}js/video_list.js"}
 
--block content
-  -if not section_list
-    %p Il n'y a aucune vidéo dans les catégories auxquelles vous avez accès.
-
-  -else
-    %div{role: "tabpanel"}
-      .row
-        %h1
-          Vidéos
-          %small.pull-right
-            %ul#myTab.nav.nav-pills
-              %li.active{role: "tablist"}
-                %a{href: "#videosList", aria-controls: "videosList", data-toggle: "tab"}
-                  %span.glyphicon.glyphicon-align-left{aria-hidden: "true"}
-              %li{role: "tablist"}
-                %a{href: "#videosTable", aria-controls: "videosTable", data-toggle: "tab"}
-                  %span.glyphicon.glyphicon-list-alt{aria-hidden: "true"}
-        %hr
-
-      .tab-content
-        #videosList.tab-pane.active{role: "tabpanel"}
-          .row
-            .col-md-4
+-block sidebar
               .fuelux
                 -for section, structure in section_list|tree_info
                   -if structure.new_level
@@ -61,16 +39,36 @@
                     </li>
                     </ul>
 
-            .col-md-8
-              -for section in section_list
-                .section{id: "section-{{ section.pk }}", visible: "{% if section in sections_I_can_read %}true{% else %}false{% endif %}", has-video: "{% if section in sections_I_can_read and section.videosection_set.exists %}true{% else %}false{% endif %}", style: "display: none"}
-                  %h2= section.title
+-block content
+  -if not section_list
+    %p Il n'y a aucune vidéo dans les catégories auxquelles vous avez accès.
 
-                  -if section in sections_I_can_read
-                    .row
-                      -for videosection in section.videosection_set.all
-                        -with video=videosection.video
-                          -include "video/thumbnail.haml"
+  -else
+    %div{role: "tabpanel"}
+      .row
+        %h1
+          Vidéos
+          %small.pull-right
+            %ul#myTab.nav.nav-pills
+              %li.active{role: "tablist"}
+                %a{href: "#videosList", aria-controls: "videosList", data-toggle: "tab"}
+                  %span.glyphicon.glyphicon-align-left{aria-hidden: "true"}
+              %li{role: "tablist"}
+                %a{href: "#videosTable", aria-controls: "videosTable", data-toggle: "tab"}
+                  %span.glyphicon.glyphicon-list-alt{aria-hidden: "true"}
+        %hr
+
+      .tab-content
+        #videosList.tab-pane.active{role: "tabpanel"}
+          -for section in section_list
+            .section{id: "section-{{ section.pk }}", visible: "{% if section in sections_I_can_read %}true{% else %}false{% endif %}", has-video: "{% if section in sections_I_can_read and section.videosection_set.exists %}true{% else %}false{% endif %}", style: "display: none"}
+              %h2= section.title
+
+              -if section in sections_I_can_read
+                .row
+                  -for videosection in section.videosection_set.all
+                    -with video=videosection.video
+                      -include "video/thumbnail.haml"
 
 
 

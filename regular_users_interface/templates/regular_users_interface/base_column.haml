@@ -1,0 +1,35 @@
+-extends "bootstrap3/bootstrap3.html"
+
+-block bootstrap3_title
+  Saya-Films
+
+-block bootstrap3_extra_head
+  %link{href: "{{ STATIC_URL }}css/simple-sidebar.css", rel: "stylesheet"}
+  -block head
+
+
+-block bootstrap3_content
+  .navbar.navbar-inverse.navbar-bold
+    .navbar-inner
+      .container
+        %a.brand.navbar-brand{href: "/", style: "padding: 5px; padding-left: 0px"}
+          %img{src: "{{ STATIC_URL }}img/logo.png", style: "height: 70px", alt: "Saya-Films"}
+        %ul.nav.navbar-nav.navbar-right
+          %li
+            %a{href: "{% url 'logout' %}"}
+              Déconnexion
+
+  #wrapper
+    #sidebar-wrapper
+      -block sidebar
+
+
+    #page-content-wrapper
+      .container-fluid
+        -block content
+
+-block bootstrap3_extra_script
+  %script{src: "{{ STATIC_URL }}js/angular.js"}
+  %script{src: "{{ STATIC_URL }}js/angular-cookies.js"}
+  %script{src: "{{ STATIC_URL }}js/base.js"}
+  -block javascript
