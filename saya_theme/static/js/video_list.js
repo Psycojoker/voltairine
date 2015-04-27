@@ -65,6 +65,7 @@ odd          : ''  // odd row zebra striping
     var activate_section = function(event) {
         var a = $(this);
         event.preventDefault();
+        $("html,body").animate({scrollTop: $("#title").offset().top}, 1000);
         $(".section").hide();
         $(".menu-toggle").removeClass("menu-toggle");
         $(a.attr("data-target")).show();
