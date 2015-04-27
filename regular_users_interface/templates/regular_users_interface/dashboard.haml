@@ -44,75 +44,75 @@
     %p Il n'y a aucune vidéo dans les catégories auxquelles vous avez accès.
 
   -else
-      .tab-content
-        #videosList.tab-pane.active{role: "tabpanel"}
-          -for section in section_list
-            .section{id: "section-{{ section.pk }}", visible: "{% if section in sections_I_can_read %}true{% else %}false{% endif %}", has-video: "{% if section in sections_I_can_read and section.videosection_set.exists %}true{% else %}false{% endif %}", style: "display: none"}
-              %h2= section.title
+    .tab-content
+      #videosList.tab-pane.active{role: "tabpanel"}
+        -for section in section_list
+          .section{id: "section-{{ section.pk }}", visible: "{% if section in sections_I_can_read %}true{% else %}false{% endif %}", has-video: "{% if section in sections_I_can_read and section.videosection_set.exists %}true{% else %}false{% endif %}", style: "display: none"}
+            %h2= section.title
 
+            -if section in sections_I_can_read
+              .row
+                -for videosection in section.videosection_set.all
+                  -with video=videosection.video
+                    -include "video/thumbnail.haml"
+
+
+
+      #videosTable.tab-pane{role: "tabpanel"}
+        %table.tablesorter
+          %thead
+            %tr
+              %th
+                Nom
+              %th.filter-select.filter-select-nosort{data-placeholder: "Choisissez une section"}
+                Section
+              %th.hidden-xs
+                Durée
+              %th.hidden-sm.hidden-xs
+                Résolution
+              %th.hidden-sm.hidden-xs
+                taille
+              %th.hidden-sm.hidden-xs
+                Fps
+
+          %tfoot
+            %tr
+              %th
+                Nom
+              %th
+                Section
+              %th.hidden-xs
+                Durée
+              %th.hidden-sm.hidden-xs
+                Résolution
+              %th.hidden-sm.hidden-xs
+                taille
+              %th.hidden-sm.hidden-xs
+                Fps
+
+          %tbody
+            -for section, structure in section_list|tree_info
               -if section in sections_I_can_read
-                .row
-                  -for videosection in section.videosection_set.all
-                    -with video=videosection.video
-                      -include "video/thumbnail.haml"
-
-
-
-        #videosTable.tab-pane{role: "tabpanel"}
-          %table.tablesorter
-            %thead
-              %tr
-                %th
-                  Nom
-                %th.filter-select.filter-select-nosort{data-placeholder: "Choisissez une section"}
-                  Section
-                %th.hidden-xs
-                  Durée
-                %th.hidden-sm.hidden-xs
-                  Résolution
-                %th.hidden-sm.hidden-xs
-                  taille
-                %th.hidden-sm.hidden-xs
-                  Fps
-
-            %tfoot
-              %tr
-                %th
-                  Nom
-                %th
-                  Section
-                %th.hidden-xs
-                  Durée
-                %th.hidden-sm.hidden-xs
-                  Résolution
-                %th.hidden-sm.hidden-xs
-                  taille
-                %th.hidden-sm.hidden-xs
-                  Fps
-
-            %tbody
-              -for section, structure in section_list|tree_info
-                -if section in sections_I_can_read
-                  -for videosection in section.videosection_set.all
-                    -with video=videosection.video
-                      %tr
-                        %td
-                          %a{href: "{% url 'administration_video_detail' video.pk %}"}
-                            %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
-                          %a{href: "{% url 'administration_video_detail' video.pk %}"}
-                            =video.title
-                          %br
-                          %a.btn.btn-default.btn-sm{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
-                            Télécharger
-                        %td
-                          =section.display_level_indicator
-                          =section.title
-                        %td.hidden-xs
-                          =video.duration
-                        %td.hidden-sm.hidden-xs
-                          =video.width_x_height
-                        %td.hidden-sm.hidden-xs
-                          =video.file_size
-                        %td.hidden-sm.hidden-xs
-                          =video.fps|floatformat|cut:",0"
-                          fps
+                -for videosection in section.videosection_set.all
+                  -with video=videosection.video
+                    %tr
+                      %td
+                        %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                          %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
+                        %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                          =video.title
+                        %br
+                        %a.btn.btn-default.btn-sm{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                          Télécharger
+                      %td
+                        =section.display_level_indicator
+                        =section.title
+                      %td.hidden-xs
+                        =video.duration
+                      %td.hidden-sm.hidden-xs
+                        =video.width_x_height
+                      %td.hidden-sm.hidden-xs
+                        =video.file_size
+                      %td.hidden-sm.hidden-xs
+                        =video.fps|floatformat|cut:",0"
+                        fps
