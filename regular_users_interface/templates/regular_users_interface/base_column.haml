@@ -27,23 +27,7 @@
             %a{href: "{% url 'logout' %}"}
               Déconnexion
 
-  .container
-    %div{role: "tabpanel"}
-      .row.video-heading
-        %h1
-          Vidéos
-          %small.pull-right
-            %ul#myTab.nav.nav-pills
-              %li.active{role: "tablist"}
-                %a{href: "#videosList", aria-controls: "videosList", data-toggle: "tab"}
-                  %span.glyphicon.glyphicon-align-left{aria-hidden: "true"}
-              %li{role: "tablist"}
-                %a{href: "#videosTable", aria-controls: "videosTable", data-toggle: "tab"}
-                  %span.glyphicon.glyphicon-list-alt{aria-hidden: "true"}
-
-  .container-fluid
-        .video-heading
-          %hr
+  -block heading
 
   #wrapper
     #sidebar-wrapper
