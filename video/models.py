@@ -44,7 +44,7 @@ class Video(models.Model):
 
             image = self._generate_thumbnail_image_from_video()
 
-            image.resize((230, 146)).save(os.path.join(thumbnails_dir, self.thumbnail_name))
+            image.resize((300, 190)).save(os.path.join(thumbnails_dir, self.thumbnail_name))
             self.save()
 
         return os.path.join(settings.MEDIA_URL, "thumbnails", self.thumbnail_name)
