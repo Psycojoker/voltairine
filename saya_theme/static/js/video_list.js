@@ -62,14 +62,6 @@ odd          : ''  // odd row zebra striping
         $(".toggled").removeClass("toggled");
     })
 
-    if ($('.section[visible="true"][has-video="true"]').length > 0) {
-        $('.section[visible="true"][has-video="true"]').first().show();
-    } else if ($('.section[visible="true"]').length > 0) {
-        $('.section[visible="true"]').first().show();
-    } else {
-        $('.section').first().show();
-    }
-
     var activate_section = function(event) {
         var a = $(this);
         event.preventDefault();
@@ -82,4 +74,14 @@ odd          : ''  // odd row zebra striping
     }
 
     $(".section-menu-link").click(activate_section);
+
+    if ($('.section[visible="true"][has-video="true"]').length > 0) {
+        var section_menu_to_clik = $('.section[visible="true"][has-video="true"]').first().attr("data-menu-link");
+    } else if ($('.section[visible="true"]').length > 0) {
+        var section_menu_to_clik = $('.section[visible="true"]').first().attr("data-menu-link");
+    } else {
+        var section_menu_to_clik = $('.section').first().attr("data-menu-link");
+    }
+
+    $("#" + section_menu_to_clik).click();
 });

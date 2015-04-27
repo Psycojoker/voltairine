@@ -67,7 +67,7 @@
     .tab-content
       #videosList.tab-pane.active{role: "tabpanel"}
         -for section in section_list
-          .section{id: "section-{{ section.pk }}", visible: "{% if section in sections_I_can_read %}true{% else %}false{% endif %}", has-video: "{% if section in sections_I_can_read and section.videosection_set.exists %}true{% else %}false{% endif %}", style: "display: none"}
+          .section{id: "section-{{ section.pk }}", visible: "{% if section in sections_I_can_read %}true{% else %}false{% endif %}", has-video: "{% if section in sections_I_can_read and section.videosection_set.exists %}true{% else %}false{% endif %}", style: "display: none", data-menu-link: "section-{{ section.pk }}-menu"}
             -if section in sections_I_can_read
               .row
                 -for videosection in section.videosection_set.all
