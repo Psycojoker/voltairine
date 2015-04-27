@@ -30,7 +30,6 @@
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
-    border-right: 1px solid #1C1E22;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -117,10 +116,6 @@
     margin-top: 10px;
 }
 
-#sidebar-wrapper {
-    padding-right: 20px;
-}
-
 @media(min-width:768px) {
     #wrapper {
         padding-left: 350px;
@@ -148,4 +143,10 @@
         position: relative;
         margin-right: 0;
     }
+
+    #sidebar-wrapper {
+        border-right: 1px solid #1C1E22;
+        padding-right: 20px;
+    }
+
 }
