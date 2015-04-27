@@ -70,6 +70,7 @@ odd          : ''  // odd row zebra striping
         $(".menu-toggle").removeClass("menu-toggle");
         $(a.attr("data-target")).show();
         a.addClass("menu-toggle");
+        $("#" + a.attr("data-other")).addClass("menu-toggle");
         a.prev().addClass("menu-toggle");
         $("#title").text(a.attr("data-title"));
     }
