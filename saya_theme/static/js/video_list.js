@@ -89,7 +89,7 @@ odd          : ''  // odd row zebra striping
 
     $("#tabVideosList").click(function(event) {
         $("#title").show();
-        $("#videoSideBar").show();
+        $(".videoSideBar").show();
         $(".onVideosTable").hide();
         if (document.body.clientWidth > 868) {
             $(".hidden-sidebaractive").hide();
@@ -100,7 +100,8 @@ odd          : ''  // odd row zebra striping
 
     $("#tabVideosTable").click(function(event) {
         $("#title").hide();
-        $("#videoSideBar").hide();
+        $(".videoSideBar").hide();
         $(".onVideosTable").show();
+        $(".hidden-sidebaractive").hide();
     })
 });
