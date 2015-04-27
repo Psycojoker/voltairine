@@ -188,7 +188,15 @@ Bootstrap theme
     min-height: 75px;
 }
 
-.navbar-nav > li > a {
+.navbar-right > li > a {
     padding-top: 27px;
     padding-bottom: 26px;
+}
+
+button.navbar-toggle {
+    margin-top: 18px;
+}
+
+.navbar-collapse {
+    margin-top: 18px;
 }
