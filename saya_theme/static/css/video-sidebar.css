@@ -148,6 +148,10 @@
         margin-left: 130px;
         margin-bottom: 0;
     }
+
+    #videoSideBar.hidden-sidebaractive {
+        display: none;
+    }
 }
 
 @media(max-width:868px) {

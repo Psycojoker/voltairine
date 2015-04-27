@@ -15,6 +15,30 @@
   %script{src: "{{ STATIC_URL }}js/video_list.js"}
 
 -block heading
+  #videoSideBar.fuelux.hidden-sidebaractive
+    -for section, structure in section_list|tree_info
+      -if structure.new_level
+        <ul class="{% if forloop.first %}tree tree-folder-select{% else %}tree-branch-children{% endif %}" data-parent-id="{{ section.parent.id }}">
+          <li class="tree-branch">
+      -else
+          </div>
+          </li>
+          <li class="tree-branch">
+
+      <h{% level_to_heading_number section.level %} visible="{% if section in sections_I_can_read %}true{% else %}false{% endif %}" has-video="{% if section in sections_I_can_read and section.videosection_set.exists %}true{% else %}false{% endif %}" class="menu-row">
+        %a.fat.fat-left.caret-toggle.toggled{href: "#", data-target: "#{{ section.pk }}-menu-childrens"}
+          %span.glyphicon.glyphicon-play
+        %a.fat.fat-right.section-menu-link{id: "section-{{ section.pk }}-menu", data-target: "#section-{{ section.pk }}", href: "#titleAnchor", data-title: "{{ section.title }}"}
+          =section.title
+      </h{% level_to_heading_number section.level %}>
+
+      <div id="{{ section.pk }}-menu-childrens" class="subsection">
+
+      -for level in structure.closed_levels
+        </div>
+        </li>
+        </ul>
+
   .container
     %div{role: "tabpanel"}
       .row.video-heading
