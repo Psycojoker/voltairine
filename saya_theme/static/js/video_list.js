@@ -84,4 +84,16 @@ odd          : ''  // odd row zebra striping
     }
 
     $("#" + section_menu_to_clik).click();
+
+    $("#tabVideosList").click(function(event) {
+        $("#title").show();
+        $("#videoSideBar").show();
+        $(".onVideosTable").hide();
+    })
+
+    $("#tabVideosTable").click(function(event) {
+        $("#title").hide();
+        $("#videoSideBar").hide();
+        $(".onVideosTable").show();
+    })
 });

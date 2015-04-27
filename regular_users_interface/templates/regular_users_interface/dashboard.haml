@@ -21,13 +21,15 @@
         %h1
           %span#title
             Vidéos
+          %span.onVideosTable
+            Vidéos
           %small.pull-right
             %ul#myTab.nav.nav-pills
               %li.active{role: "tablist"}
-                %a{href: "#videosList", aria-controls: "videosList", data-toggle: "tab"}
+                %a#tabVideosList{href: "#videosList", aria-controls: "videosList", data-toggle: "tab"}
                   %span.glyphicon.glyphicon-align-left{aria-hidden: "true"}
               %li{role: "tablist"}
-                %a{href: "#videosTable", aria-controls: "videosTable", data-toggle: "tab"}
+                %a#tabVideosTable{href: "#videosTable", aria-controls: "videosTable", data-toggle: "tab"}
                   %span.glyphicon.glyphicon-list-alt{aria-hidden: "true"}
 
   .container-fluid
@@ -35,7 +37,7 @@
           %hr
 
 -block sidebar
-  .fuelux.pull-right
+  #videoSideBar.fuelux.pull-right
     -for section, structure in section_list|tree_info
       -if structure.new_level
         <ul class="{% if forloop.first %}tree tree-folder-select{% else %}tree-branch-children{% endif %}" data-parent-id="{{ section.parent.id }}">

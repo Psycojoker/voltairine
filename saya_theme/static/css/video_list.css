@@ -33,3 +33,7 @@ a.caret-toggle:hover {
 #videosTable {
     padding-top: 30px;
 }
+
+.onVideosTable {
+    display: none;
+}
