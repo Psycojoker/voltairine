@@ -1,4 +1,4 @@
-.hidden-sm.hidden-xs
+.hidden-md.hidden-sm.hidden-xs
   .col-md-6
     .well.well-sm{style: "padding: 0px; height: 148px"}
       .pull-left{style: "margin-right: 10px"}
@@ -21,7 +21,7 @@
           regarder
         %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
           télécharger
-.hidden-md.hidden-lg
+.hidden-lg
   .col-md-4.col-sm-6
     .thumbnail
       %a{href: "{% if user.is_staff or user.groups_managed_by_user.exists %}{% url 'administration_video_detail' video.id %}{% else %}{% url 'user_video_detail' video.id %}{% endif %}"}
