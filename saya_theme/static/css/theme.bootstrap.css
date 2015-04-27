@@ -192,3 +192,8 @@ Bootstrap theme
     padding-top: 27px;
     padding-bottom: 26px;
 }
+
+.big-thumbnails {
+    height: 146px;
+    width: 230px;
+}
