@@ -141,12 +141,12 @@
                   -with video=videosection.video
                     %tr
                       %td
-                        %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                        %a{href: "{% url 'user_video_detail' video.pk %}"}
                           %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
-                        %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                        %a{href: "{% url 'user_video_detail' video.pk %}"}
                           =video.title
                         %br
-                        %a.btn.btn-primary.btn-sm{href: "{% url 'administration_video_detail' video.pk %}"}
+                        %a.btn.btn-primary.btn-sm{href: "{% url 'user_video_detail' video.pk %}"}
                           Regarder
                         %a.btn.btn-default.btn-sm{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
                           Télécharger
