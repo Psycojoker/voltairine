@@ -19,7 +19,8 @@
     %div{role: "tabpanel"}
       .row.video-heading
         %h1
-          Vidéos
+          %span#title
+            Vidéos
           %small.pull-right
             %ul#myTab.nav.nav-pills
               %li.active{role: "tablist"}
@@ -47,7 +48,7 @@
       <h{% level_to_heading_number section.level %} visible="{% if section in sections_I_can_read %}true{% else %}false{% endif %}" has-video="{% if section in sections_I_can_read and section.videosection_set.exists %}true{% else %}false{% endif %}" class="menu-row">
         %a.fat.fat-left.caret-toggle.toggled{href: "#", data-target: "#{{ section.pk }}-menu-childrens"}
           %span.glyphicon.glyphicon-play
-        %a.fat.fat-right.section-menu-link{id: "section-{{ section.pk }}-menu", data-target: "#section-{{ section.pk }}", href: "#"}
+        %a.fat.fat-right.section-menu-link{id: "section-{{ section.pk }}-menu", data-target: "#section-{{ section.pk }}", href: "#", data-title: "{{ section.title }}"}
           =section.title
       </h{% level_to_heading_number section.level %}>
 
@@ -67,8 +68,6 @@
       #videosList.tab-pane.active{role: "tabpanel"}
         -for section in section_list
           .section{id: "section-{{ section.pk }}", visible: "{% if section in sections_I_can_read %}true{% else %}false{% endif %}", has-video: "{% if section in sections_I_can_read and section.videosection_set.exists %}true{% else %}false{% endif %}", style: "display: none"}
-            %h2= section.title
-
             -if section in sections_I_can_read
               .row
                 -for videosection in section.videosection_set.all
