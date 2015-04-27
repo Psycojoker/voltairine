@@ -30,6 +30,7 @@
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    border-right: 1px solid #1C1E22;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -103,6 +104,17 @@
     margin-top: 0px !important;
     padding: 15px;
     padding-left: 35px;
+}
+
+.video-heading h1 {
+    margin-top: 0;
+    margin-left: 30px;
+    margin-bottom: 0;
+}
+
+.video-heading hr {
+    margin-bottom: 0;
+    margin-top: 10px;
 }
 
 @media(min-width:768px) {

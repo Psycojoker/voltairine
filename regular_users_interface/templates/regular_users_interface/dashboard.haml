@@ -44,20 +44,6 @@
     %p Il n'y a aucune vidéo dans les catégories auxquelles vous avez accès.
 
   -else
-    %div{role: "tabpanel"}
-      .row
-        %h1
-          Vidéos
-          %small.pull-right
-            %ul#myTab.nav.nav-pills
-              %li.active{role: "tablist"}
-                %a{href: "#videosList", aria-controls: "videosList", data-toggle: "tab"}
-                  %span.glyphicon.glyphicon-align-left{aria-hidden: "true"}
-              %li{role: "tablist"}
-                %a{href: "#videosTable", aria-controls: "videosTable", data-toggle: "tab"}
-                  %span.glyphicon.glyphicon-list-alt{aria-hidden: "true"}
-        %hr
-
       .tab-content
         #videosList.tab-pane.active{role: "tabpanel"}
           -for section in section_list
