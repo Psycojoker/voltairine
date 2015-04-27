@@ -162,4 +162,8 @@
     .navbar-collapse {
         margin-top: 18px;
     }
+
+    #myTab {
+        margin-right: 30px;
+    }
 }
