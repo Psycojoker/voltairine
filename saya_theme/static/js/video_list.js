@@ -70,14 +70,16 @@ odd          : ''  // odd row zebra striping
         $('.section').first().show();
     }
 
-    $(".section-menu-link").click(function(e) {
+    var activate_section = function(event) {
         var a = $(this);
-        e.preventDefault();
+        event.preventDefault();
         $(".section").hide();
         $(".menu-toggle").removeClass("menu-toggle");
         $(a.attr("data-target")).show();
         a.addClass("menu-toggle");
         a.prev().addClass("menu-toggle");
         $("#title").text(a.attr("data-title"));
-    });
+    }
+
+    $(".section-menu-link").click(activate_section);
 });
