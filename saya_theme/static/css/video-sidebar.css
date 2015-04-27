@@ -149,7 +149,7 @@
         margin-bottom: 0;
     }
 
-    #videoSideBar.hidden-sidebaractive {
+    .hidden-sidebaractive {
         display: none;
     }
 }

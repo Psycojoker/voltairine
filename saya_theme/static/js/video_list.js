@@ -90,6 +90,9 @@ odd          : ''  // odd row zebra striping
         $("#title").show();
         $("#videoSideBar").show();
         $(".onVideosTable").hide();
+        if (window.screen.width > 868) {
+            $(".hidden-sidebaractive").hide();
+        }
     })
 
     $("#tabVideosTable").click(function(event) {
