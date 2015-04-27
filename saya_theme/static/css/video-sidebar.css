@@ -154,4 +154,12 @@
     .video-heading h1 {
         margin-left: 30px;
     }
+
+    button.navbar-toggle {
+        margin-top: 18px;
+    }
+
+    .navbar-collapse {
+        margin-top: 18px;
+    }
 }

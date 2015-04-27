@@ -21,22 +21,22 @@
     .navbar-inner
       .container
         .navbar-header
-          %button{type: "button", class: "navbar-toggle collapsed", data-toggle: "collapse", data-target: "#toCollapse"}
+          %button.hidden-md.hidden-lg{type: "button", class: "navbar-toggle collapsed", data-toggle: "collapse", data-target: "#toCollapse"}
             %span.sr-only Toggle navigation
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
           %a.brand.navbar-brand{href: "/", style: "padding: 5px; padding-left: 0px"}
             %img{src: "{{ STATIC_URL }}img/logo.png", style: "height: 70px", alt: "Saya-Films"}
-        #toCollapse.collapse.navbar-collapse
-          %ul.nav.navbar-nav
-            %li
-              %a{href: "{% url 'logout' %}"}
-                Déconnexion
         %ul.nav.navbar-nav.navbar-right.hidden-xs.hidden-sm
           %li
             %a{href: "{% url 'logout' %}"}
               Déconnexion
+        #toCollapse.collapse.navbar-collapse
+          %ul.nav.navbar-nav.hidden-md.hidden-lg
+            %li
+              %a{href: "{% url 'logout' %}"}
+                Déconnexion
 
   -block heading
 
