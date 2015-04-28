@@ -54,7 +54,7 @@
     .fuelux{style: "font-size: 18px"}
       -for section, structure in section_list|tree_info
         -if structure.new_level
-          <ul class="{% if forloop.first %}tree tree-folder-select{% else %}tree-branch-children{% endif %}" data-parent-id="{{ section.parent.id }}">
+          <ul class="{% if forloop.first %}tree tree-folder-select{% else %}tree-branch-children{% endif %}" data-parent-id="{{ section.parent.id }}" id="children-of-{{ section.parent.id }}">
             <li class="tree-branch">
         -else
             </li>
@@ -64,7 +64,7 @@
 
         .tree-branch-header
           %form.edit-form.form-inline{method: "POST", action: "{% url 'administration_section_update' section.pk %}", style: "display: none"}
-              %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
+              %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);", data-target: "children-of-{{ section.id }}"}
                 %span.sr-only Open
               -csrf_token
               %input.input-sm{type: "text", value: "{{ section.title }}", name: "title"}
