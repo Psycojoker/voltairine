@@ -59,6 +59,9 @@ class Video(models.Model):
 
             image = self._generate_thumbnail_image_from_video()
 
+            if not image:
+                return os.path.join(settings.STATIC_URL, "images", "empty_thumbnails.png")
+
             image.resize((330, 209)).save(os.path.join(thumbnails_dir, self.thumbnail_name))
             self.save()
 
