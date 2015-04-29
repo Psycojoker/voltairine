@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponse
+from django.template.defaultfilters import slugify
 
 from administration.utils import user_can_see_administration_interface
 
@@ -51,6 +52,12 @@ def upload_video(request):
 
     full_path_file_name = form.cleaned_data["file_name"].file.name
     file_name = os.path.split(full_path_file_name)[1]
+
+    # remove anything special from file name, avoid strange bugs
+    if "." in file_name:
+        file_name = slugify(".".join(file_name.split(".")[:-1])) + file_name.split(".")[-1]
+    else:  # strange, no extension situation
+        file_name = slugify(file_name)
 
     # ensure file_name is uniq
     # not the best strategy, but good enough
