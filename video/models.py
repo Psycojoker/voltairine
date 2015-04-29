@@ -48,6 +48,7 @@ class Video(models.Model):
 
 
     @property
+    @catch_exception
     def thumbnail_uri(self):
         thumbnails_dir = os.path.join(settings.MEDIA_ROOT, "thumbnails")
         if not os.path.exists(thumbnails_dir):
@@ -77,6 +78,7 @@ class Video(models.Model):
                     until_2_seconds += 1
 
     @property
+    @catch_exception
     def duration(self):
         if "duration" not in self.additional_infos:
             self.additional_infos["duration"] = av.open(self.absolute_path).duration
@@ -93,6 +95,7 @@ class Video(models.Model):
         return "%d:%.2d" % (minutes, seconds)
 
     @property
+    @catch_exception
     def width_x_height(self):
         if "height" not in self.additional_infos or "width" not in self.additional_infos:
             # video stream always appears to be the first one, I'm not convinced that it's always the case
@@ -103,6 +106,7 @@ class Video(models.Model):
         return "%sx%s" % (self.additional_infos["width"], self.additional_infos["height"])
 
     @property
+    @catch_exception
     def file_size(self):
         def sizeof_fmt(num):
             for unit in ['','K','M','G','T','P','E','Z']:
@@ -118,6 +122,7 @@ class Video(models.Model):
         return sizeof_fmt(self.additional_infos["file_size"])
 
     @property
+    @catch_exception
     def fps(self):
         if "fps" not in self.additional_infos:
             video = av.open(self.absolute_path)
