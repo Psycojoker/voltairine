@@ -8,6 +8,18 @@ from django.template.defaultfilters import slugify
 from jsonfield import JSONField
 
 
+def catch_exception(function):
+    def wrapper(*args, **kwargs):
+        try:
+            return function(*args, **kwargs)
+        except Exception:
+            try:
+                from raven.contrib.django.raven_compat.models import client
+                client.captureException()
+            except ImportError:
+                pass
+
+
 class Video(models.Model):
     title = models.CharField(max_length=255)
 
@@ -49,24 +61,18 @@ class Video(models.Model):
 
         return os.path.join(settings.MEDIA_URL, "thumbnails", self.thumbnail_name)
 
+    @catch_exception
     def _generate_thumbnail_image_from_video(self):
-        try:
-            video = av.open(self.absolute_path)
+        video = av.open(self.absolute_path)
 
-            until_2_seconds = 0
+        until_2_seconds = 0
 
-            for i in video.demux():
-                for frame in i.decode():
-                    if frame.__class__.__name__ == "VideoFrame":
-                        if until_2_seconds > self.fps * 2:  # ~2 seconds
-                            return frame.to_image()
-                        until_2_seconds += 1
-        except Exception:
-            try:
-                from raven.contrib.django.raven_compat.models import client
-                client.captureException()
-            except ImportError:
-                pass
+        for i in video.demux():
+            for frame in i.decode():
+                if frame.__class__.__name__ == "VideoFrame":
+                    if until_2_seconds > self.fps * 2:  # ~2 seconds
+                        return frame.to_image()
+                    until_2_seconds += 1
 
     @property
     def duration(self):
