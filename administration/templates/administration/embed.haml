@@ -11,6 +11,6 @@
         $("video").mediaelementplayer();
       })
 
-  %body
+  %body{style: "margin 0; padding: 0; border: 0 none"}
     .player
       %video{src: "{{ MEDIA_URL }}videos/{{ object.file_name }}", width: "100%", height: "100%"}
