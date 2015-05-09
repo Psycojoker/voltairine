@@ -1,0 +1,16 @@
+%html
+  %head
+    %title
+      =object.title
+    %script{src: "{{ STATIC_URL }}js/jquery.min.js"}
+    %script{src: "{{ STATIC_URL }}mediaelementjs/mediaelement-and-player.min.js"}
+    %link{rel: "stylesheet", href: "{{ STATIC_URL }}mediaelementjs/mediaelementplayer.min.css"}
+
+    :javascript
+      $(function() {
+        $("video").mediaelementplayer();
+      })
+
+  %body
+    .player
+      %video{src: "{{ MEDIA_URL }}videos/{{ object.file_name }}", width: "100%", height: "100%"}
