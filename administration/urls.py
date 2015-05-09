@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, url, include
 from django.views.generic import DetailView
+from djangosecure.decorators import frame_deny_exempt
 
 from video.models import Video
 
@@ -32,7 +33,7 @@ urlpatterns = patterns('administration.views',
     url(r'^video/(?P<pk>\d+)/$', 'video_detail', name='administration_video_detail'),
     url(r'^video/(?P<pk>\d+)/delete/$', user_can_see_administration_interface(DeleteVideo.as_view()), name='administration_video_delete'),
 
-    url(r'^video/(?P<pk>\d+)/embed/$', DetailView.as_view(model=Video, template_name="administration/embed.haml"), name='administration_video_detail_embed'),
+    url(r'^video/(?P<pk>\d+)/embed/$', frame_deny_exempt(DetailView.as_view(model=Video, template_name="administration/embed.haml")), name='administration_video_detail_embed'),
 
     url(r'^', include('upload_video.urls')),
 )

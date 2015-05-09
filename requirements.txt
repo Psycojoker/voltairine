@@ -10,3 +10,4 @@ django-mptt
 jsonfield
 av
 pillow
+django-secure
