@@ -214,6 +214,12 @@ class ListSection(ListView):
     model = Section
     template_name = 'administration/section_list.haml'
 
+    def __init__(self, *args, **kwargs):
+        if not Section.objects.exists():
+            Section.objects.create(title="First section")
+
+        super(ListSection, self).__init__(*args, **kwargs)
+
     def get_context_data(self, *args, **kwargs):
         context = super(ListSection, self).get_context_data(*args, **kwargs)
         if self.request.user.is_staff:
