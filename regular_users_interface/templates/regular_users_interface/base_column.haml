@@ -5,6 +5,7 @@
 
 -block bootstrap3_extra_head
   %link{href: "{{ STATIC_URL }}css/theme.bootstrap.css", rel: "stylesheet"}
+  %link{href: "{{ STATIC_URL }}css/sticky-footer.css", rel: "stylesheet"}
   %link{href: "{{ STATIC_URL }}css/video-sidebar.css", rel: "stylesheet"}
 
   :css
@@ -41,14 +42,22 @@
 
   -block heading
 
-  #wrapper
-    #sidebar-wrapper
-      -block sidebar
+  .container-fluid
+    #wrapper
+      #sidebar-wrapper
+        -block sidebar
 
 
-    #page-content-wrapper
-      .container-fluid
-        -block content
+      #page-content-wrapper
+        .container-fluid
+          -block content
+
+  %footer.footer.hidden-xs.hidden-sm
+    .container-fluid
+      %center
+        %p.text-muted
+          SAYA - <a href="http://www.saya.fr">www.saya.fr</a> - <a href="mailto:lestudio@saya.fr">lestudio@saya.fr</a> - 32 rue des Jeuneurs 75002 Paris - TEL : 01 42 21 10 58 / FAX : 01 42 21 88 98 - Tous droits reservés © SAYA 2015
+
 
 -block bootstrap3_extra_script
   %script{src: "{{ STATIC_URL }}js/angular.js"}

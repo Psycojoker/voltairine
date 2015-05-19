@@ -33,3 +33,14 @@ footer .container .text-muted {
   margin: 10px 0;
   color: #BBB;
 }
+
+footer .container-fluid {
+  width: auto;
+  padding: 0 15px;
+  background-color: #34373D;
+}
+
+footer .container-fluid .text-muted {
+  margin: 10px 0;
+  color: #BBB;
+}
