@@ -47,9 +47,9 @@ footer .container {
     }
 }
 
-@media (max-width: 760px) {
-    footer {
-        display: none;
+@media (max-width: 768px) {
+    #page-content-wrapper {
+        position: relative;
     }
 }
 
