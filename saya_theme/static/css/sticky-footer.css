@@ -29,6 +29,30 @@ footer .container {
   background-color: #34373D;
 }
 
+@media (max-width: 1500px) and (min-width: 1200px) {
+    footer .admin {
+      max-width: 680px;
+    }
+}
+
+@media (max-width: 1200px) and (min-width: 1000px) {
+    footer .admin {
+      max-width: 480px;
+    }
+}
+
+@media (max-width: 1000px) and (min-width: 760px) {
+    footer .admin {
+      max-width: 280px;
+    }
+}
+
+@media (max-width: 760px) {
+    footer {
+        display: none;
+    }
+}
+
 footer .container .text-muted {
   margin: 10px 0;
   color: #BBB;
