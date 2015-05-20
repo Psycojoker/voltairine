@@ -47,7 +47,7 @@ footer .container {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 850px) {
     #page-content-wrapper {
         position: relative;
     }
