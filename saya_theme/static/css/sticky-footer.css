@@ -26,7 +26,7 @@ body {
 footer .container {
   width: auto;
   padding: 0 15px;
-  background-color: #3A3D44;
+  background-color: #15181D;
 }
 
 @media (max-width: 1500px) and (min-width: 1200px) {
@@ -61,7 +61,7 @@ footer .container .text-muted {
 footer .container-fluid {
   width: auto;
   padding: 0 15px;
-  background-color: #34373D;
+  background-color: #15181D;
 }
 
 footer .container-fluid .text-muted {

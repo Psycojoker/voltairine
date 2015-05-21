@@ -11,7 +11,7 @@
   :css
     .navbar-inverse {
       background-image: none;
-      background-color: #3A3D44;
+      background-color: #15181D;
       border-radius: 0px;
     }
 
@@ -26,8 +26,8 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand.navbar-brand{href: "/", style: "padding: 5px; padding-left: 0px"}
-            %img{src: "{{ STATIC_URL }}img/logo.png", style: "height: 70px", alt: "Saya-Films"}
+          %a.brand.navbar-brand{href: "/", style: "padding-top: 0px; padding-left: 0px;"}
+            %img{src: "{{ STATIC_URL }}img/logo.png", style: "height: 75px", alt: "Saya-Films"}
         %ul.nav.navbar-nav.navbar-right.hidden-xs.hidden-sm
           %li
             %a{href: "{% url 'logout' %}"}
