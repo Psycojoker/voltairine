@@ -35,3 +35,11 @@ a.fat:hover {
 .fuelux .tree .tree-branch .tree-branch-children {
     margin-left: 34px;
 }
+
+.empty-section-helper {
+    height: 30vh;
+}
+
+.empty-section {
+    text-align: center;
+}
