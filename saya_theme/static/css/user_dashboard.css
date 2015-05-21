@@ -36,10 +36,13 @@ a.fat:hover {
     margin-left: 34px;
 }
 
-.empty-section-helper {
-    height: 30vh;
+@media (min-width: 850px) {
+    .empty-section-helper {
+        height: 15vh;
+    }
 }
 
 .empty-section {
     text-align: center;
+    width: 100%;
 }
