@@ -111,6 +111,8 @@ STATIC_ROOT = '/home/soya/soya/static_deploy/static/'
 
 # this is where the videos will be stored
 MEDIA_ROOT = '/home/soya/soya/media_deploy/'
+
+SAYA_FORGOTTEN_PASSWORD_EMAILS = ['email']
 ```
 
 ## Collect the static
