@@ -6,13 +6,22 @@
 
   :javascript
     $(function() {
-      $("video").mediaelementplayer();
+      $("video").mediaelementplayer({
+        success: function(mediaElement) {
+          mediaElement.addEventListener('loadeddata', function() {
+            // horrible hack because on dynamic size, when the video is loaded yet, the player has an height of 0px
+            mediaElement.style.height = "100%";
+            mediaElement.player.height = "100%";
+            $(window).resize();
+          })
+        }
+      });
     })
 
 -block content
   .well{style: "padding: 0; border: 0px"}
     .player
-      %video{src: "{{ MEDIA_URL }}videos/{{ object.file_name }}", width: "100%", height: "100%"}
+      %video{src: "{{ MEDIA_URL }}videos/{{ object.file_name }}", width: "100%", height: "100%", style: "width: 100%; height: 41vw"}
 
     %div{style: "padding: 20px;"}
       %h2{style: "margin-top: 0px"}
