@@ -1,5 +1,6 @@
 from django.contrib.auth.views import login as base_login
 from django.contrib.auth import logout as auth_logout
+from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
@@ -23,3 +24,7 @@ def forgotten_password(request):
 
     if not form.is_valid():
         return render(request, 'registration/forgotten_password.haml', {"form": form})
+
+    #TODO email
+
+    return HttpResponseRedirect(reverse('forgotten_password_success'))
