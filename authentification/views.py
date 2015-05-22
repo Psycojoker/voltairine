@@ -18,3 +18,8 @@ def logout(request):
 def forgotten_password(request):
     if request.method == 'GET':
         return render(request, 'registration/forgotten_password.haml', {"form": ForgottenPasswordForm()})
+
+    form = ForgottenPasswordForm(request.POST)
+
+    if not form.is_valid():
+        return render(request, 'registration/forgotten_password.haml', {"form": form})
