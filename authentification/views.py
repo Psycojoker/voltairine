@@ -32,7 +32,7 @@ def forgotten_password(request):
         return render(request, 'registration/forgotten_password.haml', {"form": form})
 
     send_mail(
-              u'Demande de mot de pass oublié par %s pour %s' % (form.cleaned_data['email'], form.cleaned_data['username']),
+              u'Demande de mot de passe oublié par %s pour %s' % (form.cleaned_data['email'], form.cleaned_data['username']),
               get_template('registration/forgotten_password_email.txt').render(Context(form.cleaned_data)),
               'noreply@play.saya.fr',
               settings.SAYA_FORGOTTEN_PASSWORD_EMAILS,
