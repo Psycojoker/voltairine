@@ -1,5 +1,5 @@
 """
-Django settings for soya project.
+Django settings for voltairine project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -38,7 +38,7 @@ except ImportError:
 
 
 INSTALLED_APPS = (
-    'saya_theme',
+    'voltairine_theme',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,7 +49,7 @@ INSTALLED_APPS = (
     'mptt',
     'bootstrap3',
     'resumable',
-    'soya',
+    'voltairine',
     'debug_toolbar',
     'django_pdb',
     'administration',
@@ -72,7 +72,7 @@ MIDDLEWARE_CLASSES = (
     'django_pdb.middleware.PdbMiddleware',
 )
 
-ROOT_URLCONF = 'soya.urls'
+ROOT_URLCONF = 'voltairine.urls'
 
 import hamlpy
 
@@ -85,7 +85,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
-WSGI_APPLICATION = 'soya.wsgi.application'
+WSGI_APPLICATION = 'voltairine.wsgi.application'
 
 
 # Database

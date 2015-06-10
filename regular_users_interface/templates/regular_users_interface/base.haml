@@ -1,7 +1,7 @@
 -extends "bootstrap3/bootstrap3.html"
 
 -block bootstrap3_title
-  Saya-Films
+  Voltairine
 
 -block bootstrap3_extra_head
   %link{href: "{{ STATIC_URL }}css/theme.bootstrap.css", rel: "stylesheet"}
@@ -27,7 +27,7 @@
             %span.icon-bar
             %span.icon-bar
           %a.brand.navbar-brand{href: "/", style: "padding-top: 0px; padding-left: 0px;"}
-            %img{src: "{{ STATIC_URL }}img/logo.png", style: "height: 75px", alt: "Saya-Films"}
+            %h1 Voltairine
         %ul.nav.navbar-nav.navbar-right.hidden-xs.hidden-sm
           %li
             %a{href: "{% url 'logout' %}"}
@@ -45,7 +45,7 @@
     .container
       %center
         %p.text-muted
-          SAYA - <a href="http://www.saya.fr">www.saya.fr</a> - <a href="mailto:lestudio@saya.fr">lestudio@saya.fr</a> - 32 rue des Jeuneurs 75002 Paris - TEL : 01 42 21 10 58 / FAX : 01 42 21 88 98 - Tous droits reservés © SAYA 2015
+          voltairine
 
 -block bootstrap3_extra_script
   -block javascript

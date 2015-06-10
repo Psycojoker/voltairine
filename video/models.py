@@ -37,7 +37,7 @@ class Video(models.Model):
 
     # montage_date = models.DateField(null=True)
     # montage_version = models.CharField(max_length=255)
-    # bar_code_lto_saya = models.CharField(max_length=255)
+    # bar_code_lto_voltairine = models.CharField(max_length=255)
     # bar_code_lto_prod = models.CharField(max_length=255)
 
     additional_infos = JSONField(default={})

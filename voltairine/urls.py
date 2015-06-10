@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.conf import settings
 
 urlpatterns = patterns('',
-    url(r'^$', 'soya.views.home_redirect', name='home_redirect'),
+    url(r'^$', 'voltairine.views.home_redirect', name='home_redirect'),
     url(r'^accounts/', include('authentification.urls')),
     url(r'^administration/', include('administration.urls')),
     url(r'^films/', include('regular_users_interface.urls')),

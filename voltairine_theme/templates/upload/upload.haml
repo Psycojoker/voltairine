@@ -13,7 +13,7 @@
   -csrf_token
 
   %span#defaultSection{data: '{% if not user.is_staff %}{{ form.section.field.queryset.first.pk }}{% endif %}'}
-  %div{ng-app: "soya", ng-controller: "VideoUploadController"}
+  %div{ng-app: "voltairine", ng-controller: "VideoUploadController"}
     %div{ng-repeat: "upload in uploads"}
       .well
         %div{ng-if: 'upload.isSubmited == false || (upload.state != "canceled" && upload.state != "done")'}

@@ -34,8 +34,8 @@ def forgotten_password(request):
     send_mail(
               u'Demande de mot de pass oublié par %s pour %s' % (form.cleaned_data['email'], form.cleaned_data['username']),
               get_template('registration/forgotten_password_email.txt').render(Context(form.cleaned_data)),
-              'noreply@play.saya.fr',
-              settings.SAYA_FORGOTTEN_PASSWORD_EMAILS,
+              'noreply@voltairine.fr',
+              settings.voltairine_FORGOTTEN_PASSWORD_EMAILS,
               fail_silently=False
     )
 
