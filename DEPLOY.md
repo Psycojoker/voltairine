@@ -1,6 +1,6 @@
 # Deployment instructions
 
-Soya is a regular Django project, apart from the dependencies for pyav, nothing
+voltairine is a regular Django project, apart from the dependencies for pyav, nothing
 is a special case, so this will basically describe a traditional python/Django
 deployment instruction for nginx/supervisord/git/virtualenv/Django.
 
@@ -10,7 +10,7 @@ This tutorial assume that you are using the **last debian stable**.
 
 In root:
 
-    adduser soya
+    adduser voltairine
     # fill blank informations and no password
 
 ## Configure the database
@@ -19,8 +19,8 @@ We'll use postgresql.
 
     apt-get install postgresql
     su postgres
-    createuser soya  # if ask, don't set the user as a superuser, it's better for security
-    createdb -O soya soya  # create a dabatase for this user
+    createuser voltairine  # if ask, don't set the user as a superuser, it's better for security
+    createdb -O voltairine voltairine  # create a dabatase for this user
     exit
 
 ## Get ffmpeg
@@ -40,13 +40,13 @@ the compilation.
 
     apt-get install git python-virtualenv python-dev
 
-    su soya
+    su voltairine
     cd  # will get you into his home
-    git clone https://github.com/psycojoker/soya
+    git clone https://github.com/psycojoker/voltairine
 
 ## Install dependencies
 
-    cd soya
+    cd voltairine
 
     # dependancies installation
     virtualenv ve
@@ -63,7 +63,7 @@ the compilation.
     pip install psycopg2  # for postgresql, you might need to install the debian pkg for postgresql headers (the one with "-dev" in it)
 ## Add the production configuration
 
-Create the file `/home/soya/soya/soya/settings_local.py` and **adapt** the
+Create the file `/home/voltairine/voltairine/voltairine/settings_local.py` and **adapt** the
 following content for it:
 
 ```python
@@ -77,15 +77,15 @@ ALLOWED_HOSTS = ['my.domain.name']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'soya',
+        'NAME': 'voltairine',
     }
 }
 
 # this is where the static assets will be store (for example "jquery.min.js" or css files)
-STATIC_ROOT = '/home/soya/soya/static_deploy/static/'
+STATIC_ROOT = '/home/voltairine/voltairine/static_deploy/static/'
 
 # this is where the videos will be stored
-MEDIA_ROOT = '/home/soya/soya/media_deploy/'
+MEDIA_ROOT = '/home/voltairine/voltairine/media_deploy/'
 
 SAYA_FORGOTTEN_PASSWORD_EMAILS = ['email']
 ```
@@ -131,14 +131,14 @@ If nginx isn't already installed:
     apt-get install nginx
 
 Then, put **adapt** this content and put it into the file
-<code>/etc/nginx/sites-available/soya</code>:
+<code>/etc/nginx/sites-available/voltairine</code>:
 
 ```
 server {
     listen 80;
     server_name my.domain.name;
-    access_log  /var/log/nginx/soya_access.log;
-    error_log   /var/log/nginx/soya_error.log;
+    access_log  /var/log/nginx/voltairine_access.log;
+    error_log   /var/log/nginx/voltairine_error.log;
 
     client_max_body_size 500M;
 
@@ -150,12 +150,12 @@ server {
 
     location /static/  {
         autoindex    off;
-        root /home/soya/soya/static_deploy/;
+        root /home/voltairine/voltairine/static_deploy/;
     }
 
     location /media/  {
         autoindex    off;
-        root /home/soya/soya/media_prod/;
+        root /home/voltairine/voltairine/media_prod/;
     }
 }
 ```
@@ -165,7 +165,7 @@ server {
 
 Symlink this file in the good place:
 
-    ln -s /etc/nginx/sites-available/soya /etc/nginx/sites-enabled/soya
+    ln -s /etc/nginx/sites-available/voltairine /etc/nginx/sites-enabled/voltairine
 
 Reload nginx:
 
@@ -177,7 +177,7 @@ This is not working yet, so if you go to "my.domain.name" you'll have a "bad gat
 
 Run this (adapt port if needed):
 
-    /home/soya/soya/ve/bin/gunicorn soya.wsgi:application -b localhost:8000 --workers=1
+    /home/voltairine/voltairine/ve/bin/gunicorn voltairine.wsgi:application -b localhost:8000 --workers=1
 
 Then go to <code>my.domain.name</code>. It should be working.
 
@@ -193,15 +193,15 @@ Hopefully, by now, everything is fine, **stop** gunicorn then proceed.
 
     apt-get install supervisor
 
-Then adapt this config file and put it here <code>/etc/supervisor/conf.d/soya.conf</code>:
+Then adapt this config file and put it here <code>/etc/supervisor/conf.d/voltairine.conf</code>:
 
 ```
-[program:soya]
-command=/home/soya/soya/ve/bin/gunicorn soya.wsgi:application -b localhost:8000 --workers=4 
-stdout_logfile=/var/log/soya.log
-stderr_logfile=/var/log/soya.err.log
-directory=/data/soya
-user=soya
+[program:voltairine]
+command=/home/voltairine/voltairine/ve/bin/gunicorn voltairine.wsgi:application -b localhost:8000 --workers=4 
+stdout_logfile=/var/log/voltairine.log
+stderr_logfile=/var/log/voltairine.err.log
+directory=/data/voltairine
+user=voltairine
 ```
 
 Then run:
@@ -214,7 +214,7 @@ And now, everything should be running fine, hopefully. If you have an error, loo
 
 Now, remember, **every time** you modify your python code, you **have** to do restart the daemon using:
 
-    supervisorctl restart soya
+    supervisorctl restart voltairine
 
 Common supervisorctl commands:
 
