@@ -1,8 +1,4 @@
 from django.conf.urls import patterns, url, include
-from django.views.generic import DetailView
-from django.views.decorators.clickjacking import xframe_options_exempt
-
-from video.models import Video
 
 from .views import UpdateUser, CreateUser, CreateSection, DetailUser, DeleteUser, UpdateSection, DeleteVideo, CreateGroup, UpdateGroup, DeleteGroup, DetailGroup, ListSection
 from .utils import user_can_see_administration_interface, user_is_staff
@@ -32,8 +28,6 @@ urlpatterns = patterns('administration.views',
     url(r'^video/$', 'video_list', name='administration_video_list'),
     url(r'^video/(?P<pk>\d+)/$', 'video_detail', name='administration_video_detail'),
     url(r'^video/(?P<pk>\d+)/delete/$', user_can_see_administration_interface(DeleteVideo.as_view()), name='administration_video_delete'),
-
-    url(r'^video/(?P<pk>\d+)/embed/$', xframe_options_exempt(DetailView.as_view(model=Video, template_name="administration/embed.haml")), name='administration_video_detail_embed'),
 
     url(r'^', include('upload_video.urls')),
 )
