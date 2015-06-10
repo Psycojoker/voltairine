@@ -85,7 +85,7 @@ DATABASES = {
 STATIC_ROOT = '/home/voltairine/voltairine/static_deploy/static/'
 
 # this is where the videos will be stored
-MEDIA_ROOT = '/home/voltairine/voltairine/media_deploy/'
+MEDIA_ROOT = '/home/voltairine/voltairine/media_deploy/media/'
 
 SAYA_FORGOTTEN_PASSWORD_EMAILS = ['email']
 ```
