@@ -142,6 +142,12 @@ server {
 
     client_max_body_size 500M;
 
+    location /administration/video/ {
+        add_header Access-Control-Allow-Origin *;
+        proxy_pass        http://localhost:8000;
+        proxy_set_header  X-Real-IP  $remote_addr;
+    }
+
     location / {
         proxy_pass        http://localhost:8000;  # you might want to change the port number if it's already used
         proxy_set_header  X-Real-IP  $remote_addr;
