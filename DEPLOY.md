@@ -61,31 +61,6 @@ the compilation.
     pip install gunicorn  # production wsgi server
 
     pip install psycopg2  # for postgresql, you might need to install the debian pkg for postgresql headers (the one with "-dev" in it)
-
-## Configure the database
-
-    python manage.py syncdb  # create a superuser when ask
-
-    # if you failed to create a super user you can run:
-    # python manage.py createsuperuser
-    python manage.py makemigrations
-
-    # yes, again
-    python manage.py syncdb
-
-## A first test of the installation
-
-    python manage.py runserver
-
-If it runs without any error, it's a good sign. You can look at
-<code>http://localhost:8000</code> to a play a bit with it if you want (with
-curl or something like that). You can also run it this way to access if from
-outside the server on which it is running (or change the port):
-
-    python manage.py runserver 0.0.0.0:8000
-
-**Never run this setup in production**.
-
 ## Add the production configuration
 
 Create the file `/home/soya/soya/soya/settings_local.py` and **adapt** the
@@ -114,6 +89,31 @@ MEDIA_ROOT = '/home/soya/soya/media_deploy/'
 
 SAYA_FORGOTTEN_PASSWORD_EMAILS = ['email']
 ```
+
+
+## Configure the database
+
+    python manage.py syncdb  # create a superuser when ask
+
+    # if you failed to create a super user you can run:
+    # python manage.py createsuperuser
+    python manage.py makemigrations
+
+    # yes, again
+    python manage.py syncdb
+
+## A first test of the installation
+
+    python manage.py runserver
+
+If it runs without any error, it's a good sign. You can look at
+<code>http://localhost:8000</code> to a play a bit with it if you want (with
+curl or something like that). You can also run it this way to access if from
+outside the server on which it is running (or change the port):
+
+    python manage.py runserver 0.0.0.0:8000
+
+**Never run this setup in production**.
 
 ## Collect the static
 
