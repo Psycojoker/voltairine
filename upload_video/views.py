@@ -55,7 +55,7 @@ def upload_video(request):
 
     # remove anything special from file name, avoid strange bugs
     if "." in file_name:
-        file_name = slugify(".".join(file_name.split(".")[:-1])) + file_name.split(".")[-1]
+        file_name = slugify(".".join(file_name.split(".")[:-1])) + "." + file_name.split(".")[-1]
     else:  # strange, no extension situation
         file_name = slugify(file_name)
 
