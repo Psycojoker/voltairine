@@ -4,7 +4,7 @@ import shutil
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.conf import settings
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.template.defaultfilters import slugify
 
 from administration.utils import user_can_see_administration_interface
@@ -40,7 +40,7 @@ def upload_video(request):
         form["section"].field.empty_label = None
 
     if not form.is_valid():
-        return render(request, "upload/upload.haml", {"form": form}, status=400)
+        return HttpResponseBadRequest("%s" % form.errors)
 
     if not request.user.is_staff:
         assert form.cleaned_data["section"] in request.user.sections_can_administrate()
