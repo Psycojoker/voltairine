@@ -26,6 +26,7 @@ function VideoUploadController($scope) {
             isSubmited: false,
             section: $scope.defaultSection,
             confirmCancelShow: false,
+            error: "",
             title: ""
         };
 
@@ -68,10 +69,12 @@ function VideoUploadController($scope) {
             $.post("", data).done(function(response) {
                 console.log("success!");
                 console.log(response);
-                $scope.$digest();
             }).fail(function(response) {
                 console.log("fail!");
                 console.log(response);
+                video.error = response.responseText;
+            }).always(function() {
+                $scope.$digest();
             })
         }
     }

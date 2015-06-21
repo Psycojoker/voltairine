@@ -68,8 +68,14 @@
 
 
         %div{ng-if: 'upload.isSubmited == true && upload.state == "done"'}
-          %p{style: "margin-bottom: 0px"}
-            '{& upload.title &}' a correctement été enregistré.
+          %div{ng-if: 'upload.error == ""'}
+            %p{style: "margin-bottom: 0px"}
+              '{& upload.title &}' a correctement été enregistré.
+          %div{ng-if: 'upload.error != ""'}
+            %p{style: "margin-bottom: 0px"}
+              Erreur sur '{& upload.title &}' :
+            %div{ng-bind-html: "upload.error"}
+
 
     %button.btn.btn-primary{ng-click: "addUpload()"}
       Uploader une vidéo en plus
