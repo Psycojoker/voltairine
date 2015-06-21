@@ -133,3 +133,6 @@ try:
     from settings_local import *
 except ImportError:
     pass
+
+if not os.path.exists(MEDIA_ROOT):
+    os.makedirs(MEDIA_ROOT)
