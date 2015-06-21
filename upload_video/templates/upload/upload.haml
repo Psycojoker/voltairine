@@ -2,14 +2,86 @@
 -load bootstrap3
 -load staticfiles
 
--block content
-  %form{method: "post"}
-    %fieldset
-      -csrf_token
-      =form.as_p
-    %button.btn.btn-primary{type: "submit"}
-      Send
+-block head
+  :css
+    .progress {
+      background-color: #FFFFFF;
+    }
 
-  %script{type: "text/javascript", src: "https://raw.github.com/23/resumable.js/master/resumable.js"}
-  %script{src:"{% static 'resumable/js/django-resumable.js' %}", type:"text/javascript"}
-  %script{src:"{% static 'resumable/js/init.js' %}", type:"text/javascript"}
+-block content
+  -# put here to allow DjangoResumable to get it
+  -csrf_token
+
+  %span#defaultSection{data: '{% if not user.is_staff %}{{ form.section.field.queryset.first.pk }}{% endif %}'}
+  %div{ng-app: "voltairine", ng-controller: "VideoUploadController"}
+    %div{ng-repeat: "upload in uploads"}
+      .well
+        %div{ng-if: 'upload.isSubmited == false || (upload.state != "canceled" && upload.state != "done")'}
+          %form{method: "post", id: "upload_form_{& upload.id &}"}
+            %fieldset
+              -csrf_token
+              %div{ng-if: 'upload.isSubmited == true'}
+                En attente que '{& upload.title &}' soit complétement uploadé -
+                %a{ng-click: "upload.isSubmited = false", href: "#"}
+                  editer
+              .row{ng-if: 'upload.isSubmited == false'}
+                .col-md-6
+                  .form-group{class: "{% if form.title.errors %}has-error{% elif form.data and form.title %}has-success{% endif %}"}
+                    %label.control-label{for: "title"}
+                      Titre de la vidéo
+                    %input#id_title.form-control{type: "text", required: "", placeholder: "Titre de la vidéo", name: "title", value: "", ng-model: "upload.title"}
+                    -for error in form.title.errors
+                      %span.help-block= error
+
+                .col-md-6
+                  .form-group
+                    %label.control-label{for: "id_section"}
+                      Section
+                    %select#id_section.form-control{name: "section", title: "", ng-model: "upload.section"}
+                      -for id, section in form.section.field.choices
+                        %option{value: "{{ id }}"}
+                          =section
+
+              .form-group
+                %input#id_file_name-path{type: "hidden", name: "file_name-path", value: "None"}
+                %input#id_file_name{type: "file", name: "file_name", title: "", data-upload-url: "/administration/upload/", multiple: "multiple"}
+
+            %div{ng-if: 'upload.state == "empty"'}
+              %div{data-toggle: "tooltip", data-placement: "left", title: "Choisissez un fichier à uploader"}
+                %button.btn.btn-primary{type: "submit", ng-click: "saveVideo(upload.id)", ng-if: 'upload.isSubmited == false', disabled: "disabled"}
+                  Enregistrer
+                %button.btn.btn-danger{disabled: "disabled"}
+                  Annuler
+            %div{ng-if: 'upload.state != "empty"'}
+              %button.btn.btn-primary{type: "submit", ng-click: "saveVideo(upload.id)", ng-if: 'upload.isSubmited == false'}
+                Enregistrer
+              %button.btn.btn-danger{ng-hide: 'upload.confirmCancelShow', ng-click: 'upload.confirmCancelShow=true'}
+                Annuler
+              %button.btn.btn-success{ng-show: 'upload.confirmCancelShow', ng-click: 'upload.confirmCancelShow=false'}
+                Continuer l'upload de cette vidéo
+              %button.btn.btn-danger{ng-show: 'upload.confirmCancelShow', ng-click: 'cancelUpload(upload.id)'}
+                Confirmer l'annulation
+
+        %div{ng-if: 'upload.state == "canceled"'}
+          %p
+            L'upload de {& upload.title &} a été annulé.
+
+
+        %div{ng-if: 'upload.isSubmited == true && upload.state == "done"'}
+          %div{ng-if: 'upload.error == ""'}
+            %p{style: "margin-bottom: 0px"}
+              '{& upload.title &}' a correctement été enregistré.
+          %div{ng-if: 'upload.error != ""'}
+            %p{style: "margin-bottom: 0px"}
+              Erreur sur '{& upload.title &}' :
+            %div{ng-bind-html: "upload.error"}
+
+
+    %button.btn.btn-primary{ng-click: "addUpload()"}
+      Uploader une vidéo en plus
+
+-block javascript
+  %script{src: "{{ STATIC_URL }}js/bootstrap.min.js"}
+  %script{src: "{{ STATIC_URL }}js/resumable.js", type: "text/javascript"}
+  %script{src:"{{ STATIC_URL }}js/django-resumable.js", type:"text/javascript"}
+  %script{src: "{{ STATIC_URL }}js/upload.js"}

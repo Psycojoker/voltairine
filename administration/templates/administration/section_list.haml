@@ -1,69 +1,134 @@
 -extends "base.haml"
+-load mptt_tags
+
+-block head
+  %link{href: "{{ STATIC_URL }}css/fuelux.min.css", rel: "stylesheet"}
+  %link{href: "{{ STATIC_URL }}css/section_list.css", rel: "stylesheet"}
+
+
+-block javascript
+  %script{src: "{{ STATIC_URL }}js/fuelux.min.js"}
+
+  :javascript
+    $(".new-same-section").each(function(_, node) {
+      // awesomely dirty code to get the id of the parent of current level stored in the <ul> because |tree_info sucks for that
+      node.attributes["value"].value = $(node).parents("ul")[0].attributes["data-parent-id"].value;
+    })
+
+    $(".add").click(function(node) {
+      $($(node.target).parents(".tree-branch-header")[0]).find(".hidden-add").show();
+    })
+
+    reset = function() {
+      $(".edit-form").hide();
+      $(".remove-form").hide();
+      $(".hidden-add").hide();
+      $(".section").show();
+    }
+
+    $(".edit").click(function(node) {
+      // reset previous hidden edit form
+      reset();
+
+      var parent = $($(node.target).parents(".tree-branch-header")[0]);
+      parent.find(".section").hide();
+      parent.find(".edit-form").show();
+    })
+
+    $(".remove").click(function(node) {
+      // reset previous hidden edit form
+      reset();
+
+      var parent = $($(node.target).parents(".tree-branch-header")[0]);
+      parent.find(".section").hide();
+      parent.find(".remove-form").show();
+    })
+
+    $(".cancel").click(reset);
+
+    $(".toggled-section").click(function(event) {
+      var a = $(this);
+      event.preventDefault();
+      $("#" + a.attr("data-target")).toggle();
+      a.toggleClass("toggled-section");
+      console.log("pouet");
+    })
+
+  :css
+    .toggled-section {
+      transform: rotate(90deg);
+    }
+
+    a.arrow:link {
+      text-decoration: none;
+    }
+
+    a.arrow:hover {
+      text-decoration: none;
+    }
 
 -block content
   %h1 Sections
   %hr
 
-  %h2 Tournages
-  %ul
-    -for subsection in subsection_list
-      -if subsection.section == "1"
-        %li= subsection.title
-        %ul
-          -for subsubsection in subsection.subsubsection_set.all
-            %li= subsubsection.title
-          %li
-            %form.form-inline{method: "POST", action: "../subsubsection/new/"}
-              -csrf_token
-              .form-group
-                %input#id_subsection.form-control{type: "text", placeholder: "titre", required: "", style: "display: none;", value: '{{ subsection.id }}', name: "subsection"}
-                %input#id_title.form-control{type: "text", placeholder: "titre", required: "", name: "title"}
-              %button.btn.btn-default{type: "submit"}
-                Rajouter un nouveau jours de tournage
-    %li
-      %form.form-inline{method: "POST", action: "new/"}
-        -csrf_token
-        .form-group
-          %input#id_section.form-control{type: "text", placeholder: "titre", required: "", style: "display: none;", value: '1', name: "section"}
-          %input#id_title.form-control{type: "text", placeholder: "titre", required: "", name: "title"}
-        %button.btn.btn-default{type: "submit"}
-          Rajouter un nouveau tournage
+  -for section_list in top_section_list
+    .fuelux{style: "font-size: 18px"}
+      -for section, structure in section_list|tree_info
+        -if structure.new_level
+          <ul class="{% if forloop.first %}tree tree-folder-select{% else %}tree-branch-children{% endif %}" data-parent-id="{{ section.parent.id }}" id="children-of-{{ section.parent.id }}">
+            <li class="tree-branch">
+        -else
+            </li>
+            <li class="tree-branch">
 
-  %h2 Montages
-  %ul
-    -for subsection in subsection_list
-      -if subsection.section == "2"
-        %li= subsection.title
-    %li
-      %form.form-inline{method: "POST", action: "new/"}
-        -csrf_token
-        .form-group
-          %input#id_section.form-control{type: "text", placeholder: "titre", required: "", style: "display: none;", value: '2', name: "section"}
-          %input#id_title.form-control{type: "text", placeholder: "titre", required: "", name: "title"}
-        %button.btn.btn-default{type: "submit"}
-          Rajouter un nouveau montage
 
-  %h2 Producteurs
-  %ul
-    -for subsection in subsection_list
-      -if subsection.section == "3"
-        %li= subsection.title
-        %ul
-          -for subsubsection in subsection.subsubsection_set.all
-            %li= subsubsection.title
-          %li
-            %form.form-inline{method: "POST", action: "../subsubsection/new/"}
+
+        .tree-branch-header
+          %a.glyphicon.icon-caret.glyphicon-play.toggled-section.arrow{data-target: "children-of-{{ section.id }}", href: "#"}
+            %span.sr-only Open
+          %form.edit-form.form-inline{method: "POST", action: "{% url 'administration_section_update' section.pk %}", style: "display: none"}
               -csrf_token
-              .form-group
-                %input#id_subsection.form-control{type: "text", placeholder: "titre", required: "", style: "display: none;", value: '{{ subsection.id }}', name: "subsection"}
-                %input#id_title.form-control{type: "text", placeholder: "titre", required: "", name: "title"}
-              %button.btn.btn-default{type: "submit"}
-                Rajouter un nouveau film/une nouvelle série
-    %li
-      %form.form-inline{method: "POST", action: "new/"}
-        -csrf_token
-        .form-group
-          %input#id_section.form-control{type: "text", placeholder: "titre", required: "", style: "display: none;", value: '3', name: "section"}
-          %input#id_title.form-control{type: "text", placeholder: "titre", required: "", name: "title"}
-        %button.btn.btn-default{type: "submit"}
-          Rajouter un nouveau producteur
+              %input.input-sm{type: "text", value: "{{ section.title }}", name: "title"}
+              %button.btn.btn-default.btn-sm{type: "submit"}
+                Modifier
+              %a.cancel.btn.btn-sm.btn-primary{href: "#"} Annuler
+          %form.remove-form{method: "POST", action: "{% url 'administration_section_delete' section.pk %}", style: "display: none"}
+            -csrf_token
+            =section.title
+            %a.cancel.btn.btn-sm.btn-primary{href: "#"} Annuler
+            %input.btn.btn-sm.btn-danger{type: "submit", value: "Confirmer la suppression"}
+          %span.section
+            %span.tree-label
+              =section.title
+              %a.section-button.add.glyphicon.glyphicon-plus{href: "#"}
+              %a.section-button.edit.glyphicon.glyphicon-pencil{href: "#"}
+              %a.section-button.remove.glyphicon.glyphicon-remove{href: "#"}
+              -#
+                %span.glyphicon.glyphicon-arrow-up
+                %span.glyphicon.glyphicon-arrow-down
+          %ul.tree-branch-children.hidden-add{style: "display: none"}
+            %li.tree-branch
+              %form.form-inline{method: "POST", action: "{% url 'administration_section_create' %}"}
+                .tree-branch-header
+                  %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
+                    %span.sr-only Open
+                  -csrf_token
+                  %input{type: "text", style: "display: none;", value: '{{ section.id }}', name: "parent"}
+                  %input.input-sm{type: "text", value: "", name: "title"}
+                  %button.btn.btn-default.btn-sm{type: "submit"}
+                    Rajouter
+                  %a.cancel.btn.btn-sm.btn-primary{href: "#"} Annuler
+
+        -for level in structure.closed_levels
+          </li>
+          %li.tree-branch
+            %form.form-inline{method: "POST", action: "{% url 'administration_section_create' %}"}
+              .tree-branch-header
+                %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
+                  %span.sr-only Open
+                -csrf_token
+                %input.new-same-section{type: "text", style: "display: none;", value: '', name: "parent"}
+                %input.input-sm{type: "text", name: "title"}
+                %button.btn.btn-default.btn-sm{type: "submit"}
+                  Rajouter
+          </ul>

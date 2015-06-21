@@ -38,7 +38,6 @@ except ImportError:
 
 
 INSTALLED_APPS = (
-    'voltairine_theme',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,7 +46,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_extensions',
     'mptt',
-    'bootstrap3',
     'resumable',
     'voltairine',
     'debug_toolbar',
@@ -59,6 +57,7 @@ INSTALLED_APPS = (
     'sections',
     'upload_video',
     'video',
+    'bootstrap3',
 ) + INSTALLED_APPS_LOCAL
 
 MIDDLEWARE_CLASSES = (
