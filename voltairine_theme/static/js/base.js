@@ -1,4 +1,4 @@
-var app = angular.module('voltairine', ['ngCookies'])
+var app = angular.module('voltairine', ['ngCookies', 'ngSanitize'])
     .config(function($interpolateProvider) {
         $interpolateProvider.startSymbol('{&');
         $interpolateProvider.endSymbol('&}');

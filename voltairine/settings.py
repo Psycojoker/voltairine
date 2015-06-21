@@ -134,5 +134,6 @@ try:
 except ImportError:
     pass
 
+
 if not os.path.exists(MEDIA_ROOT):
     os.makedirs(MEDIA_ROOT)
