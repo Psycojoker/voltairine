@@ -430,6 +430,7 @@ def video_detail(request, pk):
     return render(request, "administration/video_detail.haml", {
         "object": video,
         "form": form,
+        "domain_name": request.META['wsgi.url_scheme'] + "://" + request.META['HTTP_HOST']
     })
 
 

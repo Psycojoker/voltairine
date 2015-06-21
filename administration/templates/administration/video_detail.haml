@@ -72,6 +72,10 @@
           %b Section :
           {& section &}
 
+        %p
+          %b Code d'inclusion :
+          %input.form-control{type: "text", value: "<iframe frameborder=\"0\" height=\"350\" marginheight=\"0\" width=\"600\" marginwidth=\"0\" src=\"{{ domain_name }}{% url 'administration_video_detail_embed' object.id %}\"></iframe>"}
+
         %button.btn.btn-primary{ng-click: "toggleEditMode()"}
           Éditer
 
