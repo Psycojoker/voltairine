@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -430,7 +431,7 @@ def video_detail(request, pk):
     return render(request, "administration/video_detail.haml", {
         "object": video,
         "form": form,
-        "domain_name": request.META['wsgi.url_scheme'] + "://" + request.META['HTTP_HOST']
+        "domain_name": request.META['wsgi.url_scheme'] + "://" + (request.META['HTTP_HOST'] if not hasattr(settings, "FQDN") else settings.FQDN)
     })
 
 
