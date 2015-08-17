@@ -33,7 +33,7 @@ urlpatterns = patterns('administration.views',
     url(r'^video/(?P<pk>\d+)/$', 'video_detail', name='administration_video_detail'),
     url(r'^video/(?P<pk>\d+)/delete/$', user_can_see_administration_interface(DeleteVideo.as_view()), name='administration_video_delete'),
 
-    url(r'^video/(?P<pk>\d+)/embed/$', xframe_options_exempt(DetailView.as_view(model=Video, template_name="administration/embed.haml")), name='administration_video_detail_embed'),
+    url(r'^video/(?P<slug>\w+)/embed/$', xframe_options_exempt(DetailView.as_view(model=Video, slug_field="random_id", template_name="administration/embed.haml")), name='administration_video_detail_embed'),
 
     url(r'^', include('upload_video.urls')),
 )
