@@ -28,6 +28,8 @@ class Video(models.Model):
     file_name = models.CharField(max_length=255)
     thumbnail_name = models.CharField(max_length=255, null=True, blank=True)
 
+    random_id = models.CharField(max_length=20, unique=True, db_index=True)
+
     film_name = models.CharField(max_length=255, null=True, blank=True)
     realisation = models.CharField(max_length=255, null=True, blank=True)
     production = models.CharField(max_length=255, null=True, blank=True)
