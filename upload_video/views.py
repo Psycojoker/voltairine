@@ -11,6 +11,7 @@ from administration.utils import user_can_see_administration_interface
 
 from sections.models import VideoSection, Section
 from video.models import Video
+from video.utils import generate_random_id_for_video
 
 from .utils import generate_random_string
 from .forms import ResumableForm
@@ -76,6 +77,7 @@ def upload_video(request):
     video = Video.objects.create(
         title=form.cleaned_data["title"],
         file_name=file_name,
+        random_id=generate_random_id_for_video(),
     )
 
     if form.cleaned_data["section"]:
