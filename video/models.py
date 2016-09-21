@@ -102,8 +102,16 @@ class Video(models.Model):
     def width_x_height(self):
         if "height" not in self.additional_infos or "width" not in self.additional_infos:
             # video stream always appears to be the first one, I'm not convinced that it's always the case
-            self.additional_infos["height"] = av.open(self.absolute_path).streams[0].height
-            self.additional_infos["width"] = av.open(self.absolute_path).streams[0].width
+            for i in av.open(self.absolute_path).streams:
+                if hasattr(i, "height"):
+                    self.additional_infos["height"] = i.height
+                    break
+
+            for i in av.open(self.absolute_path).streams:
+                if hasattr(i, "width"):
+                    self.additional_infos["width"] = i.width
+                    break
+
             self.save()
 
         return "%sx%s" % (self.additional_infos["width"], self.additional_infos["height"])
