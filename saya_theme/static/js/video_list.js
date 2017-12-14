@@ -108,4 +108,6 @@ odd          : ''  // odd row zebra striping
         $(".onVideosTable").show();
         $(".hidden-sidebaractive").hide();
     })
+
+    $("#closeAll").click();
 });
