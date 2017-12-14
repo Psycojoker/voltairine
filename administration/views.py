@@ -1,3 +1,5 @@
+import os
+
 from django import forms
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
@@ -445,3 +447,14 @@ class DeleteVideo(DeleteView):
             raise PermissionDenied()
 
         return object
+
+    def delete(self, *args, **kwargs):
+        # duplicate call but we don't really care here
+        object = self.get_object()
+
+        if os.path.exists(object.absolute_path):
+            os.remove(object.absolute_path)
+
+        result =  super(DeleteVideo, self).delete(*args, **kwargs)
+
+        return result
