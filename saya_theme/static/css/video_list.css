@@ -37,3 +37,23 @@ a.caret-toggle:hover {
 .onVideosTable {
     display: none;
 }
+
+.subsection-level-3 {
+    padding-left: 20px;
+}
+
+.subsection-level-4 {
+    padding-left: 40px;
+}
+
+.subsection-level-5 {
+    padding-left: 60px;
+}
+
+.subsection-level-6 {
+    padding-left: 80px;
+}
+
+.subsection-level-7 {
+    padding-left: 100px;
+}

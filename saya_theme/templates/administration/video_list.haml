@@ -54,9 +54,9 @@
               %a.caret-toggle.toggled{href: "#", data-target: "#{{ section.pk }}-childrens"}
                 %span.glyphicon.glyphicon-play
               =section.title
-            </h{% level_to_heading_number section.level %}>
+            </h{% level_to_heading_number section.level %} class="subsection-level-{% level_to_heading_number section.level %}">
 
-            <div id="{{ section.pk }}-childrens" class="subsection">
+            <div id="{{ section.pk }}-childrens" class="subsection subsection-level-{% level_to_heading_number section.level %}">
               .row
                 -for videosection in section.videosection_set.all
                   -with video=videosection.video
