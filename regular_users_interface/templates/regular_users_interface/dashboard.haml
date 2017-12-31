@@ -1,17 +1,19 @@
 -extends "regular_users_interface/base_column.haml"
+
 -load mptt_tags
 -load section_tags
+-load static
 
 -block javascript
-  %link{href: "{{ STATIC_URL }}css/video_list.css", rel: "stylesheet"}
-  %link{href: "{{ STATIC_URL }}css/fuelux.min.css", rel: "stylesheet"}
-  %link{href: "{{ STATIC_URL }}css/section_list.css", rel: "stylesheet"}
-  %link{href: "{{ STATIC_URL }}css/user_dashboard.css", rel: "stylesheet"}
+  %link{href: "{% static 'css/video_list.css' %}", rel: "stylesheet"}
+  %link{href: "{% static 'css/fuelux.min.css' %}", rel: "stylesheet"}
+  %link{href: "{% static 'css/section_list.css' %}", rel: "stylesheet"}
+  %link{href: "{% static 'css/user_dashboard.css' %}", rel: "stylesheet"}
 
-  %script{src: "{{ STATIC_URL }}js/bootstrap.min.js"}
-  %script{src: "{{ STATIC_URL }}js/jquery.tablesorter.js"}
-  %script{src: "{{ STATIC_URL }}js/jquery.tablesorter.widgets.js"}
-  %script{src: "{{ STATIC_URL }}js/video_list.js"}
+  %script{src: "{% static 'js/bootstrap.min.js' %}"}
+  %script{src: "{% static 'js/jquery.tablesorter.js' %}"}
+  %script{src: "{% static 'js/jquery.tablesorter.widgets.js' %}"}
+  %script{src: "{% static 'js/video_list.js' %}"}
 
 -block heading
   .videoSideBar.fuelux.hidden-sidebaractive
@@ -102,7 +104,7 @@
                 -empty
                   .empty-section-helper
                   .empty-section
-                    %img{src: "{{ STATIC_URL }}img/empty_section.png"}
+                    %img{src: "{% static 'img/empty_section.png' %}"}
 
 
 

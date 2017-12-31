@@ -1,10 +1,12 @@
+-load static
+
 %html
   %head
     %title
       =object.title
-    %script{src: "{{ STATIC_URL }}js/jquery.min.js"}
-    %script{src: "{{ STATIC_URL }}mediaelementjs/mediaelement-and-player.min.js"}
-    %link{rel: "stylesheet", href: "{{ STATIC_URL }}mediaelementjs/mediaelementplayer.min.css"}
+    %script{src: "{% static 'js/jquery.min.js' %}"}
+    %script{src: "{% static 'mediaelementjs/mediaelement-and-player.min.js' %}"}
+    %link{rel: "stylesheet", href: "{% static 'mediaelementjs/mediaelementplayer.min.css' %}"}
 
     :javascript
       $(function() {

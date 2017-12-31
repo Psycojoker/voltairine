@@ -1,10 +1,12 @@
 -extends "base.haml"
 
--block javascript
-  %script{src: "{{ STATIC_URL }}mediaelementjs/mediaelement-and-player.min.js"}
-  %link{rel: "stylesheet", href: "{{ STATIC_URL }}mediaelementjs/mediaelementplayer.min.css"}
+-load static
 
-  %script{src: "{{ STATIC_URL }}js/video_detail.js"}
+-block javascript
+  %script{src: "{% static 'mediaelementjs/mediaelement-and-player.min.js' %}"}
+  %link{rel: "stylesheet", href: "{% static 'mediaelementjs/mediaelementplayer.min.css' %}"}
+
+  %script{src: "{% static 'js/video_detail.js' %}"}
 
   :javascript
     $(function() {

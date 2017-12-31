@@ -1,11 +1,12 @@
 -extends "base.haml"
 -load section_tags
 -load mptt_tags
+-load static
 
 -block head
-  %link{href: "{{ STATIC_URL }}css/bootstrap-switch.min.css", rel: "stylesheet"}
-  %link{href: "{{ STATIC_URL }}css/fuelux.min.css", rel: "stylesheet"}
-  %link{href: "{{ STATIC_URL }}css/section_list.css", rel: "stylesheet"}
+  %link{href: "{% static 'css/bootstrap-switch.min.css' %}", rel: "stylesheet"}
+  %link{href: "{% static 'css/fuelux.min.css' %}", rel: "stylesheet"}
+  %link{href: "{% static 'css/section_list.css' %}", rel: "stylesheet"}
   :css
     .bootstrap-switch {
       border-color: #3A3D44;
@@ -116,8 +117,8 @@
 
 
 -block javascript
-  %script{src: "{{ STATIC_URL }}js/ajax_django_magic.js"}
-  %script{src: "{{ STATIC_URL }}js/bootstrap-switch.min.js"}
+  %script{src: "{% static 'js/ajax_django_magic.js' %}"}
+  %script{src: "{% static 'js/bootstrap-switch.min.js' %}"}
   :javascript
     $(function() {
       $("[name='foobar']").each(function(index, data) {

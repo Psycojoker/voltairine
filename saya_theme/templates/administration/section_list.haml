@@ -1,13 +1,14 @@
 -extends "base.haml"
 -load mptt_tags
+-load static
 
 -block head
-  %link{href: "{{ STATIC_URL }}css/fuelux.min.css", rel: "stylesheet"}
-  %link{href: "{{ STATIC_URL }}css/section_list.css", rel: "stylesheet"}
+  %link{href: "{% static 'css/fuelux.min.css' %}", rel: "stylesheet"}
+  %link{href: "{% static 'css/section_list.css' %}", rel: "stylesheet"}
 
 
 -block javascript
-  %script{src: "{{ STATIC_URL }}js/fuelux.min.js"}
+  %script{src: "{% static 'js/fuelux.min.js' %}"}
 
   :javascript
     $(".new-same-section").each(function(_, node) {

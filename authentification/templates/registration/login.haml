@@ -1,10 +1,11 @@
 -extends "registration/base.haml"
 
 -load bootstrap3
+-load static
 
 -block content
   %center
-    %img{src: "{{ STATIC_URL }}img/logo_old.png", style: "text-align: center; width: 100%", alt: "Saya-Films"}
+    %img{src: "{% static 'img/logo_old.png' %}", style: "text-align: center; width: 100%", alt: "Saya-Films"}
 
   -if form.errors
     .alert.alert-danger

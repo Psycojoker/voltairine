@@ -1,11 +1,13 @@
 -extends "bootstrap3/bootstrap3.html"
 
+-load static
+
 -block bootstrap3_title
   Saya-Films
 
 -block bootstrap3_extra_head
-  %link{href: "{{ STATIC_URL }}css/theme.bootstrap.css", rel: "stylesheet"}
-  %link{href: "{{ STATIC_URL }}css/sticky-footer.css", rel: "stylesheet"}
+  %link{href: "{% static 'css/theme.bootstrap.css' %}", rel: "stylesheet"}
+  %link{href: "{% static 'css/sticky-footer.css' %}", rel: "stylesheet"}
   -block head
 
   :css
@@ -27,7 +29,7 @@
             %span.icon-bar
             %span.icon-bar
           %a.brand.navbar-brand{href: "/", style: "padding-top: 0px; padding-left: 0px;"}
-            %img{src: "{{ STATIC_URL }}img/logo.png", style: "height: 75px", alt: "Saya-Films"}
+            %img{src: "{% static 'img/logo.png' %}", style: "height: 75px", alt: "Saya-Films"}
         %ul.nav.navbar-nav.navbar-right.hidden-xs.hidden-sm
           %li
             %a{href: "{% url 'logout' %}"}

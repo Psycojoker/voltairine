@@ -1,14 +1,15 @@
 -extends "base.haml"
 -load mptt_tags
 -load section_tags
+-load static
 
 -block javascript
-  %link{href: "{{ STATIC_URL }}css/theme.bootstrap.css", rel: "stylesheet"}
-  %link{href: "{{ STATIC_URL }}css/video_list.css", rel: "stylesheet"}
-  %script{src: "{{ STATIC_URL }}js/bootstrap.min.js"}
-  %script{src: "{{ STATIC_URL }}js/jquery.tablesorter.js"}
-  %script{src: "{{ STATIC_URL }}js/jquery.tablesorter.widgets.js"}
-  %script{src: "{{ STATIC_URL }}js/video_list.js"}
+  %link{href: "{% static 'css/theme.bootstrap.css' %}", rel: "stylesheet"}
+  %link{href: "{% static 'css/video_list.css' %}", rel: "stylesheet"}
+  %script{src: "{% static 'js/bootstrap.min.js' %}"}
+  %script{src: "{% static 'js/jquery.tablesorter.js' %}"}
+  %script{src: "{% static 'js/jquery.tablesorter.widgets.js' %}"}
+  %script{src: "{% static 'js/video_list.js' %}"}
 
 -block content
   %div{role: "tabpanel"}
