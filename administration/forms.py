@@ -31,8 +31,8 @@ class FormUser(forms.ModelForm):
     password = forms.CharField(required=False)
 
     class Meta:
-        model=User
-        fields=['username', 'is_staff', 'first_name', 'last_name', 'email']
+        model = User
+        fields = ['username', 'is_staff', 'first_name', 'last_name', 'email']
 
 
 class FormUserForGroupAdmin(forms.ModelForm):
@@ -40,5 +40,5 @@ class FormUserForGroupAdmin(forms.ModelForm):
     password = forms.CharField(required=False)
 
     class Meta:
-        model=User
-        fields=['username', 'first_name', 'last_name', 'email']
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']
