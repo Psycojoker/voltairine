@@ -73,9 +73,9 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'soya.urls'
 
-import hamlpy
+# import hamlpy
 
-hamlpy.nodes.TagNode.self_closing["recursetree"] = "endrecursetree"
+# hamlpy.nodes.TagNode.self_closing["recursetree"] = "endrecursetree"
 
 WSGI_APPLICATION = 'soya.wsgi.application'
 
