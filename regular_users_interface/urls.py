@@ -1,10 +1,10 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
-from .views import UserVideoDetail
+from .views import UserVideoDetail, dashboard
 
 
-urlpatterns = patterns('regular_users_interface.views',
-    url(r'^$', 'dashboard', name='user_dashboard'),
+urlpatterns = [
+    url(r'^$', dashboard, name='user_dashboard'),
     url(r'^(?P<pk>\d+)/$', login_required(UserVideoDetail.as_view()), name='user_video_detail'),
-)
+]

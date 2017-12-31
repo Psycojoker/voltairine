@@ -22,8 +22,6 @@ SECRET_KEY = 'vv1*=h1969h3i+p12sa6=9)f&$xc)%&d*@2eqossm&f4^0(z#c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = DEBUG
-
 DEBUG_PROPAGATE_EXCEPTIONS = False
 
 ALLOWED_HOSTS = []
@@ -69,6 +67,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django_pdb.middleware.PdbMiddleware',
 )
 
@@ -78,15 +77,7 @@ import hamlpy
 
 hamlpy.nodes.TagNode.self_closing["recursetree"] = "endrecursetree"
 
-TEMPLATE_LOADERS = (
-    'hamlpy.template.loaders.HamlPyFilesystemLoader',
-    'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
-
 WSGI_APPLICATION = 'soya.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -97,6 +88,27 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    "DIRS": [os.path.join(BASE_DIR, "templates")],
+    'OPTIONS': {
+        "debug": DEBUG,
+        'context_processors': [
+            'django.template.context_processors.debug',
+            'django.template.context_processors.request',
+            'django.contrib.auth.context_processors.auth',
+            'django.contrib.messages.context_processors.messages',
+            'django.template.context_processors.media',
+        ],
+        'loaders': (
+            'hamlpy.template.loaders.HamlPyFilesystemLoader',
+            'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
+            'django.template.loaders.filesystem.Loader',
+            'django.template.loaders.app_directories.Loader',
+        ),
+    }
+}]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/

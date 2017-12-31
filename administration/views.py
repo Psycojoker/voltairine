@@ -65,7 +65,7 @@ class CreateUser(CreateView):
     template_name = 'administration/user_update_form.haml'
     fields = ['username', 'password', 'is_staff', 'first_name', 'last_name', 'email']
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=None):
         # don't have to check if the user is an admin, the decorator in the
         # urls.py have already do that
         if not self.request.user.is_staff:
