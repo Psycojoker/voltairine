@@ -63,7 +63,7 @@ class DetailUser(DetailView):
 class CreateUser(CreateView):
     model = User
     template_name = 'administration/user_update_form.haml'
-    fields = ['username', 'password', 'is_staff', 'first_name', 'last_name', 'email']
+    form_class = FormUser
 
     def get_form(self, form_class=None):
         # don't have to check if the user is an admin, the decorator in the

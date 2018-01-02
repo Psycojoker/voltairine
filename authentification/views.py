@@ -22,6 +22,7 @@ def logout(request):
     return HttpResponseRedirect("/")
 
 
+# XXX this is not used anymore
 def forgotten_password(request):
     if request.method == 'GET':
         return render(request, 'registration/forgotten_password.haml', {"form": ForgottenPasswordForm()})
