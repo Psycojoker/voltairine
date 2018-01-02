@@ -26,14 +26,14 @@ from .utils import user_can_see_administration_interface, user_is_staff
 def user_and_groups(request):
     if request.user.is_staff:
         return render(request, "administration/user_list.haml", {
-            "user_list": User.objects.all(),
-            "group_list": Group.objects.all(),
+            "user_list": User.objects.all().order_by("email", "first_name", "last_name", "username"),
+            "group_list": Group.objects.all().order_by("name"),
         })
 
     elif request.user.group_is_admin_set.exists():
         return render(request, "administration/user_list.haml", {
-            "user_list": request.user.users_can_administrate(),
-            "group_list": request.user.groups_managed_by_user(),
+            "user_list": request.user.users_can_administrate().order_by("email", "first_name", "last_name", "username"),
+            "group_list": request.user.groups_managed_by_user().order_by("name"),
         })
 
     else:
