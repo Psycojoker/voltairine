@@ -116,5 +116,16 @@ odd          : ''  // odd row zebra striping
         checked = event.currentTarget.checked;
         $(".delete-checkbox").each(function(index, checkbox) {  checkbox.checked = checked })
         $(".delete-all-checkbox").each(function(index, checkbox) {  checkbox.checked = checked })
+    });
+
+    $(".delete-checkbox").click(function() {
+        var checked_values = $.map($.makeArray($(".delete-checkbox")), function(checkbox) { return checkbox.checked });
+
+        // if one checkbox is not checked
+        if (checked_values.indexOf(false) != -1) {
+            $(".delete-all-checkbox").each(function(index, checkbox) {  checkbox.checked = false })
+        } else {
+            $(".delete-all-checkbox").each(function(index, checkbox) {  checkbox.checked = true })
+        }
     })
 });
