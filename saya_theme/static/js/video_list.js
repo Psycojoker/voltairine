@@ -25,6 +25,7 @@ odd          : ''  // odd row zebra striping
         theme: "bootstrap",
         widthFixed: false,
         headerTemplate : '{content} {icon}',
+        headers: {0: {sorter: false, filter: false, parser: false}},
         widgets : [ "uitheme", "filter", "zebra" ],
 
         widgetOptions : {

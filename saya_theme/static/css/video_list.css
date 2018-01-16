@@ -57,3 +57,7 @@ a.caret-toggle:hover {
 .subsection-level-7 {
     padding-left: 100px;
 }
+
+.tablesorter-filter.disabled {
+    display: none;
+}

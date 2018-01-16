@@ -72,6 +72,8 @@
           %thead
             %tr
               %th
+                %input.delete-all-checkbox{type: "checkbox"}
+              %th
                 Nom
               %th.filter-select.filter-select-nosort{data-placeholder: "Choisissez une section"}
                 Section
@@ -86,6 +88,8 @@
 
           %tfoot
             %tr
+              %th
+                %input.delete-all-checkbox{type: "checkbox"}
               %th
                 Nom
               %th
@@ -102,6 +106,8 @@
           %tbody
             -for video in video_list
               %tr
+                %td
+                  %input.delete-checkbox{type: "checkbox"}
                 %td
                   %a{href: "{% url 'administration_video_detail' video.pk %}"}
                     %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
