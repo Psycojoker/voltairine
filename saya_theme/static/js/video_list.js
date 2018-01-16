@@ -111,4 +111,10 @@ odd          : ''  // odd row zebra striping
     })
 
     $("#closeAll").click();
+
+    $(".delete-all-checkbox").click(function(event) {
+        checked = event.currentTarget.checked;
+        $(".delete-checkbox").each(function(index, checkbox) {  checkbox.checked = checked })
+        $(".delete-all-checkbox").each(function(index, checkbox) {  checkbox.checked = checked })
+    })
 });
