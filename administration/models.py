@@ -34,7 +34,18 @@ def videos_can_administrate(self):
     return Video.objects.filter(videosection__section__in=map(lambda x: x.pk, self.sections_can_administrate()))
 
 
+def all_groups(self):
+    for i in self.group_is_admin_set.all():
+        i.is_admin = True
+        yield i
+
+    for i in self.group_is_member_set.all():
+        i.is_admin = False
+        yield i
+
+
 User.users_can_administrate = users_can_administrate
 User.groups_managed_by_user = lambda self: self.group_is_admin_set.all()
 User.sections_can_administrate = sections_can_administrate
 User.videos_can_administrate = videos_can_administrate
+User.all_groups = all_groups

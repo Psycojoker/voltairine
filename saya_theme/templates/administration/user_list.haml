@@ -22,6 +22,19 @@
             -if user.is_staff
               \- administrateur
               </b>
+            -for group in user.all_groups
+              -if forloop.first
+                \- groupes :
+                <span class="group-list">
+              -if group.is_admin
+                <b>
+              =group.name
+              -if group.is_admin
+                </b>
+              -if not forloop.last
+                , 
+              -if forloop.last
+                </span>
 
       %a.btn.btn-lg.btn-primary{href: "{% url 'administration_user_create' %}"}
         Rajouter un nouvel utilisateur
