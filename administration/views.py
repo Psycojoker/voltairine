@@ -458,3 +458,26 @@ class DeleteVideo(DeleteView):
         result =  super(DeleteVideo, self).delete(*args, **kwargs)
 
         return result
+
+
+@user_can_see_administration_interface
+@require_POST
+def video_list_delete(request):
+    video_list = request.POST["video"]
+
+    videos_can_administrate = request.user.videos_can_administrate()
+
+    for video_id in video_list:
+        video = Video.objects.filter(pk=video_id).first()
+
+        # skip because I can't see why it could happen and breaking the page
+        # for that it bad for the user
+        if video is None:
+            continue
+
+        if not request.user.is_staff and video not in videos_can_administrate:
+            raise PermissionDenied()
+
+        video.delete()
+
+    return HttpResponseRedirect(reverse("administration_video_list"))

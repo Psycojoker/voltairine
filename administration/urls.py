@@ -5,7 +5,8 @@ from .views import (UpdateUser, CreateUser, CreateSection, DetailUser,
                     UpdateGroup, DeleteGroup, DetailGroup, ListSection,
                     dashboard, user_and_groups, delete_section_and_childrens,
                     change_user_section_permission,
-                    change_group_section_permission, video_list, video_detail)
+                    change_group_section_permission, video_list, video_detail,
+                    video_list_delete)
 from .utils import user_can_see_administration_interface, user_is_staff
 
 
@@ -33,6 +34,7 @@ urlpatterns = [
     url(r'^video/$', video_list, name='administration_video_list'),
     url(r'^video/(?P<pk>\d+)/$', video_detail, name='administration_video_detail'),
     url(r'^video/(?P<pk>\d+)/delete/$', user_can_see_administration_interface(DeleteVideo.as_view()), name='administration_video_delete'),
+    url(r'^video/list-delete/$', video_list_delete, name='administration_video_list_delete'),
 
     url(r'^', include('upload_video.urls')),
 ]

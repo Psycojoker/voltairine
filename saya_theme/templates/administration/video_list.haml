@@ -68,86 +68,89 @@
 
 
       #videosTable.tab-pane{role: "tabpanel"}
-        %table.tablesorter
-          %thead
-            %tr
-              %th
-                %input.delete-all-checkbox{type: "checkbox"}
-              %th
-                Nom
-              %th.filter-select.filter-select-nosort{data-placeholder: "Choisissez une section"}
-                Section
-              %th.hidden-xs
-                Durée
-              %th.hidden-sm.hidden-xs
-                Résolution
-              %th.hidden-sm.hidden-xs
-                taille
-              %th.hidden-sm.hidden-xs
-                Fps
-
-          %tfoot
-            %tr
-              %th
-                %input.delete-all-checkbox{type: "checkbox"}
-              %th
-                Nom
-              %th
-                Section
-              %th.hidden-xs
-                Durée
-              %th.hidden-sm.hidden-xs
-                Résolution
-              %th.hidden-sm.hidden-xs
-                taille
-              %th.hidden-sm.hidden-xs
-                Fps
-
-          %tbody
-            -for video in video_list
+        %form{method: "POST", action: "{% url 'administration_video_list_delete' %}"}
+          %input.btn-lg.btn-danger.pull-right{type: "submit", value: "Supprimer"}
+          -csrf_token
+          %table.tablesorter
+            %thead
               %tr
-                %td
-                  %input.delete-checkbox{type: "checkbox"}
-                %td
-                  %a{href: "{% url 'administration_video_detail' video.pk %}"}
-                    %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
-                  %a{href: "{% url 'administration_video_detail' video.pk %}"}
-                    =video.title
-                  %br
-                  %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
-                    Télécharger
-                %td
-                %td.hidden-xs
-                  =video.duration
-                %td.hidden-sm.hidden-xs
-                  =video.width_x_height
-                %td.hidden-sm.hidden-xs
-                  =video.file_size
-                %td.hidden-sm.hidden-xs
-                  =video.fps|floatformat|cut:",0"
-                  fps
-            -for section_list in top_section_list
-              -for section, structure in section_list|tree_info
-                -for videosection in section.videosection_set.all
-                  -with video=videosection.video
-                    %tr
-                      %td
-                        %a{href: "{% url 'administration_video_detail' video.pk %}"}
-                          %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
-                        %a{href: "{% url 'administration_video_detail' video.pk %}"}
-                          =video.title
-                        %br
-                        %a.btn.btn-sm{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
-                          Télécharger
-                      %td
-                        =section.display_level_indicator
-                        =section.title
-                      %td.hidden-xs
-                        =video.duration
-                      %td.hidden-sm.hidden-xs
-                        =video.width_x_height
-                      %td.hidden-sm.hidden-xs
-                        =video.file_size
-                      %td.hidden-sm.hidden-xs
-                        =video.fps|floatformat|cut:",0"
-                        fps
+                %th
+                  %input.delete-all-checkbox{type: "checkbox"}
+                %th
+                  Nom
+                %th.filter-select.filter-select-nosort{data-placeholder: "Choisissez une section"}
+                  Section
+                %th.hidden-xs
+                  Durée
+                %th.hidden-sm.hidden-xs
+                  Résolution
+                %th.hidden-sm.hidden-xs
+                  taille
+                %th.hidden-sm.hidden-xs
+                  Fps
+
+            %tfoot
+              %tr
+                %th
+                  %input.delete-all-checkbox{type: "checkbox"}
+                %th
+                  Nom
+                %th
+                  Section
+                %th.hidden-xs
+                  Durée
+                %th.hidden-sm.hidden-xs
+                  Résolution
+                %th.hidden-sm.hidden-xs
+                  taille
+                %th.hidden-sm.hidden-xs
+                  Fps
+
+            %tbody
+              -for video in video_list
+                %tr
+                  %td
+                    %input.delete-checkbox{type: "checkbox", name: "video", value: "{{ video.pk }}"}
+                  %td
+                    %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                      %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
+                    %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                      =video.title
+                    %br
+                    %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                      Télécharger
+                  %td
+                  %td.hidden-xs
+                    =video.duration
+                  %td.hidden-sm.hidden-xs
+                    =video.width_x_height
+                  %td.hidden-sm.hidden-xs
+                    =video.file_size
+                  %td.hidden-sm.hidden-xs
+                    =video.fps|floatformat|cut:",0"
+                    fps
+              -for section_list in top_section_list
+                -for section, structure in section_list|tree_info
+                  -for videosection in section.videosection_set.all
+                    -with video=videosection.video
+                      %tr
+                        %td
+                          %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                            %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
+                          %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                            =video.title
+                          %br
+                          %a.btn.btn-sm{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                            Télécharger
+                        %td
+                          =section.display_level_indicator
+                          =section.title
+                        %td.hidden-xs
+                          =video.duration
+                        %td.hidden-sm.hidden-xs
+                          =video.width_x_height
+                        %td.hidden-sm.hidden-xs
+                          =video.file_size
+                        %td.hidden-sm.hidden-xs
+                          =video.fps|floatformat|cut:",0"
+                          fps
