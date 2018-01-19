@@ -112,12 +112,13 @@
                   %td
                     %input.delete-checkbox{type: "checkbox", name: "video", value: "{{ video.pk }}"}
                   %td
-                    %a{href: "{% url 'administration_video_detail' video.pk %}"}
-                      %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
+                    -#
+                      %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                        %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
                     %a{href: "{% url 'administration_video_detail' video.pk %}"}
                       =video.title
-                    %br
-                    %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                    -# %br
+                    %a.pull-right.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
                       Télécharger
                   %td
                   %td.hidden-xs
