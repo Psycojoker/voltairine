@@ -45,7 +45,7 @@
 
               .form-group
                 %input#id_file_name-path{type: "hidden", name: "file_name-path", value: "None"}
-                %input#id_file_name{type: "file", name: "file_name", title: "", data-upload-url: "/administration/upload/", multiple: "multiple"}
+                %input#id_file_name{type: "file", accept: ".mp4", name: "file_name", title: "", data-upload-url: "/administration/upload/", multiple: "multiple"}
 
             %div{ng-if: 'upload.state == "empty"'}
               %div{data-toggle: "tooltip", data-placement: "left", title: "Choisissez un fichier à uploader"}
