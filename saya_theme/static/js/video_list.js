@@ -117,6 +117,7 @@ odd          : ''  // odd row zebra striping
         checked = event.currentTarget.checked;
         $(".delete-checkbox").each(function(index, checkbox) {  checkbox.checked = checked })
         $(".delete-all-checkbox").each(function(index, checkbox) {  checkbox.checked = checked })
+        $("#delete-videos-button").attr("disabled", checked ? false : "disabled");
     });
 
     $(".delete-checkbox").click(function() {
@@ -127,6 +128,13 @@ odd          : ''  // odd row zebra striping
             $(".delete-all-checkbox").each(function(index, checkbox) {  checkbox.checked = false })
         } else {
             $(".delete-all-checkbox").each(function(index, checkbox) {  checkbox.checked = true })
+        }
+
+        // if one checkbox IS checked
+        if (checked_values.indexOf(true) != -1) {
+            $("#delete-videos-button").attr("disabled", null);
+        } else {
+            $("#delete-videos-button").attr("disabled", "disabled");
         }
     })
 
