@@ -68,7 +68,7 @@
 
 
       #videosTable.tab-pane{role: "tabpanel"}
-        %form{method: "POST", action: "{% url 'administration_video_list_delete' %}"}
+        %form#delete-videos{method: "POST", action: "{% url 'administration_video_list_delete' %}"}
           %input.btn-lg.btn-danger.pull-right{type: "submit", value: "Supprimer"}
           -csrf_token
           %table.tablesorter

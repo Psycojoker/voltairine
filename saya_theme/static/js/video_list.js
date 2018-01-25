@@ -129,4 +129,12 @@ odd          : ''  // odd row zebra striping
             $(".delete-all-checkbox").each(function(index, checkbox) {  checkbox.checked = true })
         }
     })
+
+    $("#delete-videos").submit(function(event) {
+        if (confirm("Voulez vous vraiment Supprimer ces vidéos ?")) {
+            // do nothing
+        } else {
+            event.preventDefault();
+        }
+    })
 });
