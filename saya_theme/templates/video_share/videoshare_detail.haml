@@ -1,4 +1,4 @@
--extends "base.haml"
+-extends "regular_users_interface/base.haml"
 
 -load static
 
@@ -23,112 +23,40 @@
     })
 
 -block content
-  .well{ng-app: "soya", ng-controller: "editVideoDetailsController", style: "padding: 0; border: 0px"}
+  .well{style: "padding: 0; border: 0px"}
     .player
       %video{src: "{{ MEDIA_URL }}videos/{{ object.video.file_name }}", width: "100%", height: "100%", style: "width: 100%; height: 41vw"}
 
-    %div{ng-init: 'title="{{ object.video.title|default:"" }}"'}
-    %div{ng-init: 'film_name="{{ object.video.film_name|default:"" }}"'}
-    %div{ng-init: 'realisation="{{ object.video.realisation|default:"" }}"'}
-    %div{ng-init: 'production="{{ object.video.production|default:"" }}"'}
-    %div{ng-init: 'photo_direction="{{ object.video.photo_direction|default:"" }}"'}
-    %div{ng-init: 'lto_archive_number="{{ object.video.lto_archive_number|default:"" }}"'}
-    %div{ng-init: 'observations="{{ object.video.observations|default:"" }}"'}
-    %div{ng-init: 'section="{{ object.video.videosection|default:"" }}"'}
-    %div{ng-init: 'section_id="{{ object.video.videosection.section.id|default:"" }}"'}
     %div{style: "padding: 20px;"}
-      %div{ng-if: "inEditMode == false"}
-        %h2{style: "margin-top: 0px"}
-          {& title &}
+      %h2{style: "margin-top: 0px"}
+        {{ object.video.title|default:"" }}
 
-        %hr
+      %hr
 
-        .row
-          .col-md-6
-            %p
-              %b Nom du film :
-              {& film_name &}
-            %p
-              %b Realisation :
-              {& realisation &}
-
-          .col-md-6
-            %p
-              %b Production :
-              {& production &}
-            %p
-              %b Direction photo :
-              {& photo_direction &}
-
-        %p
-          %b Numéro d'archive LTO :
-          {& lto_archive_number &}
-
-        %p
-          %i {& observations &}
-
-        %p
-          %b Section :
-          {& section &}
-
-        %button.btn.btn-primary{ng-click: "toggleEditMode()"}
-          Éditer
-
-
-      %div{ng-if: "inEditMode == true"}
-        %form{ng-submit: "toggleEditMode()"}
-          -csrf_token
-          .col-md-10{style: "padding-left: 0px; margin-bottom: 36px"}
-            .input-group
-              %span.input-group-addon Titre :
-              %input#id_title.form-control{type: "text", ng-model: "title"}
-
-          %a.btn.btn-small.btn-info.pull-right{href: "{{ MEDIA_URL }}videos/{{ object.video.file_name }}"} Télécharger
-
-          .row
-            .col-md-6
-              %p
-                .input-group
-                  %span.input-group-addon Nom du film :
-                  %input#id_film_name.form-control{type: "text", ng-model: "film_name"}
-
-              %p
-                .input-group
-                  %span.input-group-addon Réalisation :
-                  %input#id_realisation.form-control{type: "text", ng-model: "realisation"}
-
-            .col-md-6
-              %p
-                .input-group
-                  %span.input-group-addon Production :
-                  %input#id_production.form-control{type: "text", ng-model: "production"}
-
-              %p
-                .input-group
-                  %span.input-group-addon Direction photo :
-                  %input#id_photo_direction.form-control{type: "text", ng-model: "photo_direction"}
-
+      .row
+        .col-md-6
           %p
-            .input-group
-              %span.input-group-addon Numéro d'archive LTO :
-              %input#id_lto_archive_number.form-control{type: "text", ng-model: "lto_archive_number"}
-
-          .form-group
-            %label{for: "id_observations"}
-              Obersations :
-            %textarea#id_observations.form-control{type: "text", ng-model: "observations"}
-          .form-group
-            %label.control-label{for: "id_section"}
-              Section
-            %select#id_section.form-control{name: "section", title: "", ng-model: "section_id"}
-              -if user.is_staff
-                %option{value: "", selected: "selected"}
-                  \---------
-              -for id, section in form.section.field.choices
-                %option{value: "{{ id }}"}
-                  =section
-
-
+            %b Nom du film :
+            {{ object.video.film_name|default:"" }}
           %p
-            %button.btn.btn-primary{ng-click: "toggleEditMode()"}
-              Sauver
+            %b Realisation :
+            {{ object.video.realisation|default:"" }}
+
+        .col-md-6
+          %p
+            %b Production :
+            {{ object.video.production|default:"" }}
+          %p
+            %b Direction photo :
+            {{ object.video.photo_direction|default:"" }}
+
+      %p
+        %b Numéro d'archive LTO :
+        {{ object.video.lto_archive_number|default:"" }}
+
+      %p
+        %i {{ object.video.observations|default:"" }}
+
+      %p
+        %b Section :
+        {{ object.video.videosection|default:"" }}
