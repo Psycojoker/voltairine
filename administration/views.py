@@ -1,4 +1,6 @@
 import os
+import random
+import string
 
 from django import forms
 from django.db import transaction
@@ -15,6 +17,7 @@ from django.forms.models import modelform_factory
 from sections.models import Section, Permission, VideoSection
 from video.models import Video
 from permissions_groups.models import Group
+from video_share.models import VideoShare
 
 from sections.utils import unfold_tree
 
@@ -433,6 +436,23 @@ def video_detail(request, pk):
         "object": video,
         "form": form,
     })
+
+
+@user_can_see_administration_interface
+@require_POST
+def video_share(request, pk):
+    video = get_object_or_404(Video, pk=pk)
+
+    if not request.user.is_staff and video not in request.user.videos_can_administrate():
+        raise PermissionDenied()
+
+    video_share = VideoShare.objects.create(
+        pk="".join([random.SystemRandom().choice(string.ascii_letters + string.digits) for x in range(20)]),
+        video=video,
+        user=request.user,
+    )
+
+    return HttpResponseRedirect(reverse('video_share_detail', args=(video_share.pk,)))
 
 
 class DeleteVideo(DeleteView):

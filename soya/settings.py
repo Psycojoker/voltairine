@@ -57,6 +57,7 @@ INSTALLED_APPS = (
     'sections',
     'upload_video',
     'video',
+    'video_share',
 ) + INSTALLED_APPS_LOCAL
 
 MIDDLEWARE_CLASSES = (
