@@ -30,15 +30,17 @@
             %span.icon-bar
           %a.brand.navbar-brand{href: "/", style: "padding-top: 0px; padding-left: 0px;"}
             %img{src: "{% static 'img/logo.png' %}", style: "height: 75px", alt: "Saya-Films"}
-        %ul.nav.navbar-nav.navbar-right.hidden-xs.hidden-sm
-          %li
-            %a{href: "{% url 'logout' %}"}
-              Déconnexion
-        #toCollapse.collapse.navbar-collapse
-          %ul.nav.navbar-nav.hidden-md.hidden-lg
+        -if not hide_logout
+          %ul.nav.navbar-nav.navbar-right.hidden-xs.hidden-sm
             %li
               %a{href: "{% url 'logout' %}"}
+                <b>caca: {{ hide_logout }}</b>
                 Déconnexion
+          #toCollapse.collapse.navbar-collapse
+            %ul.nav.navbar-nav.hidden-md.hidden-lg
+              %li
+                %a{href: "{% url 'logout' %}"}
+                  Déconnexion
 
   .container
     -block content
