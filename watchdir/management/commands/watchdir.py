@@ -55,9 +55,9 @@ class Command(BaseCommand):
         return sections_map
 
     def parse_all_videos(self, videos, sections_map):
-        def handle_dir(_, dirname, names):
-            for name in names:
-                file_path = os.path.join(dirname, name)
+        for path in sections_map.keys():
+            for name in os.listdir(path):
+                file_path = os.path.join(path, name)
 
                 if not os.path.isfile(file_path) or not file_path.lower().endswith(".mp4"):
                     continue
@@ -66,13 +66,11 @@ class Command(BaseCommand):
 
                 videos[file_path] = {
                     "name": name,
-                    "section": sections_map[dirname],
+                    "section": sections_map[path],
                     "last_modification_time": time.time() - os.path.getmtime(file_path),
                     "send_notification": False,  # TODO Vantage
                 }
 
-        # TODO parse sections_map instead
-        os.path.walk(self.base_path, handle_dir, None)
         return videos
 
     def handle_videos(self, videos):
