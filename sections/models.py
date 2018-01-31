@@ -39,6 +39,7 @@ class Section(MPTTModel):
 
     title = models.CharField(max_length=255)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+    notification_email = models.EmailField(null=True, blank=True)
 
     def __unicode__(self):
         return self.title
