@@ -8,6 +8,7 @@ from django.conf import settings
 
 from sections.models import Section, VideoSection
 from video.models import Video
+from upload_video.utils import ensure_file_name_is_unique, clean_file_name
 
 
 class Command(BaseCommand):
@@ -78,15 +79,18 @@ class Command(BaseCommand):
             if informations["last_modification_time"] < 4:
                 continue
 
-            # TODO unique filename, clean filename (see upload_video/views.py#56)
-            file_name = informations["name"]
             section = informations["section"]
+            destination = os.path.join(settings.MEDIA_ROOT, "videos")
+            file_name = informations["name"]
 
-            print "Detecting new video '%s', loading it into saya into the section '%s'" % (video_path, section)
+            file_name = clean_file_name(file_name)
+            file_name = ensure_file_name_is_unique(destination, file_name)
+
+            print "Detecting new video '%s', loading it into saya into the section '%s' as '%s'" % (video_path, section, file_name)
 
             shutil.move(
                 src=video_path,
-                dst=os.path.join(settings.MEDIA_ROOT, "videos", file_name)
+                dst=os.path.join(destination, file_name),
             )
 
             video = Video.objects.create(
