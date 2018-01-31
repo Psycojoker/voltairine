@@ -1,10 +1,13 @@
 import os
 import sys
 import time
+import shutil
 
 from django.core.management.base import BaseCommand
+from django.conf import settings
 
-from sections.models import Section
+from sections.models import Section, VideoSection
+from video.models import Video
 
 
 class Command(BaseCommand):
@@ -15,14 +18,16 @@ class Command(BaseCommand):
         if not os.path.exists(self.base_path):
             os.makedirs(self.base_path)
 
-        videos = {}
-        sections_map = {}
-
         try:
             while True:
+                videos = {}
+                sections_map = {}
+
                 sections_map = self.update_directories_hierarchy()
 
                 videos = self.parse_all_videos(videos, sections_map)
+
+                self.handle_videos(videos)
                 time.sleep(3)
 
         except KeyboardInterrupt:
@@ -54,7 +59,7 @@ class Command(BaseCommand):
             for name in names:
                 file_path = os.path.join(dirname, name)
 
-                if not os.path.isfile(file_path) or not file_path.endswith(".mp4"):
+                if not os.path.isfile(file_path) or not file_path.lower().endswith(".mp4"):
                     continue
 
                 # TODO partage/Vantage
@@ -66,5 +71,32 @@ class Command(BaseCommand):
                     "send_notification": False,  # TODO Vantage
                 }
 
+        # TODO parse sections_map instead
         os.path.walk(self.base_path, handle_dir, None)
         return videos
+
+    def handle_videos(self, videos):
+        for video_path, informations in videos.items():
+            if informations["last_modification_time"] < 4:
+                continue
+
+            # TODO unique filename, clean filename (see upload_video/views.py#56)
+            file_name = informations["name"]
+            section = informations["section"]
+
+            print "Detecting new video '%s', loading it into saya into the section '%s'" % (video_path, section)
+
+            shutil.move(
+                src=video_path,
+                dst=os.path.join(settings.MEDIA_ROOT, "videos", file_name)
+            )
+
+            video = Video.objects.create(
+                title=informations["name"][:-len(".mp4")],
+                file_name=file_name,
+            )
+
+            VideoSection.objects.create(
+                video=video,
+                section=section,
+            )
