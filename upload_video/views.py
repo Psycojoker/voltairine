@@ -5,14 +5,13 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponse
-from django.template.defaultfilters import slugify
 
 from administration.utils import user_can_see_administration_interface
 
 from sections.models import VideoSection, Section
 from video.models import Video
 
-from .utils import generate_random_string
+from .utils import ensure_file_name_is_unique, clean_file_name
 from .forms import ResumableForm
 
 
@@ -54,22 +53,8 @@ def upload_video(request):
     file_name = os.path.split(full_path_file_name)[1]
 
     # remove anything special from file name, avoid strange bugs
-    if "." in file_name:
-        file_name = slugify(".".join(file_name.split(".")[:-1])) + "." + file_name.split(".")[-1]
-    else:  # strange, no extension situation
-        file_name = slugify(file_name)
-
-    # ensure file_name is uniq
-    # not the best strategy, but good enough
-    # shouldn't loop more than 1 time, maybe 2-3 in the worst situation
-    while os.path.exists(os.path.join(destination, file_name)):
-        file_name = file_name.split(".")
-        assert len(file_name) > 0
-        if len(file_name) > 1:
-            file_name.insert(-1, generate_random_string(10))
-            file_name = ".".join(file_name)
-        else:
-            file_name = "%s_%s" % (file_name[0], generate_random_string(10))
+    file_name = clean_file_name(file_name)
+    file_name = ensure_file_name_is_unique(destination, file_name)
 
     shutil.move(full_path_file_name, os.path.join(destination, file_name))
 
