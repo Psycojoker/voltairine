@@ -61,6 +61,9 @@ INSTALLED_APPS = (
     'watchdir',
 ) + INSTALLED_APPS_LOCAL
 
+# for django debug toolbar
+INTERNAL_IPS = ['127.0.0.1']
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
