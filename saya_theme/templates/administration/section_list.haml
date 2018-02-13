@@ -122,7 +122,7 @@
                 %a.section-button.section-email.glyphicon.glyphicon-envelope{href: "#"}
               %form.section-email-form.form-inline{method: "POST", action: "{% url 'administration_section_notification_email' section.pk %}", style: "display: none"}
                 -csrf_token
-                %input.input-sm{type: "email", value: "{{ section.notification_email }}", name: "notification_email"}
+                %input.input-sm{type: "email", value: "{{ section.notification_email|default:\"\" }}", name: "notification_email"}
                 %button.btn.btn-default.btn-sm{type: "submit"}
                   Ajouter
                 %a.cancel.btn.btn-sm.btn-primary{href: "#"} Annuler
