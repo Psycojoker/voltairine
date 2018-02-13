@@ -120,10 +120,9 @@
                 %a.section-button.section-email.glyphicon.glyphicon-envelope{href: "#", style: "color: #016C99"}
               -else
                 %a.section-button.section-email.glyphicon.glyphicon-envelope{href: "#"}
-              %form.section-email-form.form-inline{method: "POST", action: "", style: "display: none"}
+              %form.section-email-form.form-inline{method: "POST", action: "{% url 'administration_section_notification_email' section.pk %}", style: "display: none"}
                 -csrf_token
-                %input{type: "text", style: "display: none;", value: '{{ section.id }}', name: "parent"}
-                %input.input-sm{type: "text", value: "", name: "title"}
+                %input.input-sm{type: "email", value: "{{ section.notification_email }}", name: "notification_email"}
                 %button.btn.btn-default.btn-sm{type: "submit"}
                   Ajouter
                 %a.cancel.btn.btn-sm.btn-primary{href: "#"} Annuler

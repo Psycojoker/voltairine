@@ -6,7 +6,7 @@ from .views import (UpdateUser, CreateUser, CreateSection, DetailUser,
                     dashboard, user_and_groups, delete_section_and_childrens,
                     change_user_section_permission,
                     change_group_section_permission, video_list, video_detail,
-                    video_list_delete, video_share)
+                    video_list_delete, video_share, change_section_email)
 from .utils import user_can_see_administration_interface, user_is_staff
 
 
@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^section/new/$', user_can_see_administration_interface(CreateSection.as_view()), name='administration_section_create'),
     url(r'^section/(?P<pk>\d+)/update/$', user_can_see_administration_interface(UpdateSection.as_view()), name='administration_section_update'),
     url(r'^section/(?P<pk>\d+)/delete/$', delete_section_and_childrens, name='administration_section_delete'),
+    url(r'^section/(?P<pk>\d+)/email/$', change_section_email, name='administration_section_notification_email'),
 
     url(r'^change_user_section_permission/$', change_user_section_permission, name='administration_change_user_section_permission'),
     url(r'^change_group_section_permission/$', change_group_section_permission, name='administration_change_group_section_permission'),

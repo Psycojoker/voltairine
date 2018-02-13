@@ -52,3 +52,7 @@ class FormUserForGroupAdmin(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email']
+
+
+class SectionNotificationEmailForm(forms.Form):
+    notification_email = forms.EmailField(required=False)

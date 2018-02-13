@@ -21,7 +21,7 @@ from video_share.models import VideoShare
 
 from sections.utils import unfold_tree
 
-from .forms import UserPermissionForm, GroupPermissionForm, VideoForm, FormUser, FormUserForGroupAdmin
+from .forms import UserPermissionForm, GroupPermissionForm, VideoForm, FormUser, FormUserForGroupAdmin, SectionNotificationEmailForm
 from .utils import user_can_see_administration_interface, user_is_staff
 
 
@@ -283,6 +283,27 @@ def delete_section_and_childrens(request, pk):
 @user_can_see_administration_interface
 def dashboard(request):
     return render(request, "administration/dashboard.haml")
+
+
+@user_can_see_administration_interface
+@require_POST
+def change_section_email(request, pk):
+    section = get_object_or_404(Section, pk=pk)
+
+    if not request.user.is_staff and section not in request.user.sections_can_administrate():
+        raise PermissionDenied()
+
+    form = SectionNotificationEmailForm(request.POST)
+
+    if not form.is_valid():
+        # sucks for debugging
+        print form.errors
+        raise PermissionDenied()
+
+    section.notification_email = form.cleaned_data["notification_email"]
+    section.save()
+
+    return HttpResponseRedirect((reverse('administration_section_list')))
 
 
 @user_is_staff
