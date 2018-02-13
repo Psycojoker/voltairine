@@ -24,7 +24,9 @@
       $(".edit-form").hide();
       $(".remove-form").hide();
       $(".hidden-add").hide();
+      $(".section-email-form").hide();
       $(".section").show();
+      $(".section-email").show();
     }
 
     $(".edit").click(function(node) {
@@ -43,6 +45,16 @@
       var parent = $($(node.target).parents(".tree-branch-header")[0]);
       parent.find(".section").hide();
       parent.find(".remove-form").show();
+    })
+
+    $(".section-email").click(function(node) {
+      // reset previous hidden edit form
+      reset();
+
+      var form = $($(node.target).next());
+      // parent..hide();
+      $(node.target).hide();
+      form.show();
     })
 
     $(".cancel").click(reset);
@@ -104,9 +116,17 @@
               %a.section-button.add.glyphicon.glyphicon-plus{href: "#"}
               %a.section-button.edit.glyphicon.glyphicon-pencil{href: "#"}
               %a.section-button.remove.glyphicon.glyphicon-remove{href: "#"}
-              -#
-                %span.glyphicon.glyphicon-arrow-up
-                %span.glyphicon.glyphicon-arrow-down
+              -if section.notification_email
+                %a.section-button.section-email.glyphicon.glyphicon-envelope{href: "#", style: "color: #016C99"}
+              -else
+                %a.section-button.section-email.glyphicon.glyphicon-envelope{href: "#"}
+              %form.section-email-form.form-inline{method: "POST", action: "", style: "display: none"}
+                -csrf_token
+                %input{type: "text", style: "display: none;", value: '{{ section.id }}', name: "parent"}
+                %input.input-sm{type: "text", value: "", name: "title"}
+                %button.btn.btn-default.btn-sm{type: "submit"}
+                  Ajouter
+                %a.cancel.btn.btn-sm.btn-primary{href: "#"} Annuler
           %ul.tree-branch-children.hidden-add{style: "display: none"}
             %li.tree-branch
               %form.form-inline{method: "POST", action: "{% url 'administration_section_create' %}"}
