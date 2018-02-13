@@ -1,10 +1,15 @@
+# encoding: utf-8
+
 import os
 import sys
 import time
 import shutil
 
 from django.core.management.base import BaseCommand
+from django.core.mail import send_mail
 from django.conf import settings
+from django.template import Template, Context
+from django.db import transaction
 
 from sections.models import Section, VideoSection
 from video.models import Video
@@ -63,13 +68,11 @@ class Command(BaseCommand):
                 if not os.path.isfile(file_path) or not file_path.lower().endswith(".mp4"):
                     continue
 
-                # TODO partage/Vantage
-
                 videos[file_path] = {
                     "name": name,
                     "section": sections_map[path],
                     "last_modification_time": time.time() - os.path.getmtime(file_path),
-                    "send_notification": False,  # TODO Vantage
+                    "send_notification": False,
                 }
 
         return videos
@@ -88,17 +91,52 @@ class Command(BaseCommand):
 
             print "Detecting new video '%s', loading it into saya into the section '%s' as '%s'" % (video_path, section, file_name)
 
-            shutil.move(
-                src=video_path,
-                dst=os.path.join(destination, file_name),
-            )
+            try:
+                with transaction.atomic():
+                    video = Video.objects.create(
+                        title=informations["name"][:-len(".mp4")],
+                        file_name=file_name,
+                    )
 
-            video = Video.objects.create(
-                title=informations["name"][:-len(".mp4")],
-                file_name=file_name,
-            )
+                    VideoSection.objects.create(
+                        video=video,
+                        section=section,
+                    )
 
-            VideoSection.objects.create(
-                video=video,
-                section=section,
-            )
+                    shutil.move(
+                        src=video_path,
+                        dst=os.path.join(destination, file_name),
+                    )
+            except Exception as e:
+                import traceback
+                traceback.print_exc()
+                print e
+                print "Failed to upload video '%s'" % video_path
+                continue
+
+            if section.notification_email:
+                try:
+                    self.send_notification_email(section, video)
+                except Exception as e:
+                    import traceback
+                    traceback.print_exc()
+                    print e
+
+    def send_notification_email(self, section, video):
+        send_mail(
+              u'Nouvelle vidéo "%s" dans la section "%s"' % (video.file_name, section.title),
+              Template(EMAIL_TEMPLATE).render(Context({"video": video, "section": section})),
+              'noreply@play.saya.fr',
+              section.notification_email.split(","),
+              fail_silently=False
+        )
+
+
+EMAIL_TEMPLATE = u"""\
+Bonjour,
+
+Une nouvelle vidéo '%s' vient d'être mise en ligne dans la section '%s'.
+Vous pouvez la visionner à cette adresse : https://play.saya.fr{% url 'user_video_detail' video.pk %}
+
+Bien à vous,
+"""
