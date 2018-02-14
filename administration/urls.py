@@ -7,7 +7,7 @@ from .views import (UpdateUser, CreateUser, CreateSection, DetailUser,
                     change_user_section_permission,
                     change_group_section_permission, video_list, video_detail,
                     video_list_delete, video_share, change_section_email,
-                    change_group_can_download)
+                    change_user_can_download, change_group_can_download)
 from .utils import user_can_see_administration_interface, user_is_staff
 
 
@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^section/(?P<pk>\d+)/email/$', change_section_email, name='administration_section_notification_email'),
 
     url(r'^change_user_section_permission/$', change_user_section_permission, name='administration_change_user_section_permission'),
+    url(r'^change_user_can_download/$', change_user_can_download, name='administration_change_user_can_download'),
     url(r'^change_group_section_permission/$', change_group_section_permission, name='administration_change_group_section_permission'),
     url(r'^change_group_can_download/$', change_group_can_download, name='administration_change_group_can_download'),
 

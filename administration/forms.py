@@ -26,6 +26,11 @@ class GroupCanDownloadForm(forms.Form):
     state = forms.BooleanField(required=False, initial=False)
 
 
+class UserCanDownloadForm(forms.Form):
+    user = forms.ModelChoiceField(queryset=User.objects.all())
+    state = forms.BooleanField(required=False, initial=False)
+
+
 class VideoForm(forms.ModelForm):
     section = TreeNodeChoiceField(queryset=Section.objects.all(), required=False)
 

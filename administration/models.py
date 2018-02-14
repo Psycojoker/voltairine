@@ -1,3 +1,4 @@
+from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User
 
@@ -44,8 +45,27 @@ def all_groups(self):
         yield i
 
 
+def can_download(self):
+    if not hasattr(self, "useradditionalattributes"):
+        self.useradditionalattributes = UserAdditionalAttributes.objects.create(user=self)
+
+    return self.useradditionalattributes.can_download
+
+def can_download_setter(self, value):
+    if not hasattr(self, "useradditionalattributes"):
+        self.useradditionalattributes = UserAdditionalAttributes.objects.create(user=self)
+
+    self.useradditionalattributes.can_download = value
+
+
+class UserAdditionalAttributes(models.Model):
+    user = models.OneToOneField(User)
+    can_download = models.BooleanField(default=False)
+
+
 User.users_can_administrate = users_can_administrate
 User.groups_managed_by_user = lambda self: self.group_is_admin_set.all()
 User.sections_can_administrate = sections_can_administrate
 User.videos_can_administrate = videos_can_administrate
 User.all_groups = all_groups
+User.can_download = property(can_download, can_download_setter)

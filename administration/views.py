@@ -21,7 +21,7 @@ from video_share.models import VideoShare
 
 from sections.utils import unfold_tree
 
-from .forms import UserPermissionForm, GroupPermissionForm, VideoForm, FormUser, FormUserForGroupAdmin, SectionNotificationEmailForm, GroupCanDownloadForm
+from .forms import UserPermissionForm, GroupPermissionForm, VideoForm, FormUser, FormUserForGroupAdmin, SectionNotificationEmailForm, GroupCanDownloadForm, UserCanDownloadForm
 from .utils import user_can_see_administration_interface, user_is_staff
 
 
@@ -371,6 +371,24 @@ def change_group_section_permission(request):
 
     # state is False
     group.permissions.remove(section_id)
+
+    return HttpResponse("ok")
+
+
+@user_is_staff
+@require_POST
+def change_user_can_download(request):
+    form = UserCanDownloadForm(request.POST)
+
+    if not form.is_valid():
+        # sucks for debugging
+        print form.errors
+        raise PermissionDenied()
+
+    user = form.cleaned_data["user"]
+
+    user.can_download = form.cleaned_data["state"]
+    user.save()
 
     return HttpResponse("ok")
 

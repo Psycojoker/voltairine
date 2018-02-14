@@ -51,6 +51,11 @@
           -else
             L'utilisateur n'est pas un membre de l'équipe.
 
+        -if user.is_staff
+          Bouton téléchargement
+          %span{style: "margin-left: 20px;"}
+            %input{type: "checkbox", name: "can_download", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", data-user-id: "{{ object.id }}", data-has-permission: "{{ object.can_download }}"}
+
       -if not user.is_staff
         </div>
         <div class="col-md-6">
@@ -133,6 +138,23 @@
           $.post("{% url 'administration_change_user_section_permission' %}", {
             "user": attributes["data-user-id"].value,
             "section": attributes["data-section-id"].value,
+            "state": value
+          })
+        })
+      });
+
+      // can_download button
+      $("[name='can_download']").each(function(index, data) {
+        if (data.attributes["data-has-permission"].value == "True") {
+          data.checked = true;
+        }
+        $(data).bootstrapSwitch();
+        $(data).on("switchChange.bootstrapSwitch", function(event, value) {
+          attributes = event.currentTarget.attributes;
+          console.log(value);
+
+          $.post("{% url 'administration_change_user_can_download' %}", {
+            "user": attributes["data-user-id"].value,
             "state": value
           })
         })
