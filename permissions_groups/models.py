@@ -12,6 +12,8 @@ class Group(models.Model):
 
     permissions = models.ManyToManyField(Section)
 
+    can_download = models.BooleanField(default=False)
+
     def get_permissions(self):
         if not hasattr(self, "_permissions_cache"):
             self._permissions_cache = self.permissions.all()

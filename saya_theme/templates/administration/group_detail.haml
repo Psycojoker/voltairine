@@ -56,6 +56,10 @@
         %h2 Permissions
         %hr
 
+        Téléchargement
+        %span{style: "margin-left: 20px;"}
+          %input{type: "checkbox", name: "can_download", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", data-group-id: "{{ object.id }}", data-has-permission: "{{ object.can_download }}"}
+
         .fuelux
           %ul.tree.tree-folder-select
             -recursetree section_list
@@ -101,6 +105,8 @@
     %script{src: "{% static 'js/bootstrap-switch.min.js' %}"}
     :javascript
       $(function() {
+        // change_user_section_permission && change_group_section_permission
+        // buttons
         $("[name='foobar']").each(function(index, data) {
           if (data.attributes["data-has-permission"].value == "true") {
             data.checked = true;
@@ -113,6 +119,23 @@
             $.post("{% url 'administration_change_group_section_permission' %}", {
               "group": attributes["data-group-id"].value,
               "section": attributes["data-section-id"].value,
+              "state": value
+            })
+          })
+        });
+
+        // can_download button
+        $("[name='can_download']").each(function(index, data) {
+          if (data.attributes["data-has-permission"].value == "True") {
+            data.checked = true;
+          }
+          $(data).bootstrapSwitch();
+          $(data).on("switchChange.bootstrapSwitch", function(event, value) {
+            attributes = event.currentTarget.attributes;
+            console.log(value);
+
+            $.post("{% url 'administration_change_group_can_download' %}", {
+              "group": attributes["data-group-id"].value,
               "state": value
             })
           })
