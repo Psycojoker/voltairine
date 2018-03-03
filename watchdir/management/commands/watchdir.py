@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 import os
+import grp
 import sys
 import time
 import shutil
@@ -29,6 +30,12 @@ class Command(BaseCommand):
 
         logger.info("Started watchdir daemon")
 
+        self.saya_watchdir_group_id = None
+        try:
+            self.saya_watchdir_group_id = grp.getgrnam("saya_watchdir").gr_gid
+        except KeyError:
+            logger.warning("The group 'saya_watchdir' doesn't exist on the system, it won't be possible to set it on the directories.")
+
         try:
             while True:
                 videos = {}
@@ -51,6 +58,14 @@ class Command(BaseCommand):
             sections_map[path] = section
             if not os.path.exists(path):
                 os.makedirs(path)
+
+            os.chmod(path, 0775)
+            if self.saya_watchdir_group_id is not None:
+                try:
+                    os.chown(path, -1, self.saya_watchdir_group_id)
+                except OSError, e:
+                    logger.warning("I can't chgrp '%s' because of '%s'", path, e)
+                    logger.warning("Check that this process is launched by a user in the 'saya_watchdir' group.")
 
             for sub_section, sub_childrens in childrens:
                 _recursivly_generate_directories(path, sub_section, sub_childrens)
