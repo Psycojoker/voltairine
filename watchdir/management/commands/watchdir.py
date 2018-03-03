@@ -47,14 +47,10 @@ class Command(BaseCommand):
     def update_directories_hierarchy(self):
         def _recursivly_generate_directories(base, section, childrens):
             path = os.path.join(base, section.title)
-            partage = os.path.join(path, "PARTAGE")
 
             sections_map[path] = section
             if not os.path.exists(path):
                 os.makedirs(path)
-
-            if not os.path.exists(partage):
-                os.makedirs(partage)
 
             for sub_section, sub_childrens in childrens:
                 _recursivly_generate_directories(path, sub_section, sub_childrens)
