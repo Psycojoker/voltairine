@@ -4,6 +4,7 @@ import os
 import sys
 import time
 import shutil
+import logging
 
 from django.core.management.base import BaseCommand
 from django.core.mail import send_mail
@@ -15,6 +16,8 @@ from sections.models import Section, VideoSection
 from video.models import Video
 from upload_video.utils import ensure_file_name_is_unique, clean_file_name
 
+logger = logging.getLogger(__name__)
+
 
 class Command(BaseCommand):
     help = 'Launch watchdir daemon'
@@ -23,6 +26,8 @@ class Command(BaseCommand):
         self.base_path = os.path.join(os.curdir, "ftp")
         if not os.path.exists(self.base_path):
             os.makedirs(self.base_path)
+
+        logger.info("Started watchdir daemon")
 
         try:
             while True:
@@ -89,7 +94,7 @@ class Command(BaseCommand):
             file_name = clean_file_name(file_name)
             file_name = ensure_file_name_is_unique(destination, file_name)
 
-            print "Detecting new video '%s', loading it into saya into the section '%s' as '%s'" % (video_path, section, file_name)
+            logger.info("Detecting new video '%s', loading it into saya into the section '%s' as '%s'" , video_path, section, file_name)
 
             try:
                 with transaction.atomic():
@@ -110,8 +115,8 @@ class Command(BaseCommand):
             except Exception as e:
                 import traceback
                 traceback.print_exc()
-                print e
-                print "Failed to upload video '%s'" % video_path
+                logger.error(e)
+                logger.error("Failed to upload video '%s'", video_path)
                 continue
 
             if section.notification_email:
