@@ -29,6 +29,7 @@ class Command(BaseCommand):
             os.makedirs(self.base_path)
 
         logger.info("Started watchdir daemon")
+        self.has_seen_chgrp_error = False
 
         self.saya_watchdir_group_id = None
         try:
@@ -63,9 +64,12 @@ class Command(BaseCommand):
             if self.saya_watchdir_group_id is not None:
                 try:
                     os.chown(path, -1, self.saya_watchdir_group_id)
+
                 except OSError, e:
-                    logger.warning("I can't chgrp '%s' because of '%s'", path, e)
-                    logger.warning("Check that this process is launched by a user in the 'saya_watchdir' group.")
+                    if not self.has_seen_chgrp_error:
+                        logger.warning("I can't chgrp '%s' because of '%s'", path, e)
+                        logger.warning("Check that this process is launched by a user in the 'saya_watchdir' group (check with the 'groups' command) and DON'T FORGET TO RELOG after adding it to it.")
+                        self.has_seen_chgrp_error = True
 
             for sub_section, sub_childrens in childrens:
                 _recursivly_generate_directories(path, sub_section, sub_childrens)
