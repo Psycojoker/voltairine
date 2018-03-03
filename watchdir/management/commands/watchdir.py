@@ -137,6 +137,7 @@ class Command(BaseCommand):
             if section.notification_email:
                 try:
                     self.send_notification_email(section, video)
+                    logger.info("Sent notification email to '%s' about '%s' in '%s'", section.notification_email, video.file_name, section.title)
                 except Exception as e:
                     import traceback
                     traceback.print_exc()
