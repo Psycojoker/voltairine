@@ -120,12 +120,12 @@ class Command(BaseCommand):
                 except Exception as e:
                     import traceback
                     traceback.print_exc()
-                    print e
+                    logger.error(e)
 
     def send_notification_email(self, section, video):
         send_mail(
               u'Nouvelle vidéo "%s" dans la section "%s"' % (video.file_name, section.title),
-              Template(EMAIL_TEMPLATE).render(Context({"video": video, "section": section})),
+              Template(EMAIL_TEMPLATE).render(Context({"video": video, "section": section, "settings": settings})),
               'noreply@play.saya.fr',
               section.notification_email.split(","),
               fail_silently=False
@@ -136,7 +136,7 @@ EMAIL_TEMPLATE = u"""\
 Bonjour,
 
 Une nouvelle vidéo '%s' vient d'être mise en ligne dans la section '%s'.
-Vous pouvez la visionner à cette adresse : https://play.saya.fr{% url 'user_video_detail' video.pk %}
+Vous pouvez la visionner à cette adresse : {{ settings.BASE_URL }}{% url 'user_video_detail' video.pk %}
 
 Bien à vous,
 """

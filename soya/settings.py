@@ -190,6 +190,8 @@ LOGGING = {
     },
 }
 
+BASE_URL = "https://play.saya.fr"
+
 try:
     from settings_local import *
 except ImportError:
