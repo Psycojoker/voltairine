@@ -143,22 +143,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
-        },
-    },
-}
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
@@ -175,6 +159,36 @@ FILE_UPLOAD_TEMP_DIR = os.path.join(BASE_DIR, 'chuncks')
 # not 100% good, should be in ResumableUploadView
 if not os.path.exists(os.path.join(BASE_DIR, "chuncks")):
     os.makedirs(os.path.join(BASE_DIR, "chuncks"))
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'formatters': {
+        'simple': {
+            'format': '%(asctime)s [%(levelname)s] %(message)s'
+        },
+    },
+    'loggers': {
+        'default': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'watchdir': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+    },
+}
 
 try:
     from settings_local import *
