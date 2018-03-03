@@ -140,7 +140,7 @@ class Command(BaseCommand):
 EMAIL_TEMPLATE = u"""\
 Bonjour,
 
-Une nouvelle vidéo '%s' vient d'être mise en ligne dans la section '%s'.
+Une nouvelle vidéo '{{ video }}' vient d'être mise en ligne dans la section '{{ section }}'.
 Vous pouvez la visionner à cette adresse : {{ settings.BASE_URL }}{% url 'user_video_detail' video.pk %}
 
 Bien à vous,
