@@ -54,7 +54,7 @@ class Command(BaseCommand):
 
     def update_directories_hierarchy(self):
         def _recursivly_generate_directories(base, section, childrens):
-            path = os.path.join(base, section.title).encode("Utf-8")
+            path = os.path.join(base, section.title.encode("Utf-8"))
 
             sections_map[path] = section
             if not os.path.exists(path):
@@ -76,7 +76,7 @@ class Command(BaseCommand):
 
         sections_map = {}
         for section, childrens in Section.objects.all().as_python_tree():
-            _recursivly_generate_directories(self.base_path, section, childrens)
+            _recursivly_generate_directories(self.base_path.encode("Utf-8"), section, childrens)
 
         return sections_map
 
