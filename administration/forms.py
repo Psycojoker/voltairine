@@ -45,6 +45,7 @@ class FormUser(forms.ModelForm):
     def clean_password(self):
         # this will raise a ValidationError for us
         validate_password(self.cleaned_data["password"])
+        return self.cleaned_data["password"]
 
     class Meta:
         model = User
@@ -58,6 +59,7 @@ class FormUserForGroupAdmin(forms.ModelForm):
     def clean_password(self):
         # this will raise a ValidationError for us
         validate_password(self.cleaned_data["password"])
+        return self.cleaned_data["password"]
 
     class Meta:
         model = User
