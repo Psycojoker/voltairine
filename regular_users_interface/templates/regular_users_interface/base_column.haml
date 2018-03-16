@@ -44,15 +44,14 @@
 
   -block heading
 
-  .container-fluid
-    #wrapper
-      #sidebar-wrapper
-        -block sidebar
+  #wrapper
+    #sidebar-wrapper
+      -block sidebar
 
 
-      #page-content-wrapper
-        .container-fluid
-          -block content
+    #page-content-wrapper
+      .container-fluid
+        -block content
 
   %footer.footer
     .container-fluid
