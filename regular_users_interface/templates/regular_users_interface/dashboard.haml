@@ -148,8 +148,6 @@
                     %tr
                       %td
                         %a{href: "{% url 'user_video_detail' video.pk %}"}
-                          %img.pull-left{src: "{{ video.thumbnail_uri }}", alt: "{{ video.title }}", style: "height: 60px; margin-right: 5px"}
-                        %a{href: "{% url 'user_video_detail' video.pk %}"}
                           =video.title
                         %br
                         %a.btn.btn-primary.btn-sm{href: "{% url 'user_video_detail' video.pk %}"}
