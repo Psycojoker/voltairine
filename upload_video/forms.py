@@ -13,6 +13,3 @@ class ResumableForm(forms.Form):
     title = forms.CharField()
     file_name = ResumableFileField(upload_url=reverse_lazy('upload'), chunks_dir="chuncks")
     section = TreeNodeChoiceField(queryset=Section.objects.order_by("title"), required=False)
-
-    def clean_file_name(self):
-        return slugify(self.cleaned_data["file_name"])
