@@ -14,10 +14,11 @@ def filename(self):
     filename = self.kwargs.get('resumableFilename')
     if '/' in filename:
         raise Exception('Invalid filename')
+    extension = filename.split(".")[-1]
     return slugify("%s_%s" % (
         self.kwargs.get('resumableTotalSize'),
-        filename
-    ))
+        ".".join(filename.split(".")[:-1])
+    )) + "." + extension
 
 ResumableFile.filename = filename
 

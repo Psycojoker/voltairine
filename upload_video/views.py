@@ -32,7 +32,7 @@ def upload_video(request):
 
     # this is to fix an encoding error on filename on freebsd
     post = request.POST.copy()
-    post["file_name-path"] = slugify(request.POST["file_name-path"])
+    post["file_name-path"] = slugify(request.POST["file_name-path"][:-len(".mp4")]) + ".mp4"
 
     # POST
     form = ResumableForm(post)
