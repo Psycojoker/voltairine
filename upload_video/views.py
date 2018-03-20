@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponse
+from django.template.defaultfilters import slugify
 
 from administration.utils import user_can_see_administration_interface
 
@@ -29,8 +30,12 @@ def upload_video(request):
 
     assert request.method == "POST"
 
+    # this is to fix an encoding error on filename on freebsd
+    post = request.POST.copy()
+    post["file_name-path"] = slugify(request.POST["file_name-path"])
+
     # POST
-    form = ResumableForm(request.POST)
+    form = ResumableForm(post)
 
     # bad: not dry
     if not request.user.is_staff:
