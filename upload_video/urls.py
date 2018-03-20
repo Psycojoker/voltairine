@@ -1,8 +1,25 @@
 from django.conf.urls import url
+from django.template.defaultfilters import slugify
+
 from resumable.views import ResumableUploadView
+from resumable.files import ResumableFile
 
 from administration.utils import user_can_see_administration_interface
 from .views import upload_video
+
+
+@property
+def filename(self):
+    """Gets the filename."""
+    filename = self.kwargs.get('resumableFilename')
+    if '/' in filename:
+        raise Exception('Invalid filename')
+    return slugify("%s_%s" % (
+        self.kwargs.get('resumableTotalSize'),
+        filename
+    ))
+
+ResumableFile.filename = filename
 
 
 urlpatterns = [
