@@ -44,6 +44,8 @@ def upload_video(request):
         form["section"].field.empty_label = None
 
     if not form.is_valid():
+        print post
+        print form.errors
         return render(request, "upload/upload.haml", {"form": form}, status=400)
 
     if not request.user.is_staff:

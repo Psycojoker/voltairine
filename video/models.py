@@ -13,6 +13,9 @@ def catch_exception(function):
         try:
             return function(*args, **kwargs)
         except Exception as e:
+            import traceback
+            traceback.print_exc()
+            print e
             try:
                 from raven.contrib.django.raven_compat.models import client
                 client.captureException()
