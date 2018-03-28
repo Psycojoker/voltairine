@@ -6,6 +6,8 @@
 -block javascript
   %link{href: "{% static 'css/theme.bootstrap.css' %}", rel: "stylesheet"}
   %link{href: "{% static 'css/video_list.css' %}", rel: "stylesheet"}
+  %link{href: "{% static 'css/video_list.css' %}", rel: "stylesheet"}
+  %link{href: "{% static 'css/style.css' %}", rel: "stylesheet"}
   %script{src: "{% static 'js/bootstrap.min.js' %}"}
   %script{src: "{% static 'js/jquery.tablesorter.js' %}"}
   %script{src: "{% static 'js/jquery.tablesorter.widgets.js' %}"}
@@ -79,6 +81,7 @@
                   %input.delete-all-checkbox{type: "checkbox"}
                 %th
                   Nom
+                %th
                 %th.filter-select.filter-select-nosort{data-placeholder: "Choisissez une section"}
                   Section
                 %th.hidden-xs
@@ -96,6 +99,7 @@
                   %input.delete-all-checkbox{type: "checkbox"}
                 %th
                   Nom
+                %th
                 %th
                   Section
                 %th.hidden-xs
@@ -115,7 +119,8 @@
                   %td
                     %a{href: "{% url 'administration_video_detail' video.pk %}"}
                       =video.title
-                    %a.pull-right.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                  %td.center
+                    %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
                       Télécharger
                   %td
                   %td.hidden-xs
@@ -137,6 +142,7 @@
                         %td
                           %a{href: "{% url 'administration_video_detail' video.pk %}"}
                             =video.title
+                        %td.center
                           %a.btn.btn-sm{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
                             Télécharger
                         %td
