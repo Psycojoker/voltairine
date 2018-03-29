@@ -81,7 +81,6 @@
                   %input.delete-all-checkbox{type: "checkbox"}
                 %th
                   Nom
-                %th
                 %th.filter-select.filter-select-nosort{data-placeholder: "Choisissez une section"}
                   Section
                 %th.hidden-xs
@@ -100,7 +99,6 @@
                 %th
                   Nom
                 %th
-                %th
                   Section
                 %th.hidden-xs
                   Durée
@@ -117,11 +115,10 @@
                   %td
                     %input.delete-checkbox{type: "checkbox", name: "video", value: "{{ video.pk }}"}
                   %td
+                    %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                      %span.glyphicon.glyphicon-download-alt{aria-hidden: true, title: "Télécharger"}
                     %a{href: "{% url 'administration_video_detail' video.pk %}"}
                       =video.title
-                  %td.center
-                    %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
-                      Télécharger
                   %td
                   %td.hidden-xs
                     =video.duration
@@ -140,11 +137,10 @@
                         %td
                           %input.delete-checkbox{type: "checkbox", name: "video", value: "{{ video.pk }}"}
                         %td
+                          %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                            %span.glyphicon.glyphicon-download-alt{aria-hidden: true, title: "Télécharger"}
                           %a{href: "{% url 'administration_video_detail' video.pk %}"}
                             =video.title
-                        %td.center
-                          %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
-                            Télécharger
                         %td
                           =section.display_level_indicator
                           =section.title
