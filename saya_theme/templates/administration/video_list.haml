@@ -143,7 +143,7 @@
                           %a{href: "{% url 'administration_video_detail' video.pk %}"}
                             =video.title
                         %td.center
-                          %a.btn.btn-sm{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                          %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
                             Télécharger
                         %td
                           =section.display_level_indicator
