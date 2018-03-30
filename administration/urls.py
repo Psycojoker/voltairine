@@ -7,7 +7,8 @@ from .views import (UpdateUser, CreateUser, CreateSection, DetailUser,
                     change_user_section_permission,
                     change_group_section_permission, video_list, video_detail,
                     video_list_delete, video_share, change_section_email,
-                    change_user_can_download, change_group_can_download)
+                    change_user_can_download,
+                    change_group_can_download, user_list_delete)
 from .utils import user_can_see_administration_interface, user_is_staff
 
 
@@ -18,6 +19,7 @@ urlpatterns = [
     url(r'^user/(?P<pk>\d+)/$', user_can_see_administration_interface(DetailUser.as_view()), name='administration_user_detail'),
     url(r'^user/(?P<pk>\d+)/update/$', user_can_see_administration_interface(UpdateUser.as_view()), name='administration_user_update'),
     url(r'^user/(?P<pk>\d+)/delete/$', user_can_see_administration_interface(DeleteUser.as_view()), name='administration_user_delete'),
+    url(r'^user/list-delete/$', user_list_delete, name='administration_user_list_delete'),
 
     url(r'^group/new/$', user_is_staff(CreateGroup.as_view()), name='administration_group_create'),
     url(r'^group/(?P<pk>\d+)/$', user_can_see_administration_interface(DetailGroup.as_view()), name='administration_group_detail'),

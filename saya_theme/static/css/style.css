@@ -1,3 +1,7 @@
 .center {
     text-align: center;
 }
+
+.delete-checkbox-wrapper {
+    padding-right: 9px;
+}

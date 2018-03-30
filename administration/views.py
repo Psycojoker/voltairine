@@ -141,6 +141,37 @@ class DeleteUser(DeleteView):
         return object
 
 
+@user_can_see_administration_interface
+@require_POST
+def user_list_delete(request):
+    user_list = request.POST.getlist("user")
+    logger.debug("user_list_delete: request to deletes users %s", ", ".join(map(str, user_list)))
+
+    users_can_administrate = request.user.users_can_administrate()
+    logger.debug("user_list_delete: users the user can delete: %s", ", ".join([str(x.id) for x in users_can_administrate]))
+
+    for user_id in user_list:
+        user = User.objects.filter(pk=user_id).first()
+
+        if user == request.user:
+            logger.warning("user_list_delete: user attempted to delete itself (id '%s')", user_id)
+            continue
+
+        # skip because I can't see why it could happen and breaking the page
+        # for that it bad for the user
+        if user is None:
+            logger.warning("user_list_delete: no user for id '%s', skip", user_id)
+            continue
+
+        if not request.user.is_staff and user not in users_can_administrate:
+            logger.warning("user_list_delete: user '%s' is not staff and user '%s' is not in the users he can administrated (%s), denied", request.user.username, user.pk, ", ".join([str(x.id) for x in users_can_administrate]))
+            raise PermissionDenied()
+
+        user.delete()
+
+    return HttpResponseRedirect(reverse("administration_user_list"))
+
+
 class CreateGroup(CreateView):
     model = Group
     template_name = 'administration/group_update_form.haml'
