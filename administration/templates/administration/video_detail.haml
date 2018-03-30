@@ -42,7 +42,7 @@
           {& title &}
 
           %span.pull-right
-            -if object in user.videos_can_administrate or user.is_superuser
+            -if object in user.videos_can_administrate or user.is_superuser or user.is_staff
               %form{action: "{% url 'administration_video_share' object.pk %}", method: "POST", style:" display: inline"}
                 -csrf_token
                 %input.btn.btn-small.btn-success{type: "submit", value: "Lien"}

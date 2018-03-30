@@ -534,7 +534,7 @@ def video_detail(request, pk):
 def video_share(request, pk):
     video = get_object_or_404(Video, pk=pk)
 
-    if not request.user.is_staff and video not in request.user.videos_can_administrate():
+    if not request.user.is_staff and not request.user.is_superuser and video not in request.user.videos_can_administrate():
         raise PermissionDenied()
 
     video_share = VideoShare.objects.create(
