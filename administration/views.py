@@ -543,7 +543,7 @@ class DeleteVideo(DeleteView):
 @user_can_see_administration_interface
 @require_POST
 def video_list_delete(request):
-    video_list = request.POST["video"]
+    video_list = request.POST.getlist("video")
     logger.debug("video_list_delete: request to deletes videos %s", ", ".join(map(str, video_list)))
 
     videos_can_administrate = request.user.videos_can_administrate()
