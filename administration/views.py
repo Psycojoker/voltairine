@@ -1,6 +1,7 @@
 import os
 import random
 import string
+import logging
 
 from django import forms
 from django.db import transaction
@@ -23,6 +24,8 @@ from sections.utils import unfold_tree
 
 from .forms import UserPermissionForm, GroupPermissionForm, VideoForm, FormUser, FormUserForGroupAdmin, SectionNotificationEmailForm, GroupCanDownloadForm, UserCanDownloadForm
 from .utils import user_can_see_administration_interface, user_is_staff
+
+logger = logging.getLogger("saya")
 
 
 @user_can_see_administration_interface
@@ -541,8 +544,10 @@ class DeleteVideo(DeleteView):
 @require_POST
 def video_list_delete(request):
     video_list = request.POST["video"]
+    logger.debug("video_list_delete: request to deletes videos %s", ", ".join(map(str, video_list)))
 
     videos_can_administrate = request.user.videos_can_administrate()
+    logger.debug("video_list_delete: videos the user can delete: %s", ", ".join([str(x.id) for x in videos_can_administrate]))
 
     for video_id in video_list:
         video = Video.objects.filter(pk=video_id).first()
@@ -550,9 +555,11 @@ def video_list_delete(request):
         # skip because I can't see why it could happen and breaking the page
         # for that it bad for the user
         if video is None:
+            logger.warning("video_list_delete: no video for id '%s', skip", video_id)
             continue
 
         if not request.user.is_staff and video not in videos_can_administrate:
+            logger.warning("video_list_delete: user '%s' is not staff and video '%s' is not in the videos he can administrated (%s), denied", request.user.username, video.pk, ", ".join([str(x.id) for x in videos_can_administrate]))
             raise PermissionDenied()
 
         video.delete()

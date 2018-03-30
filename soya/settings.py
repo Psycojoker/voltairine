@@ -177,15 +177,19 @@ LOGGING = {
     'loggers': {
         'default': {
             'handlers': ['console'],
-            'level': 'INFO',
+            'level': 'INFO' if not DEBUG else 'DEBUG',
         },
         'django': {
             'handlers': ['console'],
             'level': 'INFO',
         },
+        'saya': {
+            'handlers': ['console'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+        },
         'watchdir': {
             'handlers': ['console'],
-            'level': 'INFO',
+            'level': 'INFO' if not DEBUG else 'DEBUG',
         },
     },
 }
