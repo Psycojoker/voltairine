@@ -1,6 +1,17 @@
 from django import forms
 
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordResetForm
+
+
+class PasswordResetUserDontExistsForm(PasswordResetForm):
+    def clean_email(self):
+        email = self.cleaned_data['email']
+
+        if not list(self.get_users(email)):
+            raise forms.ValidationError("Il n'y a pas d'utilisateur avec cet email.")
+
+        return email
 
 
 class ForgottenPasswordForm(forms.Form):
