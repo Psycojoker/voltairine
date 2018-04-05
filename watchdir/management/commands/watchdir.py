@@ -144,11 +144,18 @@ class Command(BaseCommand):
                     logger.error(e)
 
     def send_notification_email(self, section, video):
+        context = {
+            "video": video,
+            "section": section,
+            "settings": settings,
+        }
+
         send_mail(
               u'Nouvelle vidéo "%s" dans la section "%s"' % (video.file_name, section.title),
-              Template(EMAIL_TEMPLATE).render(Context({"video": video, "section": section, "settings": settings})),
+              Template(EMAIL_TEMPLATE).render(Context(context)),
               'noreply@play.saya.fr',
               section.notification_email.split(","),
+              html_message=Template(EMAIL_TEMPLATE_HTML).render(Context(context)),
               fail_silently=False
         )
 
@@ -156,8 +163,28 @@ class Command(BaseCommand):
 EMAIL_TEMPLATE = u"""\
 Bonjour,
 
-Une nouvelle vidéo '{{ video }}' vient d'être mise en ligne dans la section '{{ section }}'.
-Vous pouvez la visionner à cette adresse : {{ settings.BASE_URL }}{% url 'user_video_detail' video.pk %}
+Nous avons le plaisir de vous annoncer la mise en ligne sur stream.saya.fr du
+fichier suivant:
 
-Bien à vous,
+FICHIER:        {{ section }}/{{ video }}
+LIEN:           {{ settings.BASE_URL }}{% url 'user_video_detail' video.pk %}
+
+Cordialement,
+l'équipe stream.saya.fr
+"""
+
+
+EMAIL_TEMPLATE_HTML = u"""\
+<p>Bonjour,</p>
+
+<p>Nous avons le plaisir de vous annoncer la mise en ligne sur stream.saya.fr
+du fichier suivant:</p>
+
+<p>
+FICHIER:        {{ section }}/{{ video }}<br>
+LIEN:           <a class="moz-txt-link-freetext"href="{{ settings.BASE_URL }}{% url 'user_video_detail' video.pk %}">{{ settings.BASE_URL }}{% url 'user_video_detail' video.pk %}</a>
+</p>
+
+<p>Cordialement,<br>
+l'équipe stream.saya.fr</p>
 """
