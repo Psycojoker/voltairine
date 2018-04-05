@@ -54,7 +54,7 @@
       var form = $($(node.target).next());
       // parent..hide();
       $(node.target).hide();
-      form.show();
+      form.css("display", "inline");
     })
 
     $(".cancel").click(reset);
