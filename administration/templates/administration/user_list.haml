@@ -1,13 +1,69 @@
 -extends "base.haml"
 
+-load static
+
+-block javascript
+  %script{src: "{% static 'js/bootstrap.min.js' %}"}
+  %script{src: "{% static 'js/user_list.js' %}"}
+
 -block content
-  %h1 Users
-  %hr
+  .row
+    .col-md-6
+      %form#delete-users{method: "POST", action: "{% url 'administration_user_list_delete' %}"}
+        %h1 Utilisateurs
+          %input#delete-users-button.btn.btn-lg.btn-danger.pull-right{type: "submit", value: "Supprimer", disabled: "disabled"}
+        %hr
 
-  %ul
-    -for user in user_list
-      %li
-        %a{href: "{% url 'administration_user_detail' user.pk %}"}= user.username
+        -csrf_token
+        %ul.list-group
+          -with logged_user=user
+            -for user in user_list
+              %li.list-group-item
+                %span.delete-checkbox-wrapper
+                  -if logged_user == user
+                    %input.delete-checkbox{type: "checkbox", name: "user", value: "", disabled: "disabled", data-toggle: "tooltip", data-placement: "top", title: "Vous ne pouvez pas supprimer votre propre compte"}
+                  -else
+                    %input.delete-checkbox{type: "checkbox", name: "user", value: "{{ user.pk }}"}
+                %a{href: "{% url 'administration_user_detail' user.pk %}"}
+                  -if user.is_staff
+                    <b>
+                  -if user.first_name and user.last_name
+                    =user.first_name
+                    =user.last_name
+                    ({{ user.username }})
+                  -else
+                    =user.username
+                  \-
+                  &lt;{{ user.email }}&gt;
+                  -if user.is_staff
+                    \- administrateur
+                    </b>
+                  -for group in user.all_groups
+                    -if forloop.first
+                      \- groupes :
+                      <span class="group-list">
+                    -if group.is_admin
+                      <b>
+                    =group.name
+                    -if group.is_admin
+                      </b>
+                    -if not forloop.last
+                      , 
+                    -if forloop.last
+                      </span>
 
-  %a.btn.btn-lg.btn-primary{href: "{% url 'administration_user_create' %}"}
-    Add another user
+      %a.btn.btn-lg.btn-primary{href: "{% url 'administration_user_create' %}"}
+        Rajouter un nouvel utilisateur
+
+    .col-md-6
+      %h1 Groupes
+      %hr
+
+      .list-group
+        -for group in group_list
+          %a.list-group-item{href: "{% url 'administration_group_detail' group.pk %}"}
+            =group.name
+
+      -if user.is_staff
+        %a.btn.btn-lg.btn-primary{href: "{% url 'administration_group_create' %}"}
+          Rajouter un nouveau groupe

@@ -1,18 +1,31 @@
 -extends "base.haml"
 
 -block content
-  %h2
+  .row
     %a{href: "{% url 'administration_user_list' %}"}
-      Administrate users
+      .col-md-6
+        .well
+          %h2
+            %span.glyphicon.glyphicon-user{aria-hidden: "true"}
+            Utilisateurs et groupes
 
-  %h2
     %a{href: "{% url 'administration_section_list' %}"}
-      Administrate sections and permissions
+      .col-md-6
+        .well
+          %h2
+            %span.glyphicon.glyphicon-list-alt{aria-hidden: "true"}
+            Administrer les sections
 
-  %h2
     %a{href: "{% url 'upload_video' %}"}
-      Uploader un film
+      .col-md-6
+        .well
+          %h2
+            %span.glyphicon.glyphicon-save{aria-hidden: "true"}
+            Uploader un film
 
-  %h2
     %a{href: "{% url 'administration_video_list' %}"}
-      Voir toutes les vidéos uploadé
+      .col-md-6
+        .well
+          %h2
+            %span.glyphicon.glyphicon-film{aria-hidden: "true"}
+            Voir toutes les vidéos

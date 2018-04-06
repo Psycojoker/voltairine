@@ -2,10 +2,83 @@
 -load bootstrap3
 
 -block content
-  %h1 Modify user
+  -if object.pk
+    %h2 Modifier l'utilisateur
+  -else
+    %h2 Rajouter un nouvel utilisateur
+  %hr
 
   %form{method: "POST"}
     -csrf_token
-    -bootstrap_form form
+    .form-group{class: "{% if form.username.errors %}has-error{% elif form.data and form.username %}has-success{% endif %}"}
+      %label.control-label{for: "id_username"}
+        Nom d'utilisateur
+      %input#id_username.form-control{type: "text", required: "required", placeholder: 'Nom d´utilisateur', name: "username", value: '{{ form.username.value|default_if_none:"" }}'}
+      -for error in form.username.errors
+        %span.help-block= error
+
+    .form-group{class: "{% if form.password.errors %}has-error{% elif form.data and form.password %}has-success{% endif %}"}
+      -# I'm modifying the user
+      -if object.pk
+        %label.control-label{for: "id_password"}
+          Nouveau mot de passe (optionnel)
+        %input#id_password.form-control{type: "password", placeholder: "Nouveau mot de passe", name: "password"}
+      -else
+        %label.control-label{for: "id_password"}
+          Mot de passe
+        %input#id_password.form-control{type: "password", required: "required", placeholder: "Mot de passe", name: "password"}
+      -for error in form.password.errors
+        %span.help-block= error
+
+    .form-group{class: "{% if form.email.errors %}has-error{% elif form.data and form.email %}has-success{% endif %}"}
+      %label.control-label{for: "id_email"}
+        Email
+      %input#id_email.form-control{type: "text", required: "required", placeholder: "Email", name: "email", value: '{{ form.email.value|default_if_none:"" }}'}
+      -for error in form.email.errors
+        %span.help-block= error
+
+    .form-group{class: "{% if form.first_name.errors %}has-error{% elif form.data and form.first_name %}has-success{% endif %}"}
+      %label.control-label{for: "id_first_name"}
+        Prénom (optionnel)
+      %input#id_first_name.form-control{type: "text", placeholder: "Prénom", name: "first_name", value: '{{ form.first_name.value|default_if_none:"" }}'}
+      -for error in form.first_name.errors
+        %span.help-block= error
+
+    .form-group{class: "{% if form.last_name.errors %}has-error{% elif form.data and form.last_name %}has-success{% endif %}"}
+      %label.control-label{for: "id_last_name"}
+        Nom (optionnel)
+      %input#id_last_name.form-control{type: "text", placeholder: "Nom", name: "last_name", value: '{{ form.last_name.value|default_if_none:"" }}'}
+      -for error in form.last_name.errors
+        %span.help-block= error
+
+    -if user.is_staff
+      .form-group{class: "{% if form.is_staff.errors %}has-error{% elif form.data and form.is_staff %}has-success{% endif %}"}
+        .checkbox
+          %label{for: "id_is_staff"}
+            -if form.is_staff.value
+              %input#id_is_staff{type: "checkbox", name: "is_staff", checked: "checked"}.
+              Administrateur
+            -else
+              %input#id_is_staff{type: "checkbox", name: "is_staff"}.
+              Administrateur
+        %span.help-block
+          L'utilisateur peut se connecter sur l'interface d'administration
+        -for error in form.is_staff.errors
+          %span.help-block= error
+
+    -elif not object.pk
+      -if form.group.field.queryset|length > 1
+          -bootstrap_field form.group
+      -else
+        %div{style: "display: none"}
+          -bootstrap_field form.group
+        %p
+          L'utilisateur sera rajouté au groupe:
+          =form.group.field.queryset.first.name
+
+
     %button.btn.btn-lg.btn-primary{type: "submit"}
-      Update
+      Enregistrer
+
+    %a.btn.btn-lg.btn-danger{href: "{% if object.pk %}{% url 'administration_user_detail' object.pk %}{% else %}{% url 'administration_user_list' %}{% endif %}"}
+      Annuler

@@ -1,24 +1,162 @@
 -extends "base.haml"
+-load section_tags
+-load mptt_tags
+-load static
+
+-block head
+  %link{href: "{% static 'css/bootstrap-switch.min.css' %}", rel: "stylesheet"}
+  %link{href: "{% static 'css/fuelux.min.css' %}", rel: "stylesheet"}
+  %link{href: "{% static 'css/section_list.css' %}", rel: "stylesheet"}
+  :css
+    .bootstrap-switch {
+      border-color: #3A3D44;
+    }
+
+    .bootstrap-switch .bootstrap-switch-label {
+      background: #D0D0D0;
+    }
 
 -block content
-  %h1 User:
-    =object.username
-  %hr
+  .row
+    .col-md-6
+      %h2 Utilisateur :
+        =object.username
+        %small.pull-right
+          %a.btn.btn-primary{href: "{% url 'administration_user_update' object.pk %}"}
+            Modifier
+          %a.btn.btn-danger{href: "{% url 'administration_user_delete' object.pk %}"}
+            Supprimer
 
-  %p First name:
-    =object.first_name
-  %p Last name:
-    =object.last_name
-  %p Email:
-    =object.email
+      %hr
 
-  %a.btn.btn-primary.btn-lg{href: "{% url 'administration_user_update' object.pk %}"}
-    Modify
+      .well
+        .row
+          .col-md-6
+            %p
+              %b Nom :
+              =object.last_name
+            %p
+              %b Prénom :
+              =object.first_name
+          .col-md-6
+            %p
+              %b Nom d'utilisateur :
+              =object.username
+            %p
+              %b Adresse email :
+              =object.email
+        %p
+          -if object.is_staff
+            L'utilisateur est un membre de l'équipe.
+          -else
+            L'utilisateur n'est pas un membre de l'équipe.
 
-  %h2 Permissions
-  %hr
+        -if user.is_staff
+          Bouton téléchargement
+          %span{style: "margin-left: 20px;"}
+            %input{type: "checkbox", name: "can_download", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", data-user-id: "{{ object.id }}", data-has-permission: "{{ object.can_download }}"}
 
-  %p TODO
+      -if not user.is_staff
+        </div>
+        <div class="col-md-6">
+      %h2 Groupes :
+      %hr
 
-  %a{href: "{% url 'administration_user_list' %}"}
-    Users list
+      -if group_is_admin.exists
+        .panel.panel-primary
+          .panel-heading
+            Est admin de
+          .list-group
+            -for group in group_is_admin
+              %a.list-group-item{href: "{% url 'administration_group_detail' group.pk %}"}
+                =group
+      -else
+        -if user.is_staff
+          %p
+            L'utilisateur n'est admin d'aucun groupe.
+        -else
+          %p
+            L'utilisateur n'est admin d'aucun groupe dont vous avez la reponsabilité.
+
+      -if group_is_member.exists
+        .panel.panel-primary
+          .panel-heading
+            Est membre de
+          .list-group
+            -for group in group_is_member
+              %a.list-group-item{href: "{% url 'administration_group_detail' group.pk %}"}
+                =group
+      -else
+        -if user.is_staff
+          %p
+            L'utilisateur n'est membre d'aucun groupe.
+        -else
+          %p
+            L'utilisateur n'est membre d'aucun groupe dont vous avez la responsabilité.
+
+      -if not user.is_staff
+        </div>
+        </div>
+
+    -if user.is_staff
+      .col-md-6
+        %h2 Permissions
+        %hr
+
+        -if object.is_staff
+          %p L'utilisateur est un membre de l'équipe, il a accès à toutes les vidéos.
+        -else
+          .fuelux
+            %ul.tree.tree-folder-select
+              -recursetree section_list
+                %li.tree-branch
+                  .tree-branch-header
+                    %span.glyphicon.icon-caret.glyphicon-play{style: "transform: rotate(90deg);"}
+                      %span.sr-only Open
+                    =node.title
+                    %span{style: "margin-left: 20px;"}
+                      %input{type: "checkbox", name: "foobar", data-size: "mini", data-on-color: "success", data-off-color: "danger", data-on-text: "autorisé", data-off-text: "non&#8239;autorisé", data-user-id: "{{ object.id }}", data-section-id: "{{ node.id }}", data-has-permission: "{% is_user_have_access node object %}"}
+                  -if not node.is_leaf_node
+                    %ul.tree-branch-children
+                      =children
+
+
+-block javascript
+  %script{src: "{% static 'js/ajax_django_magic.js' %}"}
+  %script{src: "{% static 'js/bootstrap-switch.min.js' %}"}
+  :javascript
+    $(function() {
+      $("[name='foobar']").each(function(index, data) {
+        if (data.attributes["data-has-permission"].value == "true") {
+          data.checked = true;
+        }
+        $(data).bootstrapSwitch();
+        $(data).on("switchChange.bootstrapSwitch", function(event, value) {
+          attributes = event.currentTarget.attributes;
+          console.log(value);
+
+          $.post("{% url 'administration_change_user_section_permission' %}", {
+            "user": attributes["data-user-id"].value,
+            "section": attributes["data-section-id"].value,
+            "state": value
+          })
+        })
+      });
+
+      // can_download button
+      $("[name='can_download']").each(function(index, data) {
+        if (data.attributes["data-has-permission"].value == "True") {
+          data.checked = true;
+        }
+        $(data).bootstrapSwitch();
+        $(data).on("switchChange.bootstrapSwitch", function(event, value) {
+          attributes = event.currentTarget.attributes;
+          console.log(value);
+
+          $.post("{% url 'administration_change_user_can_download' %}", {
+            "user": attributes["data-user-id"].value,
+            "state": value
+          })
+        })
+      });
+    })
