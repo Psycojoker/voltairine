@@ -36,7 +36,6 @@ except ImportError:
 
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -51,6 +50,7 @@ INSTALLED_APPS = (
     'django_pdb',
     'administration',
     'authentification',
+    'django.contrib.admin',
     'permissions_groups',
     'regular_users_interface',
     'sections',
