@@ -28,3 +28,7 @@
     line-height: 24px;
     margin-bottom: 0px;
 }
+
+#videosTable {
+    padding-top: 0;
+}
