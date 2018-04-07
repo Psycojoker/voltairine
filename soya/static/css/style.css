@@ -2,6 +2,14 @@
     text-align: center;
 }
 
+.center-th {
+    text-align: center;
+}
+
+.center-th .tablesorter-header-inner {
+    padding: 0;
+}
+
 .delete-checkbox-wrapper {
     padding-right: 9px;
 }
