@@ -111,13 +111,14 @@
             %tbody
               -for video in video_list
                 %tr
-                  %td
+                  %td.center
                     %input.delete-checkbox{type: "checkbox", name: "video", value: "{{ video.pk }}"}
                   %td
-                    %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                    %a.btn.btn-sm.btn-default.download-button{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
                       %span.glyphicon.glyphicon-download-alt{aria-hidden: true, title: "Télécharger"}
-                    %a{href: "{% url 'administration_video_detail' video.pk %}"}
-                      =video.title
+                    %p.video-title
+                      %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                        =video.title
                   %td
                   %td.hidden-xs
                     =video.duration
@@ -133,13 +134,14 @@
                   -for videosection in section.videosection_set.all
                     -with video=videosection.video
                       %tr
-                        %td
+                        %td.center
                           %input.delete-checkbox{type: "checkbox", name: "video", value: "{{ video.pk }}"}
                         %td
-                          %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                          %a.btn.btn-sm.btn-default.download-button{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
                             %span.glyphicon.glyphicon-download-alt{aria-hidden: true, title: "Télécharger"}
-                          %a{href: "{% url 'administration_video_detail' video.pk %}"}
-                            =video.title
+                          %p.video-title
+                            %a{href: "{% url 'administration_video_detail' video.pk %}"}
+                              =video.title
                         %td
                           =section.display_level_indicator
                           =section.title

@@ -5,3 +5,18 @@
 .delete-checkbox-wrapper {
     padding-right: 9px;
 }
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.download-button {
+    position: absolute;
+}
+
+.video-title {
+    text-indent: 38px;
+    padding-top: 4px;
+    line-height: 24px;
+    margin-bottom: 0px;
+}
