@@ -39,6 +39,11 @@ odd          : ''  // odd row zebra striping
     $(".tablesorter-filter").slice(2).parents("td").addClass("hidden-xs");
     $(".tablesorter-filter").slice(3).parents("td").addClass("hidden-sm");
 
+    // fix bug in tablesorter where "sorter: false" don't display
+    // the sorter for the "checkbox column" but still but the <i>
+    // tag which conflict with clicking on the checkbox
+    $(".center-th").find("i").hide()
+
     $('#myTab a').click(function (e) {
         e.preventDefault()
         $(this).tab('show')
