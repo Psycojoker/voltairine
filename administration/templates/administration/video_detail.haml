@@ -46,7 +46,8 @@
               %form{action: "{% url 'administration_video_share' object.pk %}", method: "POST", style:" display: inline"}
                 -csrf_token
                 %input.btn.btn-small.btn-success{type: "submit", value: "Lien"}
-            %a.btn.btn-small.btn-info{href: "{{ MEDIA_URL }}videos/{{ object.file_name }}"} Télécharger
+            -if user.can_see_download_button
+              %a.btn.btn-small.btn-info{href: "{{ MEDIA_URL }}videos/{{ object.file_name }}"} Télécharger
             %a.btn.btn-small.btn-danger{href: "{% url 'administration_video_delete' object.pk %}"} Supprimer
         %hr
 

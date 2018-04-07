@@ -58,6 +58,29 @@ def can_download_setter(self, value):
     self.useradditionalattributes.can_download = value
 
 
+def can_see_download_button(self):
+    if self.is_superuser:
+        return True
+
+    if self.is_staff:
+        return True
+
+    if self.can_download:
+        return True
+
+    # XXX check that the video is in a group that can see it
+    # but that looks overkill here
+    for group in self.group_is_admin_set.all():
+        if group.can_download:
+            return True
+
+    for group in self.group_is_member_set.all():
+        if group.can_download:
+            return True
+
+    return False
+
+
 class UserAdditionalAttributes(models.Model):
     user = models.OneToOneField(User)
     can_download = models.BooleanField(default=False)
@@ -69,3 +92,4 @@ User.sections_can_administrate = sections_can_administrate
 User.videos_can_administrate = videos_can_administrate
 User.all_groups = all_groups
 User.can_download = property(can_download, can_download_setter)
+User.can_see_download_button = can_see_download_button
