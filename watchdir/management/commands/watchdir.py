@@ -44,6 +44,8 @@ class Command(BaseCommand):
 
                 sections_map = self.update_directories_hierarchy()
 
+                self.remove_unused_directories(sections_map)
+
                 videos = self.parse_all_videos(videos, sections_map)
 
                 self.handle_videos(videos)
@@ -58,6 +60,7 @@ class Command(BaseCommand):
 
             sections_map[path] = section
             if not os.path.exists(path):
+                logger.info("Create new directory '%s' for section '%s'", path, section.title.encode("Utf-8"))
                 os.makedirs(path)
 
             os.chmod(path, 0775)
@@ -79,6 +82,20 @@ class Command(BaseCommand):
             _recursivly_generate_directories(self.base_path.encode("Utf-8"), section, childrens)
 
         return sections_map
+
+    def remove_unused_directories(self, sections_map):
+        used_paths = set(sections_map.keys())
+
+        for path, files, _ in os.walk(self.base_path.encode("Utf-8")):
+            if path == self.base_path:
+                continue
+
+            # remove unused directories that don't contains any files
+            if path not in used_paths and not files:
+                logger.info("Removed empty unused directory '%s' that don't map to any section", path)
+                shutil.rmtree(path)
+            elif path not in used_paths:
+                logger.warning("Can't remove directory '%s' that don't map to any section because it contains the files '%s'", path, ", ".join(files))
 
     def parse_all_videos(self, videos, sections_map):
         for path in sections_map.keys():
