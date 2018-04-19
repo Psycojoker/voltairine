@@ -21,3 +21,9 @@ class Group(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def get_admins(self):
+        return self.admin.order_by("username")
+
+    def get_users(self):
+        return self.users.order_by("username")
