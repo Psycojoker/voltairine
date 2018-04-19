@@ -194,7 +194,7 @@ Nous avons le plaisir de vous annoncer la mise en ligne sur Saya Play du
 fichier suivant :
 
 {{ section }} / {{ video }}
-Lien de visionnage : {{ settings.BASE_URL }}{% url 'user_video_detail' video.pk %}
+Lien de visionnage : {{ settings.BASE_URL }}{% url 'administration_video_detail' video.pk %} <{{ settings.BASE_URL }}{% url 'administration_video_detail' video.pk %}>
 
 Cordialement,
 l'équipe Saya
@@ -249,8 +249,8 @@ Saya Play</font>
 {{ section }} / {{ video }}
 </div>
 <div class="">
-Lien de visionnage :&nbsp;<a class="moz-txt-link-freetext" href="{{ settings.BASE_URL }}{% url 'user_video_detail' video.pk %}">
-{{ settings.BASE_URL }}{% url 'user_video_detail' video.pk %}</a>
+Lien de visionnage :&nbsp;<a class="moz-txt-link-freetext" href="{{ settings.BASE_URL }}{% url 'administration_video_detail' video.pk %}">
+{{ settings.BASE_URL }}{% url 'administration_video_detail' video.pk %}</a>
 </div>
 <div class="">
 <br class="">
