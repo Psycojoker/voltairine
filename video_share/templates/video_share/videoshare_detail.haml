@@ -34,29 +34,38 @@
       %hr
 
       .row
-        .col-md-6
-          %p
-            %b Nom du film :
-            {{ object.video.film_name|default:"" }}
-          %p
-            %b Realisation :
-            {{ object.video.realisation|default:"" }}
+        -if object.video.film_name and object.video.realisation
+          .col-md-6
+            -if object.video.film_name
+              %p
+                %b Nom du film :
+                {{ object.video.film_name|default:"" }}
+            -if object.video.realisation
+              %p
+                %b Realisation :
+                {{ object.video.realisation|default:"" }}
 
-        .col-md-6
-          %p
-            %b Production :
-            {{ object.video.production|default:"" }}
-          %p
-            %b Direction photo :
-            {{ object.video.photo_direction|default:"" }}
+        -if object.video.production and object.video.photo_direction
+          .col-md-6
+            -if object.video.production
+              %p
+                %b Production :
+                {{ object.video.production|default:"" }}
+            -if object.video.photo_direction
+              %p
+                %b Direction photo :
+                {{ object.video.photo_direction|default:"" }}
 
-      %p
-        %b Numéro d'archive LTO :
-        {{ object.video.lto_archive_number|default:"" }}
+      -if object.video.lto_archive_number
+        %p
+          %b Numéro d'archive LTO :
+          {{ object.video.lto_archive_number|default:"" }}
 
-      %p
-        %i {{ object.video.observations|default:"" }}
+      -if object.video.observations
+        %p
+          %i {{ object.video.observations|default:"" }}
 
-      %p
-        %b Section :
-        {{ object.video.videosection|default:"" }}
+      -if object.video.videosection
+        %p
+          %b Section :
+          {{ object.video.videosection|default:"" }}
