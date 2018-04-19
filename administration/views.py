@@ -14,6 +14,7 @@ from django.views.generic.edit import UpdateView, CreateView
 from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
 from django.forms.models import modelform_factory
+from django.db.models.functions import Lower
 
 from sections.models import Section, Permission, VideoSection
 from video.models import Video
@@ -32,14 +33,14 @@ logger = logging.getLogger("saya")
 def user_and_groups(request):
     if request.user.is_staff:
         return render(request, "administration/user_list.haml", {
-            "user_list": User.objects.all().order_by("email", "first_name", "last_name", "username"),
-            "group_list": Group.objects.all().order_by("name"),
+            "user_list": User.objects.all().order_by(Lower("email"), Lower("first_name"), Lower("last_name"), Lower("username")),
+            "group_list": Group.objects.all().order_by(Lower("name")),
         })
 
     elif request.user.group_is_admin_set.exists():
         return render(request, "administration/user_list.haml", {
-            "user_list": request.user.users_can_administrate().order_by("email", "first_name", "last_name", "username"),
-            "group_list": request.user.groups_managed_by_user().order_by("name"),
+            "user_list": request.user.users_can_administrate().order_by(Lower("email"), Lower("first_name"), Lower("last_name"), Lower("username")),
+            "group_list": request.user.groups_managed_by_user().order_by(Lower("name")),
         })
 
     else:

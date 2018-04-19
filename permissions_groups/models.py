@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.functions import Lower
 
 from sections.models import Section
 
@@ -23,7 +24,7 @@ class Group(models.Model):
         return self.name
 
     def get_admins(self):
-        return self.admins.order_by("username")
+        return self.admins.order_by(Lower("email"), Lower("first_name"), Lower("last_name"), Lower("username"))
 
     def get_users(self):
-        return self.users.order_by("username")
+        return self.users.order_by(Lower("email"), Lower("first_name"), Lower("last_name"), Lower("username"))
