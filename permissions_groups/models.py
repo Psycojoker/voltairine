@@ -23,7 +23,7 @@ class Group(models.Model):
         return self.name
 
     def get_admins(self):
-        return self.admin.order_by("username")
+        return self.admins.order_by("username")
 
     def get_users(self):
         return self.users.order_by("username")
