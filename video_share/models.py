@@ -12,4 +12,4 @@ class VideoShare(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     video = models.ForeignKey(Video)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True, blank=True)

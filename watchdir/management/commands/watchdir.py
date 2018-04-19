@@ -5,6 +5,8 @@ import grp
 import sys
 import time
 import shutil
+import string
+import random
 import logging
 from email.mime.image import MIMEImage
 
@@ -17,6 +19,7 @@ from django.db import transaction
 from sections.models import Section, VideoSection
 from video.models import Video
 from upload_video.utils import ensure_file_name_is_unique, clean_file_name
+from video_share.models import VideoShare
 
 logger = logging.getLogger(__name__)
 
@@ -162,8 +165,14 @@ class Command(BaseCommand):
                     logger.error(e)
 
     def send_notification_email(self, section, video):
+        video_share = VideoShare.objects.create(
+            pk="".join([random.SystemRandom().choice(string.ascii_letters + string.digits) for x in range(20)]),
+            video=video,
+        )
+
         context = {
             "video": video,
+            "video_share": video_share,
             "section": section,
             "settings": settings,
         }
@@ -194,7 +203,7 @@ Nous avons le plaisir de vous annoncer la mise en ligne sur Saya Play du
 fichier suivant :
 
 {{ section }} / {{ video }}
-Lien de visionnage : {{ settings.BASE_URL }}{% url 'administration_video_detail' video.pk %} <{{ settings.BASE_URL }}{% url 'administration_video_detail' video.pk %}>
+Lien de visionnage : {{ settings.BASE_URL }}{% url 'video_share_detail' video_share.pk %} <{{ settings.BASE_URL }}{% url 'video_share_detail' video_share.pk %}>
 
 Cordialement,
 l'équipe Saya
@@ -249,8 +258,8 @@ Saya Play</font>
 {{ section }} / {{ video }}
 </div>
 <div class="">
-Lien de visionnage :&nbsp;<a class="moz-txt-link-freetext" href="{{ settings.BASE_URL }}{% url 'administration_video_detail' video.pk %}">
-{{ settings.BASE_URL }}{% url 'administration_video_detail' video.pk %}</a>
+Lien de visionnage :&nbsp;<a class="moz-txt-link-freetext" href="{{ settings.BASE_URL }}{% url 'video_share_detail' video_share.pk %}">
+{{ settings.BASE_URL }}{% url 'video_share_detail' video_share.pk %}</a>
 </div>
 <div class="">
 <br class="">
