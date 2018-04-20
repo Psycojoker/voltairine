@@ -240,10 +240,9 @@ Bonjour,</span>
 <br style="background-color: rgb(255, 255, 255);" class="">
 <div class="rcmBody" style="background-color: rgb(255, 255, 255);">
 <div class="">
-Nous avons le plaisir de vous annoncer la mise en ligne sur <u class="">
-<font color="#0433ff" class="">
-Saya Play</font>
-</u>
+Nous avons le plaisir de vous annoncer la mise en ligne sur <a href="https://play.saya.fr">
+Saya Play
+</a>
 &nbsp;du fichier suivant :</div>
 <div class="">
 <br class="">
