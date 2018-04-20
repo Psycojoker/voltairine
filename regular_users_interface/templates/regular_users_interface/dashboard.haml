@@ -147,14 +147,14 @@
                   -with video=videosection.video
                     %tr
                       %td
+                        -if user.can_see_download_button
+                          %a.btn.btn-sm.btn-default.download-button{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                            %span.glyphicon.glyphicon-download-alt{aria-hidden: true, title: "Télécharger"}
                         %a{href: "{% url 'user_video_detail' video.pk %}"}
                           =video.title
                         %br
                         %a.btn.btn-primary.btn-sm{href: "{% url 'user_video_detail' video.pk %}"}
                           Regarder
-                        -if user.can_see_download_button
-                          %a.btn.btn-default.btn-sm{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
-                            Télécharger
                       %td
                         =section.display_level_indicator
                         =section.title
