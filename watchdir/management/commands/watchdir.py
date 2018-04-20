@@ -178,7 +178,7 @@ class Command(BaseCommand):
         }
 
         message = EmailMultiAlternatives(
-              u"[SAYA - Play] Mise en ligne : %s / %s" % (video.file_name, section.title),
+              u"[SAYA - Play] Mise en ligne : %s / %s.mp4" % (section.title, video.title),
               Template(EMAIL_TEMPLATE).render(Context(context)),
               'noreply@play.saya.fr',
               section.notification_email.split(","),
