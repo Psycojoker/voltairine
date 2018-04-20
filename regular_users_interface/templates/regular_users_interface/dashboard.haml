@@ -150,11 +150,10 @@
                         -if user.can_see_download_button
                           %a.btn.btn-sm.btn-default.download-button{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
                             %span.glyphicon.glyphicon-download-alt{aria-hidden: true, title: "Télécharger"}
+                        %a.btn.btn-primary.btn-sm{href: "{% url 'user_video_detail' video.pk %}"}
+                          %span.glyphicon.glyphicon-play-circle{aria-hidden: true, title: "Regarder"}
                         %a{href: "{% url 'user_video_detail' video.pk %}"}
                           =video.title
-                        %br
-                        %a.btn.btn-primary.btn-sm{href: "{% url 'user_video_detail' video.pk %}"}
-                          Regarder
                       %td
                         =section.display_level_indicator
                         =section.title
