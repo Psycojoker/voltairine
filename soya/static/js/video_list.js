@@ -87,6 +87,7 @@ odd          : ''  // odd row zebra striping
 
     $(".section-menu-link").click(activate_section);
 
+    // user dashboard "display first section with a video"
     if ($('.section[visible="true"][has-video="true"]').length > 0) {
         var section_menu_to_clik = $('.section[visible="true"][has-video="true"]').first().attr("data-menu-link");
     } else if ($('.section[visible="true"]').length > 0) {
@@ -96,6 +97,31 @@ odd          : ''  // odd row zebra striping
     }
 
     $("#" + section_menu_to_clik).click();
+
+    // fold all user section then unfold the one with the first video
+    $(".caret-toggle").click();
+    var parents = $("#" + section_menu_to_clik).parents();
+    console.log(parents);
+    console.log(parents.length);
+    var first = true;  // don't click on the first one
+    for (var i = 0; i < parents.length; ++i) {
+        console.log(i);
+        var tag = parents[i];
+        console.log(tag);
+        console.log(tag.localName);
+
+        // it's a h[1-6]
+        // this test isn't perfect :/
+        if (tag.localName == "li" && tag.className == "tree-branch") {
+            if (!first) {
+                console.log("matched");
+                console.log($(tag).find(".caret-toggle"));
+                $($(tag).find(".caret-toggle")[0]).click();
+            } else {
+                var first = false;
+            }
+        }
+    }
 
     $("#tabVideosList").click(function(event) {
         $("#title").show();
