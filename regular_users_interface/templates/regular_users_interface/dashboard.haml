@@ -151,7 +151,7 @@
                           %a.btn.btn-sm.btn-default.download-button{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
                             %span.glyphicon.glyphicon-download-alt{aria-hidden: true, title: "Télécharger"}
                         %a.btn.btn-primary.btn-sm{href: "{% url 'user_video_detail' video.pk %}"}
-                          %span.glyphicon.glyphicon-play-circle{aria-hidden: true, title: "Regarder"}
+                          %span.glyphicon.glyphicon-play{aria-hidden: true, title: "Regarder"}
                         %a{href: "{% url 'user_video_detail' video.pk %}"}
                           =video.title
                       %td
