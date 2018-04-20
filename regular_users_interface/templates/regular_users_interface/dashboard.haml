@@ -152,8 +152,9 @@
                         %br
                         %a.btn.btn-primary.btn-sm{href: "{% url 'user_video_detail' video.pk %}"}
                           Regarder
-                        %a.btn.btn-default.btn-sm{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
-                          Télécharger
+                        -if user.can_see_download_button
+                          %a.btn.btn-default.btn-sm{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                            Télécharger
                       %td
                         =section.display_level_indicator
                         =section.title

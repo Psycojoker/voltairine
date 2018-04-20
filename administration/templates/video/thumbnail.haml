@@ -19,8 +19,9 @@
       %p{style: "position: absolute; right: 20px; bottom: 16px"}
         %a.btn.btn-sm.btn-primary{href: "{% if user.is_staff or user.groups_managed_by_user.exists %}{% url 'administration_video_detail' video.id %}{% else %}{% url 'user_video_detail' video.id %}{% endif %}"}
           regarder
-        %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
-          télécharger
+        -if user.can_see_download_button
+          %a.btn.btn-sm.btn-default{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+            télécharger
 .hidden-lg
   .col-md-4.col-sm-6
     .thumbnail

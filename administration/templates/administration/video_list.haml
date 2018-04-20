@@ -113,8 +113,9 @@
                   %td.center
                     %input.delete-checkbox{type: "checkbox", name: "video", value: "{{ video.pk }}"}
                   %td
-                    %a.btn.btn-sm.btn-default.download-button{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
-                      %span.glyphicon.glyphicon-download-alt{aria-hidden: true, title: "Télécharger"}
+                    -if user.can_see_download_button
+                      %a.btn.btn-sm.btn-default.download-button{href: "{{ MEDIA_URL }}videos/{{ video.file_name }}"}
+                        %span.glyphicon.glyphicon-download-alt{aria-hidden: true, title: "Télécharger"}
                     %p.video-title
                       %a{href: "{% url 'administration_video_detail' video.pk %}"}
                         =video.title
