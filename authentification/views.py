@@ -18,3 +18,5 @@ def logout(request):
 
 class PasswordResetUserDontExistsView(PasswordResetView):
     form_class = PasswordResetUserDontExistsForm
+    email_template_name = 'registration/password_reset_email_saya.html'
+    from_email = "noreply@sayaplay.fr"
