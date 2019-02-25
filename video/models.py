@@ -70,15 +70,14 @@ class Video(models.Model):
             # because recreating a thumbnail is super slow and trying to
             # recreate it every time makes the page unusable
             if not image:
-                empty_thumbnail = os.path.join(settings.STATIC_URL, "images", "empty_thumbnails.png")
-                video_thumbnail_path = os.path.join(settings.MEDIA_URL, "thumbnails", self.thumbnail_name)
+                empty_thumbnail = "video/static/images/empty_thumbnails.png"
+                video_thumbnail_path = os.path.join(thumbnails_dir, self.thumbnail_name)
 
                 shutil.copyfile(empty_thumbnail, video_thumbnail_path)
 
-                return video_thumbnail_path
-
-            image.resize((330, 209)).save(os.path.join(thumbnails_dir, self.thumbnail_name))
-            self.save()
+            else:
+                image.resize((330, 209)).save(os.path.join(thumbnails_dir, self.thumbnail_name))
+                self.save()
 
         return os.path.join(settings.MEDIA_URL, "thumbnails", self.thumbnail_name)
 
