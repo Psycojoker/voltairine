@@ -1,5 +1,6 @@
 import os
 import av
+import shutil
 
 from django.db import models
 from django.conf import settings
@@ -60,10 +61,21 @@ class Video(models.Model):
         if not self.thumbnail_name or not os.path.exists(os.path.join(thumbnails_dir, self.thumbnail_name)):
             self.thumbnail_name = slugify(".".join(self.file_name.split(".")[:-1])) + ".png"
 
-            image = self._generate_thumbnail_image_from_video()
+            try:
+                image = self._generate_thumbnail_image_from_video()
+            except Exception:
+                image = None
 
+            # we failed to create a thumbnail, use the empty_thumbnails.png
+            # because recreating a thumbnail is super slow and trying to
+            # recreate it every time makes the page unusable
             if not image:
-                return os.path.join(settings.STATIC_URL, "images", "empty_thumbnails.png")
+                empty_thumbnail = os.path.join(settings.STATIC_URL, "images", "empty_thumbnails.png")
+                video_thumbnail_path = os.path.join(settings.MEDIA_URL, "thumbnails", self.thumbnail_name)
+
+                shutil.copyfile(empty_thumbnail, video_thumbnail_path)
+
+                return video_thumbnail_path
 
             image.resize((330, 209)).save(os.path.join(thumbnails_dir, self.thumbnail_name))
             self.save()
